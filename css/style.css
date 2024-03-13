@@ -888,6 +888,7 @@ button {
   }
 }
 .btn:hover {
+  transform: scaleX(1.06) scaleY(1.06);
   box-shadow: var(--redefine-box-shadow-hover);
 }
 .btn:hover,
@@ -2543,7 +2544,7 @@ pre .deletion {
   position: relative;
   box-sizing: border-box;
   width: 80%;
-  max-width: 1000px;
+  max-width: 1050px;
   height: 100%;
   transition-property: color, background, box-shadow, border-color, max-width, width;
   transition-delay: 0s, 0s, 0s, 0s, 0s, 0s;
@@ -2561,7 +2562,7 @@ pre .deletion {
   }
 }
 .page-container .main-content-container .main-content-body .main-content.has-toc {
-  max-width: 1200px !important;
+  max-width: 1260px !important;
 }
 .page-container .main-content-container .main-content-body .main-content-footer {
   width: 100%;
@@ -4611,7 +4612,7 @@ html.is-animating .scroll-progress-bar {
 .navbar-container .navbar-content {
   position: relative;
   height: 100%;
-  width: 80%;
+  width: 100%;
   max-width: 1000px;
   display: flex;
   flex-direction: row;
@@ -4622,16 +4623,6 @@ html.is-animating .scroll-progress-bar {
 }
 .navbar-container .navbar-content.has-home-banner {
   max-width: 1200px;
-}
-@media (max-width: 768px) {
-  .navbar-container .navbar-content {
-    width: 86%;
-  }
-}
-@media (max-width: 640px) {
-  .navbar-container .navbar-content {
-    width: 90%;
-  }
 }
 .navbar-container .navbar-content .left {
   display: flex;
@@ -4960,6 +4951,7 @@ html.is-animating .scroll-progress-bar {
   margin-bottom: 0;
 }
 .post-tools-container .article-tools-list li:hover {
+  transform: scaleX(1.06) scaleY(1.06);
   box-shadow: var(--redefine-box-shadow-hover);
 }
 .post-tools-container .article-tools-list li.page-aside-toggle {
@@ -5286,36 +5278,17 @@ html.is-animating .scroll-progress-bar {
   --redefine-box-shadow-flat-hover: var(--shadow-color-2) 0px 1px 4px 0px, var(--shadow-color-1) 0px 0px 0px 1px, var(--shadow-color-1) 0px 0px 0px 1px inset;
   --mermaid-theme: '';
 }
-.archive-list-container .archive-item {
-  margin-bottom: 38px;
-}
-.archive-list-container .archive-item:last-child {
-  margin-bottom: 0;
-}
-@media (max-width: 768px) {
-  .archive-list-container .archive-item .article-list {
-    padding-left: 0;
-  }
-}
-.archive-list-container .archive-item .article-list .article-item {
-  font-size: 1rem;
-  padding: 3em 2em 1em;
-  position: relative;
-  color: rgba(0,0,0,0.7);
-  border-left: 2px solid var(--border-color);
-}
-.archive-list-container .archive-item .article-list .article-item::before {
+.archive-list-container .article-item::before {
   content: attr(date-is);
   position: absolute;
   left: 2em;
   font-weight: bold;
   top: 1em;
   display: block;
-  font-weight: 700;
   font-size: 0.785rem;
   color: var(--third-text-color);
 }
-.archive-list-container .archive-item .article-list .article-item::after {
+.archive-list-container .article-item::after {
   width: 10px;
   height: 10px;
   display: block;
@@ -5328,7 +5301,7 @@ html.is-animating .scroll-progress-bar {
   background: var(--background-color);
   transition: background 0.2s ease-in-out;
 }
-.archive-list-container .archive-item .article-list .article-item:last-child {
+.archive-list-container .article-item:last-child {
   border-image: var(--archive-timeline-last-child-color);
 }
 :root {
@@ -5701,6 +5674,7 @@ html.is-animating .scroll-progress-bar {
 .paginator span.page-number:hover,
 .paginator a.prev:hover,
 .paginator a.next:hover {
+  transform: scaleX(1.06) scaleY(1.06);
   box-shadow: var(--redefine-box-shadow-hover);
 }
 .paginator a.page-number:hover,
@@ -6105,6 +6079,16 @@ html.is-animating .scroll-progress-bar {
   -webkit-backdrop-filter: blur(10px);
   border-radius: 9px;
   transition: opacity 0.2s ease-out;
+}
+.page-template-container figure.image-caption img {
+  margin-bottom: 0;
+}
+.page-template-container figure.image-caption figcaption {
+  margin-top: 5px;
+  margin-bottom: 10px;
+  text-align: center;
+  font-size: 0.9rem;
+  color: var(--third-text-color);
 }
 .page-template-container .image-container:hover .image-title,
 .page-template-container .image-container:hover .image-description {
@@ -7257,6 +7241,7 @@ html.is-animating .scroll-progress-bar {
   }
 }
 .home-content-container .home-article-list .home-article-item:hover {
+  transform: scaleX(1.015) scaleY(1.015);
   box-shadow: var(--redefine-box-shadow-hover);
 }
 @media (max-width: 768px) {
@@ -8021,7 +8006,7 @@ html.is-animating .scroll-progress-bar {
   display: block;
   opacity: 1;
   transition: opacity 0.2s ease-in 0.2s;
-  width: 210px;
+  width: 320px;
 }
 .post-page-container.show-toc .toc-content-container:hover::-webkit-scrollbar-thumb {
   border: 3px solid rgba(183,183,183,0.3);
