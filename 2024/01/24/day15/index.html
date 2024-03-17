@@ -1,0 +1,1459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="Hexo Theme Redefine">
+    
+    <meta name="author" content="Artemis">
+    <!-- preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    
+        
+        
+        
+    
+    <!--- Seo Part-->
+    
+    <link rel="canonical" href="http://example.com/2024/01/24/day15/"/>
+    <meta name="robots" content="index,follow">
+    <meta name="googlebot" content="index,follow">
+    <meta name="revisit-after" content="1 days">
+    
+        <meta name="description" content="第一章 抽象类1.1 概述1.1.1 抽象类引入​	父类中的方法，被它的子类们重写，子类各自的实现都不尽相同。那么父类的方法声明和方法主体，只有声明还有意义，而方法主体则没有存在的意义了(因为子类对象会调用自己重写的方法)。换句话说，父类可能知道子类应该有哪个功能，但是功能具体怎么实现父类是不清楚的（由子类自己决定），父类只需要提供一个没有方法体的定义即可，具体实现交给子类自己去实现。我们把没有方">
+<meta property="og:type" content="article">
+<meta property="og:title" content="抽象类&amp;接口&amp;内部类">
+<meta property="og:url" content="http://example.com/2024/01/24/day15/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="第一章 抽象类1.1 概述1.1.1 抽象类引入​	父类中的方法，被它的子类们重写，子类各自的实现都不尽相同。那么父类的方法声明和方法主体，只有声明还有意义，而方法主体则没有存在的意义了(因为子类对象会调用自己重写的方法)。换句话说，父类可能知道子类应该有哪个功能，但是功能具体怎么实现父类是不清楚的（由子类自己决定），父类只需要提供一个没有方法体的定义即可，具体实现交给子类自己去实现。我们把没有方">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/JavaNotes/%E7%B1%BB/img/%E5%86%85%E9%83%A8%E7%B1%BB%E5%86%85%E5%AD%98%E5%9B%BE.png">
+<meta property="article:published_time" content="2024-01-24T10:31:13.000Z">
+<meta property="article:modified_time" content="2024-03-17T10:58:44.259Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="Object Oriented">
+<meta property="article:tag" content="Class">
+<meta property="article:tag" content="Interface">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/JavaNotes/%E7%B1%BB/img/%E5%86%85%E9%83%A8%E7%B1%BB%E5%86%85%E5%AD%98%E5%9B%BE.png">
+    
+    
+    <!--- Icon Part-->
+    <link rel="icon" type="image/png" href="/images/redefine-favicon.svg" sizes="192x192">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/redefine-favicon.svg">
+    <meta name="theme-color" content="#A31F34">
+    <link rel="shortcut icon" href="/images/redefine-favicon.svg">
+    <!--- Page Info-->
+    
+    <title>
+        
+            抽象类&amp;接口&amp;内部类 -
+        
+        Artemis&#39;s Blog
+    </title>
+
+    <link rel="stylesheet" href="//evan.beee.top/projects/hexo-theme-redefine@2.6.1/source/fonts/Chillax/chillax.css">
+
+    <!--- Inject Part-->
+    
+        
+            
+    
+            
+    
+            
+                
+                    <link rel="stylesheet" href="/css/custom.css?1">
+                
+    
+
+    
+        <style>
+    :root {
+        --preloader-background-color: #fff;
+        --preloader-text-color: #000;
+    }
+
+    @media (prefers-color-scheme: dark) {
+        :root {
+            --preloader-background-color: #202124;
+            --preloader-text-color: #fff;
+        }
+    }
+
+    @media (prefers-color-scheme: light) {
+        :root {
+            --preloader-background-color: #fff;
+            --preloader-text-color: #000;
+        }
+    }
+
+    @media (max-width: 600px) {
+        .ml13 {
+            font-size: 2.6rem !important; /* Adjust this value as needed */
+        }
+    }
+
+    .preloader {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem; /* Tailwind 'gap-4' is 1rem */
+        align-items: center;
+        justify-content: center;
+        position: fixed;
+        padding: 12px;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh; /* 'h-screen' is 100% of the viewport height */
+        background-color: var(--preloader-background-color);
+        z-index: 1100; /* 'z-[1100]' sets the z-index */
+        transition: opacity 0.2s ease-in-out;
+    }
+
+    .ml13 {
+        font-size: 3.2rem;
+        /* text-transform: uppercase; */
+        color: var(--preloader-text-color);
+        letter-spacing: -1px;
+        font-weight: 500;
+        font-family: 'Chillax-Variable', sans-serif;
+        text-align: center;
+    }
+
+    .ml13 .word {
+        display: inline-flex;
+        flex-wrap: wrap;
+        white-space: nowrap;
+    }
+
+    .ml13 .letter {
+        display: inline-block;
+        line-height: 1em;
+    }
+</style>
+
+<div class="preloader">
+    <script src="https://evan.beee.top/projects/hexo-theme-redefine@2.6.1/source/js/libs/anime.min.js"></script>
+    <h1 class="ml13">
+        Artemis&#39;s Blog
+    </h1>
+    <script>
+        var textWrapper = document.querySelector('.ml13');
+        // Split text into words
+        var words = textWrapper.textContent.trim().split(' ');
+
+        // Clear the existing content
+        textWrapper.innerHTML = '';
+
+        // Wrap each word and its letters in spans
+        words.forEach(function(word) {
+            var wordSpan = document.createElement('span');
+            wordSpan.classList.add('word');
+            wordSpan.innerHTML = word.replace(/\S/g, "<span class='letter'>$&</span>");
+            textWrapper.appendChild(wordSpan);
+            textWrapper.appendChild(document.createTextNode(' ')); // Add space between words
+        });
+
+
+        anime.timeline({loop: true})
+            .add({
+                targets: '.ml13 .letter',
+                translateY: [100,0],
+                translateZ: 0,
+                opacity: [0,1],
+                easing: "easeOutExpo",
+                duration: 1400,
+                delay: (el, i) => 300 + 30 * i
+            }).add({
+            targets: '.ml13 .letter',
+            translateY: [0,-100],
+            opacity: [1,0],
+            easing: "easeInExpo",
+            duration: 1200,
+            delay: (el, i) => 100 + 30 * i
+        });
+
+        let themeStatus = JSON.parse(localStorage.getItem('REDEFINE-THEME-STATUS'))?.isDark;
+
+        // If the theme status is not found in local storage, check the preferred color scheme
+        if (themeStatus === undefined || themeStatus === null) {
+            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                themeStatus = 'dark';
+            } else {
+                themeStatus = 'light';
+            }
+        }
+
+        // Now you can use the themeStatus variable in your code
+        if (themeStatus) {
+            document.documentElement.style.setProperty('--preloader-background-color', '#202124');
+            document.documentElement.style.setProperty('--preloader-text-color', '#fff');
+        } else {
+            document.documentElement.style.setProperty('--preloader-background-color', '#fff');
+            document.documentElement.style.setProperty('--preloader-text-color', '#000');
+        }
+
+        window.addEventListener('load', function () {
+            hidePreloaderAfterTimeout(1000); // Hide after 1000 milliseconds once the window has loaded
+        });
+
+        // Backup failsafe: Hide preloader after a maximum of 5000 milliseconds, regardless of the window load event
+        hidePreloaderAfterTimeout(5000);
+
+        function hidePreloaderAfterTimeout(delay) {
+            setTimeout(function () {
+                var preloader = document.querySelector('.preloader');
+                preloader.style.opacity = '0';
+                setTimeout(function () {
+                    preloader.style.display = 'none';
+                }, 200);
+            }, delay);
+        }
+    </script>
+</div>
+    
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+        <link rel="stylesheet" href="//evan.beee.top/projects/hexo-theme-redefine@2.6.1/source/assets/build/styles.css">
+    
+
+    <link rel="stylesheet" href="//evan.beee.top/projects/hexo-theme-redefine@2.6.1/source/fonts/fonts.css">
+    <link rel="stylesheet" href="//evan.beee.top/projects/hexo-theme-redefine@2.6.1/source/fonts/Satoshi/satoshi.css">
+    <!--- Font Part-->
+    
+    
+    
+        <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+    
+    
+
+
+    <script id="hexo-configurations">
+    window.config = {"hostname":"example.com","root":"/","language":"en","path":"search.xml"};
+    window.theme = {"articles":{"style":{"font_size":"16px","line_height":1.5,"image_border_radius":"14px","image_alignment":"center","image_caption":false,"link_icon":true,"title_alignment":"left","headings_top_spacing":{"h1":"5rem","h2":"4rem","h3":"2.8rem","h4":"2.5rem","h5":"2.2rem","h6":"2rem"}},"word_count":{"enable":true,"count":true,"min2read":true},"author_label":{"enable":true,"auto":false,"list":["Lv8"]},"code_block":{"copy":true,"style":"mac","font":{"enable":false,"family":null,"url":null}},"toc":{"enable":true,"max_depth":3,"number":false,"expand":true,"init_open":true},"copyright":{"enable":false,"default":"cc_by_nc_sa"},"lazyload":true,"recommendation":{"enable":false,"title":"推荐阅读","limit":3,"mobile_limit":2,"placeholder":"/images/wallhaven-wqery6-light.webp","skip_dirs":[]}},"colors":{"primary":"#A31F34","secondary":null,"default_mode":"light"},"global":{"fonts":{"chinese":{"enable":true,"family":"Noto Sans SC","url":"https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap"},"english":{"enable":false,"family":"Farsan","url":"https://fonts.googleapis.com/css2?family=Farsan&display=swap"}},"content_max_width":"1020px","sidebar_width":"320px","hover":{"shadow":true,"scale":true},"scroll_progress":{"bar":true,"percentage":true},"website_counter":{"url":"https://cn.vercount.one/js","enable":true,"site_pv":true,"site_uv":true,"post_pv":true},"single_page":true,"preloader":true,"open_graph":true,"google_analytics":{"enable":false,"id":null}},"home_banner":{"enable":true,"style":"fixed","image":{"light":"/images/road.webp","dark":"/images/sand.webp"},"title":"Welcome to my website","subtitle":{"text":["Life gets better when no one knows what you are doing","代 码 可 以 重 构 ，思 想 难 以 重 塑","Don't be emcubered by history ,go off and do something wonderful","莫 道 桑 榆 晚，为 霞 尚 满 天","Passions will die without actions supporting them","莫得感情 + 电子阳痿 = 极致的效率","你所有的精力应该投入到更好的习惯中，而不是追求更好的结果","过度地追求局部最优会影响全局最优","关山难越，谁悲失路之人？萍水相逢，尽是他乡之客"],"hitokoto":{"enable":false,"api":"https://v1.hitokoto.cn/"},"typing_speed":100,"backing_speed":80,"starting_delay":500,"backing_delay":1500,"loop":true,"smart_backspace":true},"text_color":{"light":"#fff","dark":"#d1d1b6"},"text_style":{"title_size":"2.8rem","subtitle_size":"1.5rem","line_height":1.2},"custom_font":{"enable":false,"family":null,"url":null},"social_links":{"enable":true,"style":"default","links":{"github":"https://github.com/SukhoiGit","instagram":null,"zhihu":null,"twitter":"https://x.com/OriginBlue50362?t=Yu96I7tDxgX9IGv2CzNnbQ&s=09","email":"3103846585@qq.com"},"qrs":{"weixin":"/images/wechat.png","qq":"/images/qq.jpg"}}},"plugins":{"feed":{"enable":false},"aplayer":{"enable":true,"type":"fixed","audios":[{"name":"K-Pop Type Beat \"Puberty\"","artist":"Scorpion","url":"http://music.163.com/song/media/outer/url?id=2038499612.mp3","cover":"http://p2.music.126.net/8EFT8SUap3AFalqhCm6cTA==/109951168540048426.jpg?param=130y130"},{"name":"Anybody","artist":"Shae,WIMY","url":"http://music.163.com/song/media/outer/url?id=2067819390.mp3","cover":"http://p2.music.126.net/SYyqNbGTSHah_lyRg_ilpw==/109951168769615805.jpg?param=130y130"},{"name":"JDS (Fantasy)","artist":"Finding Hope","url":"http://music.163.com/song/media/outer/url?id=553814074.mp3","cover":"http://p1.music.126.net/aSdtmhutZ0IL-P5Edk1EAA==/109951163254267352.jpg?param=130y130"},{"name":"Saint Claire","artist":"Damma Beatz","url":"http://music.163.com/song/media/outer/url?id=1481990777.mp3","cover":"http://p1.music.126.net/r8kw9HjQKSNPLuxYTM0nHA==/109951165341829045.jpg?param=130y130"},{"name":"Warm (feat. Mia)","artist":"Dre'es,Mia","url":"http://music.163.com/song/media/outer/url?id=524148990.mp3","cover":"http://p1.music.126.net/lUr_3hI44YpbLCeTzH-OlQ==/109951168286424435.jpg?param=130y130"},{"name":"☾ 你 喜 歡 的 人 的 夢 裡 面","artist":"Mei","url":"http://music.163.com/song/media/outer/url?id=1368934522.mp3","cover":"http://p2.music.126.net/QVOpq4JILoj-x_UJck82zA==/109951164198574154.jpg?param=130y130"},{"name":"Rain Song","artist":"J-Kay,景衍Flowsik,note,YANGHAHA","url":"http://music.163.com/song/media/outer/url?id=1878880863.mp3","cover":"http://p2.music.126.net/IEO2S0e4ugeQL_N9lvProA==/109951166422664637.jpg?param=130y130"},{"name":"우리 얘기 좀 해","artist":"Lillo,제이형,지현","url":"http://music.163.com/song/media/outer/url?id=28798391.mp3","cover":"http://p1.music.126.net/4PEO92IxtPBD2MVLtPBdlA==/6062707116251917.jpg?param=130y130"},{"name":"I Blame You","artist":"Ledisi","url":"http://music.163.com/song/media/outer/url?id=28296901.mp3","cover":"http://p1.music.126.net/V7iAGrbL-IRh7YtW1TQ3hQ==/5849401859946885.jpg?param=130y130"},{"name":"危险派对 (伴奏)","artist":"王以太,刘至佳","url":"http://music.163.com/song/media/outer/url?id=1877996648.mp3","cover":"http://p2.music.126.net/GpnLproqUUyc4xmYKpRFcQ==/109951166516282895.jpg?param=130y130"},{"name":"Freaky Deaky","artist":"Tyga,Doja Cat","url":"http://music.163.com/song/media/outer/url?id=1922779061.mp3","cover":"http://p1.music.126.net/719DhEuEAsIpfU6LCzBQ3A==/109951167082707175.jpg?param=130y130"},{"name":"Shut up My Moms Calling ((Sped Up))","artist":"Hotel Ugly","url":"http://music.163.com/song/media/outer/url?id=1980856355.mp3","cover":"http://p1.music.126.net/Vfm0Jh8ynxSeYxh5DwRnXg==/109951167871897254.jpg?param=130y130"},{"name":"No Fear No More","artist":"Madeon","url":"http://music.163.com/song/media/outer/url?id=1403356922.mp3","cover":"http://p1.music.126.net/T7qkRJsFDat6GxWDXP2cTA==/109951164486305073.jpg?param=130y130"},{"name":"Say So","artist":"Doja Cat","url":"http://music.163.com/song/media/outer/url?id=1401302504.mp3","cover":"http://p2.music.126.net/jpwgibpDAI8b3AxcIv5QMQ==/109951168930483402.jpg?param=130y130"},{"name":"住在雪山的落日","artist":"Lev","url":"http://music.163.com/song/media/outer/url?id=1873107569.mp3","cover":"http://p2.music.126.net/Ejn3hYPl9hrpBuqURDfcYQ==/109951166325499272.jpg?param=130y130"},{"name":"Sweatshirt","artist":"Patrick Hizon,EJEAN,Gabe Bondoc","url":"http://music.163.com/song/media/outer/url?id=2049495339.mp3","cover":"http://p2.music.126.net/23urSlrnGAuXNzUfTemQNQ==/109951168630808433.jpg?param=130y130"},{"name":"Cool & Down","artist":"The 49ers","url":"http://music.163.com/song/media/outer/url?id=22670312.mp3","cover":"http://p2.music.126.net/ACxQuITgURDWPqivHU_EAQ==/781752767371077.jpg?param=130y130"},{"name":"爱野美奈子","artist":"银河骑士GalaxyKnight","url":"http://music.163.com/song/media/outer/url?id=413829844.mp3","cover":"http://p1.music.126.net/CDAbUu8CD1mYh5BYuxGXag==/17929736114279608.jpg?param=130y130"},{"name":"看月亮","artist":"StrawberryPapa","url":"http://music.163.com/song/media/outer/url?id=465472474.mp3","cover":"http://p2.music.126.net/71tLrMQrG3BgDH94OJY5Ew==/109951162876317221.jpg?param=130y130"},{"name":"West Coast Love","artist":"Emotional Oranges","url":"http://music.163.com/song/media/outer/url?id=1401876482.mp3","cover":"http://p1.music.126.net/QdAKECVQopD9IdEBomJ8IQ==/109951164869191242.jpg?param=130y130"},{"name":"phone kisses","artist":"suhmeduh","url":"http://music.163.com/song/media/outer/url?id=446512853.mp3","cover":"http://p2.music.126.net/UWQUe2Vl3xEvfDsSYqf-kA==/18651015743606039.jpg?param=130y130"}],"autoplay":true},"mermaid":{"enable":false,"version":"9.3.0"}},"version":"2.6.1","navbar":{"auto_hide":false,"color":{"left":"#f78736","right":"#367df7","transparency":10},"width":{"home":"1200px","pages":"1000px"},"links":{"Home":{"path":"/","icon":"fa-regular fa-house"},"Archives":{"path":"/archives","icon":"fa-regular fa-archive"},"Status":{"path":"/","icon":"fa-regular fa-chart-bar"},"gallery":{"icon":"fa-solid fa-image","path":"/masonry/"},"About":{"icon":"fa-regular fa-user","submenus":{"Github":"https://github.com/SukhoiGit"}},"Links":{"icon":"fa-regular fa-link","submenus":{"NASA":"https://www.nasa.gov/","SpaceX":"https://www.spacex.com/","ESA":"https://www.esa.int/","Mashable":"https://mashable.com/","Click here to touch stars":"https://stellarium.org/"}}},"search":{"enable":true,"preload":true}},"page_templates":{"friends_column":2,"tags_style":"blur"},"home":{"sidebar":{"enable":true,"position":"left","first_item":"menu","announcement":"借汝之光，得见光明","show_on_mobile":true,"links":{"Archives":{"path":"/archives","icon":"fa-regular fa-archive"},"Tags":{"path":"/tags","icon":"fa-regular fa-tags"},"Categories":{"path":"/categories","icon":"fa-regular fa-folder"},"Gossip":{"path":"/essays","icon":"fa-brands fa-waze"}}},"article_date_format":"auto","categories":{"enable":true,"limit":3},"tags":{"enable":true,"limit":3}},"footerStart":"2023/12/25 11:45:14"};
+    window.lang_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+    window.data = {"masonry":true};
+  </script>
+    
+    <!--- Fontawesome Part-->
+    <link rel="stylesheet" href="//evan.beee.top/projects/hexo-theme-redefine@2.6.1/source/fontawesome/fontawesome.min.css">
+    <link rel="stylesheet" href="//evan.beee.top/projects/hexo-theme-redefine@2.6.1/source/fontawesome/brands.min.css">
+    <link rel="stylesheet" href="//evan.beee.top/projects/hexo-theme-redefine@2.6.1/source/fontawesome/solid.min.css">
+    <link rel="stylesheet" href="//evan.beee.top/projects/hexo-theme-redefine@2.6.1/source/fontawesome/regular.min.css">
+    
+    
+    
+    
+<meta name="generator" content="Hexo 7.0.0"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+        <span class="scroll-progress-bar"></span>
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+<!--        <span class="swup-progress-icon">-->
+<!--            <i class="fa-solid fa-circle-notch fa-spin"></i>-->
+<!--        </span>-->
+    
+</div>
+
+
+<main class="page-container" id="swup">
+
+    
+
+    <div class="main-content-container">
+
+
+        <div class="main-content-header">
+            <header class="navbar-container px-6 md:px-12">
+
+    <div class="navbar-content ">
+        <div class="left">
+            
+            <a class="logo-title" href="/">
+                
+                Artemis&#39;s Blog
+                
+            </a>
+        </div>
+
+        <div class="right">
+            <!-- PC -->
+            <div class="desktop">
+                <ul class="navbar-list">
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/"
+                                        >
+                                    <i class="fa-regular fa-house fa-fw"></i>
+                                    HOME
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/archives"
+                                        >
+                                    <i class="fa-regular fa-archive fa-fw"></i>
+                                    ARCHIVES
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/"
+                                        >
+                                    <i class="fa-regular fa-chart-bar fa-fw"></i>
+                                    STATUS
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/masonry/"
+                                        >
+                                    <i class="fa-solid fa-image fa-fw"></i>
+                                    GALLERY
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class="has-dropdown"
+                                   href="#"
+                                        onClick=&#34;return false;&#34;>
+                                    <i class="fa-regular fa-user fa-fw"></i>
+                                    ABOUT
+                                    <i class="fa-solid fa-chevron-down fa-fw"></i>
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                                    <ul class="sub-menu">
+                                        
+                                            <li>
+                                                <a target="_blank" rel="noopener" href="https://github.com/SukhoiGit">
+                                                    GITHUB
+                                                </a>
+                                            </li>
+                                        
+                                    </ul>
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class="has-dropdown"
+                                   href="#"
+                                        onClick=&#34;return false;&#34;>
+                                    <i class="fa-regular fa-link fa-fw"></i>
+                                    LINKS
+                                    <i class="fa-solid fa-chevron-down fa-fw"></i>
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                                    <ul class="sub-menu">
+                                        
+                                            <li>
+                                                <a target="_blank" rel="noopener" href="https://www.nasa.gov/">
+                                                    NASA
+                                                </a>
+                                            </li>
+                                        
+                                            <li>
+                                                <a target="_blank" rel="noopener" href="https://www.spacex.com/">
+                                                    SPACEX
+                                                </a>
+                                            </li>
+                                        
+                                            <li>
+                                                <a target="_blank" rel="noopener" href="https://www.esa.int/">
+                                                    ESA
+                                                </a>
+                                            </li>
+                                        
+                                            <li>
+                                                <a target="_blank" rel="noopener" href="https://mashable.com/">
+                                                    MASHABLE
+                                                </a>
+                                            </li>
+                                        
+                                            <li>
+                                                <a target="_blank" rel="noopener" href="https://stellarium.org/">
+                                                    CLICK HERE TO TOUCH STARS
+                                                </a>
+                                            </li>
+                                        
+                                    </ul>
+                                
+                            </li>
+                    
+                    
+                        <li class="navbar-item search search-popup-trigger">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <!-- Mobile -->
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fa-solid fa-magnifying-glass"></i>
+                    </div>
+                
+                <div class="icon-item navbar-bar">
+                    <div class="navbar-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile sheet -->
+    <div class="navbar-drawer h-screen w-full absolute top-0 left-0 bg-background-color flex flex-col justify-between">
+        <ul class="drawer-navbar-list flex flex-col px-4 justify-center items-start">
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/"
+                        >
+                            <span>
+                                HOME
+                            </span>
+                            
+                                <i class="fa-regular fa-house fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/archives"
+                        >
+                            <span>
+                                ARCHIVES
+                            </span>
+                            
+                                <i class="fa-regular fa-archive fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/"
+                        >
+                            <span>
+                                STATUS
+                            </span>
+                            
+                                <i class="fa-regular fa-chart-bar fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/masonry/"
+                        >
+                            <span>
+                                GALLERY
+                            </span>
+                            
+                                <i class="fa-solid fa-image fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item-sub text-base my-1.5 flex flex-col w-full">
+                        
+                        <div class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary cursor-pointer text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                             navbar-data-toggle="submenu-About"
+                        >
+                            <span>
+                                ABOUT
+                            </span>
+                            
+                                <i class="fa-solid fa-chevron-right fa-sm fa-fw transition-all"></i>
+                            
+                        </div>
+                        
+
+                        
+                            <div class="flex-col items-start px-2 py-2 hidden" data-target="submenu-About">
+                                
+                                    <div class="drawer-navbar-item text-base flex flex-col justify-center items-start hover:underline active:underline hover:underline-offset-1 rounded-3xl">
+                                        <a class=" text-third-text-color text-xl"
+                                           target="_blank" rel="noopener" href="https://github.com/SukhoiGit">GITHUB</a>
+                                    </div>
+                                
+                            </div>
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item-sub text-base my-1.5 flex flex-col w-full">
+                        
+                        <div class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary cursor-pointer text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                             navbar-data-toggle="submenu-Links"
+                        >
+                            <span>
+                                LINKS
+                            </span>
+                            
+                                <i class="fa-solid fa-chevron-right fa-sm fa-fw transition-all"></i>
+                            
+                        </div>
+                        
+
+                        
+                            <div class="flex-col items-start px-2 py-2 hidden" data-target="submenu-Links">
+                                
+                                    <div class="drawer-navbar-item text-base flex flex-col justify-center items-start hover:underline active:underline hover:underline-offset-1 rounded-3xl">
+                                        <a class=" text-third-text-color text-xl"
+                                           target="_blank" rel="noopener" href="https://www.nasa.gov/">NASA</a>
+                                    </div>
+                                
+                                    <div class="drawer-navbar-item text-base flex flex-col justify-center items-start hover:underline active:underline hover:underline-offset-1 rounded-3xl">
+                                        <a class=" text-third-text-color text-xl"
+                                           target="_blank" rel="noopener" href="https://www.spacex.com/">SPACEX</a>
+                                    </div>
+                                
+                                    <div class="drawer-navbar-item text-base flex flex-col justify-center items-start hover:underline active:underline hover:underline-offset-1 rounded-3xl">
+                                        <a class=" text-third-text-color text-xl"
+                                           target="_blank" rel="noopener" href="https://www.esa.int/">ESA</a>
+                                    </div>
+                                
+                                    <div class="drawer-navbar-item text-base flex flex-col justify-center items-start hover:underline active:underline hover:underline-offset-1 rounded-3xl">
+                                        <a class=" text-third-text-color text-xl"
+                                           target="_blank" rel="noopener" href="https://mashable.com/">MASHABLE</a>
+                                    </div>
+                                
+                                    <div class="drawer-navbar-item text-base flex flex-col justify-center items-start hover:underline active:underline hover:underline-offset-1 rounded-3xl">
+                                        <a class=" text-third-text-color text-xl"
+                                           target="_blank" rel="noopener" href="https://stellarium.org/">CLICK HERE TO TOUCH STARS</a>
+                                    </div>
+                                
+                            </div>
+                        
+                    </li>
+            
+
+            
+            
+                
+                    
+                    
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full active"
+                           href="/tags"
+                        >
+                            <span>Tags</span>
+                            <i class="fa-regular fa-tags fa-sm fa-fw"></i>
+                        </a>
+                    </li>
+                
+                    
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full active"
+                           href="/categories"
+                        >
+                            <span>Categories</span>
+                            <i class="fa-regular fa-folder fa-sm fa-fw"></i>
+                        </a>
+                    </li>
+                
+                    
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full active"
+                           href="/essays"
+                        >
+                            <span>Gossip</span>
+                            <i class="fa-brands fa-waze fa-sm fa-fw"></i>
+                        </a>
+                    </li>
+                
+            
+        </ul>
+
+        <div class="statistics flex justify-around my-2.5">
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/tags">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">12</div>
+        <div class="label text-third-text-color text-sm">Tags</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/categories">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">4</div>
+        <div class="label text-third-text-color text-sm">Categories</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/archives">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">16</div>
+        <div class="label text-third-text-color text-sm">Posts</div>
+    </a>
+</div>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="main-content-body">
+
+            
+
+            <div class="main-content">
+
+                
+                    <div class="post-page-container flex relative justify-between box-border w-full h-full">
+    <div class="article-content-container">
+
+        <div class="article-title relative w-full">
+            
+                
+                
+                <img src="https://www.toopic.cn/public/uploads/small/1708925738177170892573825.jpg" alt="抽象类&amp;接口&amp;内部类" class="w-full h-60 sm:h-72 md:h-80 object-cover sm:rounded-t-large dark:brightness-75"/>
+                
+                <div class="w-full flex items-center absolute bottom-0 justify-start">
+                    <h1 class="article-title-cover text-center mx-6 my-6 text-second-text-color bg-background-color-transparent px-4 py-3 text-3xl sm:text-4xl md:text-5xl font-bold backdrop-blur-lg rounded-xl border border-border-color ">抽象类&amp;接口&amp;内部类</h1>
+                </div>
+            
+            </div>
+
+        
+            <div class="article-header flex flex-row gap-2 items-center px-2 sm:px-6 md:px-8">
+                <div class="avatar w-[46px] h-[46px] flex-shrink-0 rounded-medium border border-border-color p-[1px]">
+                    <img src="/images/girl.jpg">
+                </div>
+                <div class="info flex flex-col justify-between">
+                    <div class="author flex items-center">
+                        <span class="name text-default-text-color text-lg font-semibold">Artemis</span>
+                        
+                            <span class="author-label ml-1.5 text-xs px-2 py-0.5 rounded-small text-third-text-color border border-shadow-color-1">Lv8</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa-regular fa-pen-fancy"></i>&nbsp;
+        <span class="desktop">2024-01-24 18:31:13</span>
+        <span class="mobile">2024-01-24 18:31:13</span>
+        <span class="hover-info">Created</span>
+    </span>
+    
+        <span class="article-date article-meta-item">
+            <i class="fa-regular fa-wrench"></i>&nbsp;
+            <span class="desktop">2024-03-17 18:58:44</span>
+            <span class="mobile">2024-03-17 18:58:44</span>
+            <span class="hover-info">Updated</span>
+        </span>
+    
+
+    
+        <span class="article-categories article-meta-item">
+            <i class="fa-regular fa-folders"></i>&nbsp;
+            <ul>
+                
+                
+                    
+                        
+                        <li>
+                            <a href="/categories/Java%E5%9F%BA%E7%A1%80/">Java基础</a>&nbsp;
+                        </li>
+                    
+                    
+                
+            </ul>
+        </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fa-regular fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/Object-Oriented/">Object Oriented</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/Class/">Class</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/Interface/">Interface</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+        <span class="article-wordcount article-meta-item">
+            <i class="fa-regular fa-typewriter"></i>&nbsp;<span>5.5k Words</span>
+        </span>
+    
+    
+        <span class="article-min2read article-meta-item">
+            <i class="fa-regular fa-clock"></i>&nbsp;<span>21 Mins</span>
+        </span>
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fa-regular fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        
+
+
+        <div class="article-content markdown-body px-2 sm:px-6 md:px-8 pb-8">
+            <h1 id="第一章-抽象类"><a href="#第一章-抽象类" class="headerlink" title="第一章 抽象类"></a>第一章 抽象类</h1><h2 id="1-1-概述"><a href="#1-1-概述" class="headerlink" title="1.1 概述"></a>1.1 概述</h2><h3 id="1-1-1-抽象类引入"><a href="#1-1-1-抽象类引入" class="headerlink" title="1.1.1 抽象类引入"></a>1.1.1 抽象类引入</h3><p>​	父类中的方法，被它的子类们重写，子类各自的实现都不尽相同。那么父类的方法声明和方法主体，只有声明还有意义，而方法主体则没有存在的意义了(因为子类对象会调用自己重写的方法)。换句话说，父类可能知道子类应该有哪个功能，但是功能具体怎么实现父类是不清楚的（由子类自己决定），父类只需要提供一个没有方法体的定义即可，具体实现交给子类自己去实现。<strong>我们把没有方法体的方法称为抽象方法。Java语法规定，包含抽象方法的类就是抽象类</strong>。</p>
+<ul>
+<li><strong>抽象方法</strong> ： 没有方法体的方法。</li>
+<li><strong>抽象类</strong>：包含抽象方法的类。</li>
+</ul>
+<h2 id="1-2-abstract使用格式"><a href="#1-2-abstract使用格式" class="headerlink" title="1.2 abstract使用格式"></a>1.2 abstract使用格式</h2><p><strong>abstract是抽象的意思，用于修饰方法方法和类，修饰的方法是抽象方法，修饰的类是抽象类。</strong></p>
+<h3 id="1-2-1-抽象方法"><a href="#1-2-1-抽象方法" class="headerlink" title="1.2.1 抽象方法"></a>1.2.1 抽象方法</h3><p>使用<code>abstract</code> 关键字修饰方法，该方法就成了抽象方法，抽象方法只包含一个方法名，而没有方法体。</p>
+<p>定义格式：</p>
+<div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">修饰符 <span class="keyword">abstract</span> 返回值类型 方法名 (参数列表)；</span><br></pre></td></tr></table></figure></div>
+
+<p>代码举例：</p>
+<div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title function_">run</span><span class="params">()</span>；</span><br></pre></td></tr></table></figure></div>
+
+<h3 id="1-2-2-抽象类"><a href="#1-2-2-抽象类" class="headerlink" title="1.2.2 抽象类"></a>1.2.2 抽象类</h3><p>如果一个类包含抽象方法，那么该类必须是抽象类。<strong>注意：抽象类不一定有抽象方法，但是有抽象方法的类必须定义成抽象类。</strong></p>
+<p>定义格式：</p>
+<div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">abstract</span> class 类名字 &#123; </span><br><span class="line">  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<p>代码举例：</p>
+<div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">class</span> <span class="title class_">Animal</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title function_">run</span><span class="params">()</span>；</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<h3 id="1-2-3-抽象类的使用"><a href="#1-2-3-抽象类的使用" class="headerlink" title="1.2.3 抽象类的使用"></a>1.2.3 抽象类的使用</h3><p><strong>要求</strong>：继承抽象类的子类<strong>必须重写父类所有的抽象方法</strong>。否则，该子类也必须声明为抽象类。</p>
+<p>代码举例：</p>
+<div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 父类,抽象类</span></span><br><span class="line"><span class="keyword">abstract</span> <span class="keyword">class</span> <span class="title class_">Employee</span> &#123;</span><br><span class="line">	<span class="keyword">private</span> String id;</span><br><span class="line">	<span class="keyword">private</span> String name;</span><br><span class="line">	<span class="keyword">private</span> <span class="type">double</span> salary;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">public</span> <span class="title function_">Employee</span><span class="params">()</span> &#123;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">public</span> <span class="title function_">Employee</span><span class="params">(String id, String name, <span class="type">double</span> salary)</span> &#123;</span><br><span class="line">		<span class="built_in">this</span>.id = id;</span><br><span class="line">		<span class="built_in">this</span>.name = name;</span><br><span class="line">		<span class="built_in">this</span>.salary = salary;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="comment">// 抽象方法</span></span><br><span class="line">	<span class="comment">// 抽象方法必须要放在抽象类中</span></span><br><span class="line">	<span class="keyword">abstract</span> <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">work</span><span class="params">()</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 定义一个子类继承抽象类</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Manager</span> <span class="keyword">extends</span> <span class="title class_">Employee</span> &#123;</span><br><span class="line">	<span class="keyword">public</span> <span class="title function_">Manager</span><span class="params">()</span> &#123;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">public</span> <span class="title function_">Manager</span><span class="params">(String id, String name, <span class="type">double</span> salary)</span> &#123;</span><br><span class="line">		<span class="built_in">super</span>(id, name, salary);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">// 2.重写父类的抽象方法</span></span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">work</span><span class="params">()</span> &#123;</span><br><span class="line">		System.out.println(<span class="string">&quot;管理其他人&quot;</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 定义一个子类继承抽象类</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Cook</span> <span class="keyword">extends</span> <span class="title class_">Employee</span> &#123;</span><br><span class="line">	<span class="keyword">public</span> <span class="title function_">Cook</span><span class="params">()</span> &#123;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">public</span> <span class="title function_">Cook</span><span class="params">(String id, String name, <span class="type">double</span> salary)</span> &#123;</span><br><span class="line">		<span class="built_in">super</span>(id, name, salary);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">work</span><span class="params">()</span> &#123;</span><br><span class="line">		System.out.println(<span class="string">&quot;厨师炒菜多加点盐...&quot;</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 测试类</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Demo10</span> &#123;</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">		<span class="comment">// 创建抽象类,抽象类不能创建对象</span></span><br><span class="line">		<span class="comment">// 假设抽象类让我们创建对象,里面的抽象方法没有方法体,无法执行.所以不让我们创建对象</span></span><br><span class="line"><span class="comment">//		Employee e = new Employee();</span></span><br><span class="line"><span class="comment">//		e.work();</span></span><br><span class="line">		</span><br><span class="line">		<span class="comment">// 3.创建子类</span></span><br><span class="line">		<span class="type">Manager</span> <span class="variable">m</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Manager</span>();</span><br><span class="line">		m.work();</span><br><span class="line">		</span><br><span class="line">		<span class="type">Cook</span> <span class="variable">c</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Cook</span>(<span class="string">&quot;ap002&quot;</span>, <span class="string">&quot;库克&quot;</span>, <span class="number">1</span>);</span><br><span class="line">		c.work();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<p>此时的方法重写，是子类对父类抽象方法的完成实现，我们将这种方法重写的操作，也叫做<strong>实现方法</strong>。</p>
+<h2 id="1-3-抽象类的特征"><a href="#1-3-抽象类的特征" class="headerlink" title="1.3 抽象类的特征"></a>1.3 抽象类的特征</h2><p>抽象类的特征总结起来可以说是 <strong>有得有失</strong></p>
+<p><strong>有得：抽象类得到了拥有抽象方法的能力。</strong></p>
+<p><strong>有失：抽象类失去了创建对象的能力。</strong></p>
+<p>其他成员（构造方法，实例方法，静态方法等）抽象类都是具备的。</p>
+<h2 id="1-4-抽象类的细节"><a href="#1-4-抽象类的细节" class="headerlink" title="1.4 抽象类的细节"></a>1.4 抽象类的细节</h2><p>不需要背，只要当idea报错之后，知道如何修改即可。</p>
+<p>关于抽象类的使用，以下为语法上要注意的细节，虽然条目较多，但若理解了抽象的本质，无需死记硬背。</p>
+<ol>
+<li><p>抽象类<strong>不能创建对象</strong>，如果创建，编译无法通过而报错。只能创建其非抽象子类的对象。</p>
+<blockquote>
+<p>理解：假设创建了抽象类的对象，调用抽象的方法，而抽象方法没有具体的方法体，没有意义。</p>
+</blockquote>
+</li>
+<li><p>抽象类中，可以有构造方法，是供子类创建对象时，初始化父类成员使用的。</p>
+<blockquote>
+<p>理解：子类的构造方法中，有默认的super()，需要访问父类构造方法。</p>
+</blockquote>
+</li>
+<li><p>抽象类中，不一定包含抽象方法，但是有抽象方法的类必定是抽象类。</p>
+<blockquote>
+<p>理解：未包含抽象方法的抽象类，目的就是不想让调用者创建该类对象，通常用于某些特殊的类结构设计。</p>
+</blockquote>
+</li>
+<li><p>抽象类的子类，必须重写抽象父类中<strong>所有的</strong>抽象方法，否则子类也必须定义成抽象类，编译无法通过而报错。 </p>
+<blockquote>
+<p>理解：假设不重写所有抽象方法，则类中可能包含抽象方法。那么创建对象后，调用抽象的方法，没有意义。</p>
+</blockquote>
+</li>
+<li><p>抽象类存在的意义是为了被子类继承。</p>
+<blockquote>
+<p>理解：抽象类中已经实现的是模板中确定的成员，抽象类不确定如何实现的定义成抽象方法，交给具体的子类去实现。</p>
+</blockquote>
+</li>
+</ol>
+<h2 id="1-5-抽象类存在的意义"><a href="#1-5-抽象类存在的意义" class="headerlink" title="1.5 抽象类存在的意义"></a>1.5 抽象类存在的意义</h2><p>​	抽象类存在的意义是为了被子类继承，否则抽象类将毫无意义。抽象类可以强制让子类，一定要按照规定的格式进行重写。</p>
+<h1 id="第二章-接口"><a href="#第二章-接口" class="headerlink" title="第二章 接口"></a>第二章 接口</h1><h2 id="2-1-概述"><a href="#2-1-概述" class="headerlink" title="2.1 概述"></a>2.1 概述</h2><p>我们已经学完了抽象类，抽象类中可以用抽象方法，也可以有普通方法，构造方法，成员变量等。那么什么是接口呢？<strong>接口是更加彻底的抽象，JDK7之前，包括JDK7，接口中全部是抽象方法。接口同样是不能创建对象的</strong>。</p>
+<h2 id="2-2-定义格式"><a href="#2-2-定义格式" class="headerlink" title="2.2 定义格式"></a>2.2 定义格式</h2><div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//接口的定义格式：</span></span><br><span class="line">interface 接口名称&#123;</span><br><span class="line">    <span class="comment">// 抽象方法</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 接口的声明：interface</span></span><br><span class="line"><span class="comment">// 接口名称：首字母大写，满足“驼峰模式”</span></span><br></pre></td></tr></table></figure></div>
+
+<h2 id="2-3-接口成分的特点"><a href="#2-3-接口成分的特点" class="headerlink" title="2.3 接口成分的特点"></a>2.3 接口成分的特点</h2><p>  在JDK7，包括JDK7之前，接口中的<strong>只有</strong>包含：抽象方法和常量</p>
+<h3 id="2-3-1-抽象方法"><a href="#2-3-1-抽象方法" class="headerlink" title="2.3.1.抽象方法"></a>2.3.1.抽象方法</h3><p>​       注意：接口中的抽象方法默认会自动加上public abstract修饰程序员无需自己手写！！<br>​       按照规范：以后接口中的抽象方法建议不要写上public abstract。因为没有必要啊，默认会加上。</p>
+<h3 id="2-3-2-常量"><a href="#2-3-2-常量" class="headerlink" title="2.3.2 常量"></a>2.3.2 常量</h3><p> 在接口中定义的成员变量默认会加上： public static final修饰。也就是说在接口中定义的成员变量实际上是一个常量。这里是使用public static final修饰后，变量值就不可被修改，并且是静态化的变量可以直接用接口名访问，所以也叫常量。常量必须要给初始值。常量命名规范建议字母全部大写，多个单词用下划线连接。</p>
+<h3 id="2-3-3-案例演示"><a href="#2-3-3-案例演示" class="headerlink" title="2.3.3 案例演示"></a>2.3.3 案例演示</h3><div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">InterF</span> &#123;</span><br><span class="line">    <span class="comment">// 抽象方法！</span></span><br><span class="line">    <span class="comment">//    public abstract void run();</span></span><br><span class="line">    <span class="keyword">void</span> <span class="title function_">run</span><span class="params">()</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//    public abstract String getName();</span></span><br><span class="line">    String <span class="title function_">getName</span><span class="params">()</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//    public abstract int add(int a , int b);</span></span><br><span class="line">    <span class="type">int</span> <span class="title function_">add</span><span class="params">(<span class="type">int</span> a , <span class="type">int</span> b)</span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 它的最终写法是：</span></span><br><span class="line">    <span class="comment">// public static final int AGE = 12 ;</span></span><br><span class="line">    <span class="type">int</span> <span class="variable">AGE</span>  <span class="operator">=</span> <span class="number">12</span>; <span class="comment">//常量</span></span><br><span class="line">    <span class="type">String</span> <span class="variable">SCHOOL_NAME</span> <span class="operator">=</span> <span class="string">&quot;黑马程序员&quot;</span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<h2 id="2-4-基本的实现"><a href="#2-4-基本的实现" class="headerlink" title="2.4 基本的实现"></a>2.4 基本的实现</h2><h3 id="2-4-1-实现接口的概述"><a href="#2-4-1-实现接口的概述" class="headerlink" title="2.4.1 实现接口的概述"></a>2.4.1 实现接口的概述</h3><p>类与接口的关系为实现关系，即<strong>类实现接口</strong>，该类可以称为接口的实现类，也可以称为接口的子类。实现的动作类似继承，格式相仿，只是关键字不同，实现使用 <code> implements</code>关键字。</p>
+<h3 id="2-4-2-实现接口的格式"><a href="#2-4-2-实现接口的格式" class="headerlink" title="2.4.2 实现接口的格式"></a>2.4.2 实现接口的格式</h3><div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**接口的实现：</span></span><br><span class="line"><span class="comment">    在Java中接口是被实现的，实现接口的类称为实现类。</span></span><br><span class="line"><span class="comment">    实现类的格式:*/</span></span><br><span class="line">class 类名 implements 接口<span class="number">1</span>,接口<span class="number">2</span>,接口<span class="number">3.</span>..&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<p>从上面格式可以看出，接口是可以被多实现的。大家可以想一想为什么呢？</p>
+<h3 id="2-4-3-类实现接口的要求和意义"><a href="#2-4-3-类实现接口的要求和意义" class="headerlink" title="2.4.3 类实现接口的要求和意义"></a>2.4.3 类实现接口的要求和意义</h3><ol>
+<li>必须重写实现的全部接口中所有抽象方法。</li>
+<li>如果一个类实现了接口，但是没有重写完全部接口的全部抽象方法，这个类也必须定义成抽象类。</li>
+<li><strong>意义：接口体现的是一种规范，接口对实现类是一种强制性的约束，要么全部完成接口申明的功能，要么自己也定义成抽象类。这正是一种强制性的规范。</strong></li>
+</ol>
+<h3 id="2-4-4-类与接口基本实现案例"><a href="#2-4-4-类与接口基本实现案例" class="headerlink" title="2.4.4  类与接口基本实现案例"></a>2.4.4  类与接口基本实现案例</h3><p>假如我们定义一个运动员的<strong>接口</strong>（规范），代码如下：</p>
+<div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">   接口：接口体现的是规范。</span></span><br><span class="line"><span class="comment"> * */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">SportMan</span> &#123;</span><br><span class="line">    <span class="keyword">void</span> <span class="title function_">run</span><span class="params">()</span>; <span class="comment">// 抽象方法，跑步。</span></span><br><span class="line">    <span class="keyword">void</span> <span class="title function_">law</span><span class="params">()</span>; <span class="comment">// 抽象方法，遵守法律。</span></span><br><span class="line">    String <span class="title function_">compittion</span><span class="params">(String project)</span>;  <span class="comment">// 抽象方法，比赛。</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<p>接下来定义一个乒乓球运动员类，实现接口，实现接口的<strong>实现类</strong>代码如下：</p>
+<div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.itheima._03接口的实现;</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 接口的实现：</span></span><br><span class="line"><span class="comment"> *    在Java中接口是被实现的，实现接口的类称为实现类。</span></span><br><span class="line"><span class="comment"> *    实现类的格式:</span></span><br><span class="line"><span class="comment"> *      class 类名 implements 接口1,接口2,接口3...&#123;</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> *      &#125;</span></span><br><span class="line"><span class="comment"> * */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">PingPongMan</span>  <span class="keyword">implements</span> <span class="title class_">SportMan</span> &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">run</span><span class="params">()</span> &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;乒乓球运动员稍微跑一下！！&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">law</span><span class="params">()</span> &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;乒乓球运动员守法！&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">compittion</span><span class="params">(String project)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;参加&quot;</span>+project+<span class="string">&quot;得金牌！&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<p><strong>测试代码</strong>：</p>
+<div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">TestMain</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        <span class="comment">// 创建实现类对象。</span></span><br><span class="line">        <span class="type">PingPongMan</span> <span class="variable">zjk</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">PingPongMan</span>();</span><br><span class="line">        zjk.run();</span><br><span class="line">        zjk.law();</span><br><span class="line">        System.out.println(zjk.compittion(<span class="string">&quot;全球乒乓球比赛&quot;</span>));</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<h3 id="2-4-5-类与接口的多实现案例"><a href="#2-4-5-类与接口的多实现案例" class="headerlink" title="2.4.5 类与接口的多实现案例"></a>2.4.5 类与接口的多实现案例</h3><p><strong>类与接口之间的关系是多实现的，一个类可以同时实现多个接口。</strong></p>
+<p>首先我们先定义两个接口，代码如下：</p>
+<div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/** 法律规范：接口*/</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">Law</span> &#123;</span><br><span class="line">    <span class="keyword">void</span> <span class="title function_">rule</span><span class="params">()</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/** 这一个运动员的规范：接口*/</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">SportMan</span> &#123;</span><br><span class="line">    <span class="keyword">void</span> <span class="title function_">run</span><span class="params">()</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure></div>
+
+<p>然后定义一个实现类：</p>
+<div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Java中接口是可以被多实现的：</span></span><br><span class="line"><span class="comment"> *    一个类可以实现多个接口: Law, SportMan</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">JumpMan</span> <span class="keyword">implements</span> <span class="title class_">Law</span> ,SportMan &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">rule</span><span class="params">()</span> &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;尊长守法&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">run</span><span class="params">()</span> &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;训练跑步！&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<p>从上面可以看出类与接口之间是可以多实现的，我们可以理解成实现多个规范，这是合理的。</p>
+<h2 id="2-5-接口与接口的多继承"><a href="#2-5-接口与接口的多继承" class="headerlink" title="2.5 接口与接口的多继承"></a>2.5 接口与接口的多继承</h2><p>Java中，接口与接口之间是可以多继承的：也就是一个接口可以同时继承多个接口。大家一定要注意：</p>
+<p><strong>类与接口是实现关系</strong></p>
+<p><strong>接口与接口是继承关系</strong></p>
+<p>接口继承接口就是把其他接口的抽象方法与本接口进行了合并。</p>
+<p>案例演示：</p>
+<div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">Abc</span> &#123;</span><br><span class="line">    <span class="keyword">void</span> <span class="title function_">go</span><span class="params">()</span>;</span><br><span class="line">    <span class="keyword">void</span> <span class="title function_">test</span><span class="params">()</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/** 法律规范：接口*/</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">Law</span> &#123;</span><br><span class="line">    <span class="keyword">void</span> <span class="title function_">rule</span><span class="params">()</span>;</span><br><span class="line">    <span class="keyword">void</span> <span class="title function_">test</span><span class="params">()</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"> *</span><br><span class="line"> *  总结：</span><br><span class="line"> *     接口与类之间是多实现的。</span><br><span class="line"> *     接口与接口之间是多继承的。</span><br><span class="line"> * */</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">SportMan</span> <span class="keyword">extends</span> <span class="title class_">Law</span> , Abc &#123;</span><br><span class="line">    <span class="keyword">void</span> <span class="title function_">run</span><span class="params">()</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<h2 id="2-6扩展：接口的细节"><a href="#2-6扩展：接口的细节" class="headerlink" title="2.6扩展：接口的细节"></a>2.6扩展：接口的细节</h2><p>不需要背，只要当idea报错之后，知道如何修改即可。</p>
+<p>关于接口的使用，以下为语法上要注意的细节，虽然条目较多，但若理解了抽象的本质，无需死记硬背。</p>
+<ol>
+<li>当两个接口中存在相同抽象方法的时候，该怎么办？</li>
+</ol>
+<blockquote>
+<p>只要重写一次即可。此时重写的方法，既表示重写1接口的，也表示重写2接口的。</p>
+</blockquote>
+<ol start="2">
+<li>实现类能不能继承A类的时候，同时实现其他接口呢？</li>
+</ol>
+<blockquote>
+<p>继承的父类，就好比是亲爸爸一样<br>实现的接口，就好比是干爹一样<br>可以继承一个类的同时，再实现多个接口，只不过，要把接口里面所有的抽象方法，全部实现。</p>
+</blockquote>
+<ol start="3">
+<li>实现类能不能继承一个抽象类的时候，同时实现其他接口呢？</li>
+</ol>
+<blockquote>
+<p>实现类可以继承一个抽象类的同时，再实现其他多个接口，只不过要把里面所有的抽象方法全部重写。</p>
+</blockquote>
+<ol start="4">
+<li>实现类Zi，实现了一个接口，还继承了一个Fu类。假设在接口中有一个方法，父类中也有一个相同的方法。子类如何操作呢？</li>
+</ol>
+<blockquote>
+<p>处理办法一：如果父类中的方法体，能满足当前业务的需求，在子类中可以不用重写。<br>处理办法二：如果父类中的方法体，不能满足当前业务的需求，需要在子类中重写。</p>
+</blockquote>
+<ol start="5">
+<li>如果一个接口中，有10个抽象方法，但是我在实现类中，只需要用其中一个，该怎么办?</li>
+</ol>
+<blockquote>
+<p>可以在接口跟实现类中间，新建一个中间类（适配器类）<br>让这个适配器类去实现接口，对接口里面的所有的方法做空重写。<br>让子类继承这个适配器类，想要用到哪个方法，就重写哪个方法。<br>因为中间类没有什么实际的意义，所以一般会把中间类定义为抽象的，不让外界创建对象</p>
+</blockquote>
+<h1 id="第三章-内部类"><a href="#第三章-内部类" class="headerlink" title="第三章 内部类"></a>第三章 内部类</h1><h2 id="3-1-概述"><a href="#3-1-概述" class="headerlink" title="3.1 概述"></a>3.1 概述</h2><h3 id="3-1-1-什么是内部类"><a href="#3-1-1-什么是内部类" class="headerlink" title="3.1.1 什么是内部类"></a>3.1.1 什么是内部类</h3><p>将一个类A定义在另一个类B里面，里面的那个类A就称为<strong>内部类</strong>，B则称为<strong>外部类</strong>。可以把内部类理解成寄生，外部类理解成宿主。</p>
+<h3 id="3-1-2-什么时候使用内部类"><a href="#3-1-2-什么时候使用内部类" class="headerlink" title="3.1.2 什么时候使用内部类"></a>3.1.2 什么时候使用内部类</h3><p>一个事物内部还有一个独立的事物，内部的事物脱离外部的事物无法独立使用</p>
+<ol>
+<li>人里面有一颗心脏。</li>
+<li>汽车内部有一个发动机。</li>
+<li>为了实现更好的封装性。</li>
+</ol>
+<h2 id="3-2-内部类的分类"><a href="#3-2-内部类的分类" class="headerlink" title="3.2 内部类的分类"></a>3.2 内部类的分类</h2><p>按定义的位置来分</p>
+<ol>
+<li><strong>成员内部内</strong>，类定义在了成员位置 (类中方法外称为成员位置，无static修饰的内部类)</li>
+<li><strong>静态内部类</strong>，类定义在了成员位置 (类中方法外称为成员位置，有static修饰的内部类)</li>
+<li><strong>局部内部类</strong>，类定义在方法内</li>
+<li><strong>匿名内部类</strong>，没有名字的内部类，可以在方法中，也可以在类中方法外。</li>
+</ol>
+<h2 id="3-3-成员内部类"><a href="#3-3-成员内部类" class="headerlink" title="3.3 成员内部类"></a>3.3 成员内部类</h2><p><strong>成员内部类特点</strong>：</p>
+<ul>
+<li>无static修饰的内部类，属于外部类对象的。</li>
+<li>宿主：外部类对象。</li>
+</ul>
+<p><strong>内部类的使用格式</strong>：</p>
+<div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">外部类.内部类。 <span class="comment">// 访问内部类的类型都是用 外部类.内部类</span></span><br></pre></td></tr></table></figure></div>
+
+<p><strong>获取成员内部类对象的两种方式</strong>：</p>
+<p>方式一：外部直接创建成员内部类的对象</p>
+<div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">外部类.内部类 变量 = <span class="keyword">new</span> 外部类（）.new 内部类（）;</span><br></pre></td></tr></table></figure></div>
+
+<p>方式二：在外部类中定义一个方法提供内部类的对象</p>
+<p><strong>案例演示</strong></p>
+<div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">方式一：</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Test</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        <span class="comment">//  宿主：外部类对象。</span></span><br><span class="line">       <span class="comment">// Outer out = new Outer();</span></span><br><span class="line">        <span class="comment">// 创建内部类对象。</span></span><br><span class="line">        Outer.<span class="type">Inner</span> <span class="variable">oi</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Outer</span>().<span class="keyword">new</span> <span class="title class_">Inner</span>();</span><br><span class="line">        oi.method();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Outer</span> &#123;</span><br><span class="line">    <span class="comment">// 成员内部类，属于外部类对象的。</span></span><br><span class="line">    <span class="comment">// 拓展：成员内部类不能定义静态成员。</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Inner</span>&#123;</span><br><span class="line">        <span class="comment">// 这里面的东西与类是完全一样的。</span></span><br><span class="line">        <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">method</span><span class="params">()</span>&#123;</span><br><span class="line">            System.out.println(<span class="string">&quot;内部类中的方法被调用了&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">方式二：</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Outer</span> &#123;</span><br><span class="line">    String name;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">class</span> <span class="title class_">Inner</span>&#123;</span><br><span class="line">        <span class="keyword">static</span> <span class="type">int</span> <span class="variable">a</span> <span class="operator">=</span> <span class="number">10</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">public</span> Inner <span class="title function_">getInstance</span><span class="params">()</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Inner</span>();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Test</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        <span class="type">Outer</span> <span class="variable">o</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Outer</span>();</span><br><span class="line">        System.out.println(o.getInstance());</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<h2 id="3-4-成员内部类的细节"><a href="#3-4-成员内部类的细节" class="headerlink" title="3.4 成员内部类的细节"></a>3.4 成员内部类的细节</h2><p>编写成员内部类的注意点：</p>
+<ol>
+<li>成员内部类可以被一些修饰符所修饰，比如： private，默认，protected，public，static等</li>
+<li>在成员内部类里面，JDK16之前不能定义静态变量，JDK16开始才可以定义静态变量。</li>
+<li>创建内部类对象时，对象中有一个隐含的Outer.this记录外部类对象的地址值。（请参见3.6节的内存图）</li>
+</ol>
+<p>详解：</p>
+<p>​	内部类被private修饰，外界无法直接获取内部类的对象，只能通过3.3节中的方式二获取内部类的对象</p>
+<p>​	被其他权限修饰符修饰的内部类一般用3.3节中的方式一直接获取内部类的对象</p>
+<p>​	内部类被static修饰是成员内部类中的特殊情况，叫做静态内部类下面单独学习。</p>
+<p>​	内部类如果想要访问外部类的成员变量，外部类的变量必须用final修饰，JDK8以前必须手动写final，JDK8之后不需要手动写，JDK默认加上。</p>
+<h2 id="3-5-成员内部类面试题"><a href="#3-5-成员内部类面试题" class="headerlink" title="3.5 成员内部类面试题"></a>3.5 成员内部类面试题</h2><p>请在?地方向上相应代码,以达到输出的内容</p>
+<p>注意：内部类访问外部类对象的格式是：<strong>外部类名.this</strong></p>
+<div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Test</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        Outer.<span class="type">inner</span> <span class="variable">oi</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Outer</span>().<span class="keyword">new</span> <span class="title class_">inner</span>();</span><br><span class="line">        oi.method();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Outer</span> &#123;	<span class="comment">// 外部类</span></span><br><span class="line">    <span class="keyword">private</span> <span class="type">int</span> <span class="variable">a</span> <span class="operator">=</span> <span class="number">30</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 在成员位置定义一个类</span></span><br><span class="line">    <span class="keyword">class</span> <span class="title class_">inner</span> &#123;</span><br><span class="line">        <span class="keyword">private</span> <span class="type">int</span> <span class="variable">a</span> <span class="operator">=</span> <span class="number">20</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">method</span><span class="params">()</span> &#123;</span><br><span class="line">            <span class="type">int</span> <span class="variable">a</span> <span class="operator">=</span> <span class="number">10</span>;</span><br><span class="line">            System.out.println(???);	<span class="comment">// 10   答案：a</span></span><br><span class="line">            System.out.println(???);	<span class="comment">// 20	答案：this.a</span></span><br><span class="line">            System.out.println(???);	<span class="comment">// 30	答案：Outer.this.a</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<h2 id="3-6-成员内部类内存图"><a href="#3-6-成员内部类内存图" class="headerlink" title="3.6 成员内部类内存图"></a>3.6 成员内部类内存图</h2><p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/JavaNotes/%E7%B1%BB/img/%E5%86%85%E9%83%A8%E7%B1%BB%E5%86%85%E5%AD%98%E5%9B%BE.png"
+                      alt="内部类内存图"
+                ></p>
+<h2 id="3-7-静态内部类"><a href="#3-7-静态内部类" class="headerlink" title="3.7 静态内部类"></a>3.7 静态内部类</h2><p><strong>静态内部类特点</strong>：</p>
+<ul>
+<li>静态内部类是一种特殊的成员内部类。</li>
+</ul>
+<ul>
+<li>有static修饰，属于外部类本身的。</li>
+<li>总结：静态内部类与其他类的用法完全一样。只是访问的时候需要加上外部类.内部类。</li>
+<li><strong>拓展1</strong>:静态内部类可以直接访问外部类的静态成员。</li>
+<li><strong>拓展2</strong>:静态内部类不可以直接访问外部类的非静态成员，如果要访问需要创建外部类的对象。</li>
+<li><strong>拓展3</strong>:静态内部类中没有银行的Outer.this。</li>
+</ul>
+<p><strong>内部类的使用格式</strong>：</p>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">外部类.内部类。</span><br></pre></td></tr></table></figure></div>
+
+<p><strong>静态内部类对象的创建格式</strong>：</p>
+<div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">外部类.内部类  变量 = <span class="keyword">new</span>  外部类.内部类构造器;</span><br></pre></td></tr></table></figure></div>
+
+<p><strong>调用方法的格式：</strong></p>
+<ul>
+<li>调用非静态方法的格式：先创建对象，用对象调用</li>
+<li>调用静态方法的格式：外部类名.内部类名.方法名();</li>
+</ul>
+<p><strong>案例演示</strong>：</p>
+<div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 外部类：Outer01</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Outer01</span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span>  <span class="type">String</span> <span class="variable">sc_name</span> <span class="operator">=</span> <span class="string">&quot;黑马程序&quot;</span>;</span><br><span class="line">    <span class="comment">// 内部类: Inner01</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">class</span> <span class="title class_">Inner01</span>&#123;</span><br><span class="line">        <span class="comment">// 这里面的东西与类是完全一样的。</span></span><br><span class="line">        <span class="keyword">private</span> String name;</span><br><span class="line">        <span class="keyword">public</span> <span class="title function_">Inner01</span><span class="params">(String name)</span> &#123;</span><br><span class="line">            <span class="built_in">this</span>.name = name;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">showName</span><span class="params">()</span>&#123;</span><br><span class="line">            System.out.println(<span class="built_in">this</span>.name);</span><br><span class="line">            <span class="comment">// 拓展:静态内部类可以直接访问外部类的静态成员。</span></span><br><span class="line">            System.out.println(sc_name);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">InnerClassDemo01</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        <span class="comment">// 创建静态内部类对象。</span></span><br><span class="line">        <span class="comment">// 外部类.内部类  变量 = new  外部类.内部类构造器;</span></span><br><span class="line">        Outer01.<span class="type">Inner01</span> <span class="variable">in</span>  <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Outer01</span>.Inner01(<span class="string">&quot;张三&quot;</span>);</span><br><span class="line">        in.showName();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<h2 id="3-8-局部内部类"><a href="#3-8-局部内部类" class="headerlink" title="3.8 局部内部类"></a>3.8 局部内部类</h2><ul>
+<li><strong>局部内部类</strong> ：定义在<strong>方法中</strong>的类。</li>
+</ul>
+<p>定义格式:</p>
+<div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">class 外部类名 &#123;</span><br><span class="line">	数据类型 变量名;</span><br><span class="line">	</span><br><span class="line">	修饰符 返回值类型 方法名(参数列表) &#123;</span><br><span class="line">		<span class="comment">// …</span></span><br><span class="line">		class 内部类 &#123;</span><br><span class="line">			<span class="comment">// 成员变量</span></span><br><span class="line">			<span class="comment">// 成员方法</span></span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<h2 id="3-9-匿名内部类【重点】"><a href="#3-9-匿名内部类【重点】" class="headerlink" title="3.9 匿名内部类【重点】"></a>3.9 匿名内部类【重点】</h2><h3 id="3-9-1-概述"><a href="#3-9-1-概述" class="headerlink" title="3.9.1 概述"></a>3.9.1 概述</h3><p><strong>匿名内部类</strong> ：是内部类的简化写法。他是一个隐含了名字的内部类。开发中，最常用到的内部类就是匿名内部类了。</p>
+<h3 id="3-9-2-格式"><a href="#3-9-2-格式" class="headerlink" title="3.9.2 格式"></a>3.9.2 格式</h3><div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">new</span> 类名或者接口名() &#123;</span><br><span class="line">     重写方法;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></div>
+
+<p>包含了：</p>
+<ul>
+<li><p>继承或者实现关系</p>
+</li>
+<li><p>方法重写</p>
+</li>
+<li><p>创建对象</p>
+</li>
+</ul>
+<p>所以从语法上来讲，这个整体其实是匿名内部类对象</p>
+<h3 id="3-9-2-什么时候用到匿名内部类"><a href="#3-9-2-什么时候用到匿名内部类" class="headerlink" title="3.9.2 什么时候用到匿名内部类"></a>3.9.2 什么时候用到匿名内部类</h3><p><strong>实际上，如果我们希望定义一个只要使用一次的类，就可考虑使用匿名内部类。匿名内部类的本质作用</strong></p>
+<p><strong>是为了简化代码</strong>。 </p>
+<p>之前我们使用接口时，似乎得做如下几步操作：</p>
+<ol>
+<li>定义子类</li>
+<li>重写接口中的方法</li>
+<li>创建子类对象</li>
+<li>调用重写后的方法</li>
+</ol>
+<div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">interface</span> <span class="title class_">Swim</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title function_">swimming</span><span class="params">()</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 1. 定义接口的实现类</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Student</span> <span class="keyword">implements</span> <span class="title class_">Swim</span> &#123;</span><br><span class="line">    <span class="comment">// 2. 重写抽象方法</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">swimming</span><span class="params">()</span> &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;狗刨式...&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Test</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        <span class="comment">// 3. 创建实现类对象</span></span><br><span class="line">        <span class="type">Student</span> <span class="variable">s</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Student</span>();</span><br><span class="line">        <span class="comment">// 4. 调用方法</span></span><br><span class="line">        s.swimming();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<p>我们的目的，最终只是为了调用方法，那么能不能简化一下，把以上四步合成一步呢？匿名内部类就是做这样的快捷方式。</p>
+<h3 id="3-9-3-匿名内部类前提和格式"><a href="#3-9-3-匿名内部类前提和格式" class="headerlink" title="3.9.3 匿名内部类前提和格式"></a>3.9.3 匿名内部类前提和格式</h3><p>匿名内部类必须<strong>继承一个父类</strong>或者<strong>实现一个父接口</strong>。</p>
+<p><strong>匿名内部类格式</strong></p>
+<div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">new</span> 父类名或者接口名()&#123;</span><br><span class="line">    <span class="comment">// 方法重写</span></span><br><span class="line">    <span class="meta">@Override</span> </span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">method</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="comment">// 执行语句</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></div>
+
+<h3 id="3-9-4-使用方式"><a href="#3-9-4-使用方式" class="headerlink" title="3.9.4 使用方式"></a>3.9.4 使用方式</h3><p>以接口为例，匿名内部类的使用，代码如下：</p>
+<div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">interface</span> <span class="title class_">Swim</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title function_">swimming</span><span class="params">()</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Demo07</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        <span class="comment">// 使用匿名内部类</span></span><br><span class="line">		<span class="keyword">new</span> <span class="title class_">Swim</span>() &#123;</span><br><span class="line">			<span class="meta">@Override</span></span><br><span class="line">			<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">swimming</span><span class="params">()</span> &#123;</span><br><span class="line">				System.out.println(<span class="string">&quot;自由泳...&quot;</span>);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;.swimming();</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 接口 变量 = new 实现类(); // 多态,走子类的重写方法</span></span><br><span class="line">        <span class="type">Swim</span> <span class="variable">s2</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Swim</span>() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">swimming</span><span class="params">()</span> &#123;</span><br><span class="line">                System.out.println(<span class="string">&quot;蛙泳...&quot;</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;;</span><br><span class="line"></span><br><span class="line">        s2.swimming();</span><br><span class="line">        s2.swimming();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<h3 id="3-9-5-匿名内部类的特点"><a href="#3-9-5-匿名内部类的特点" class="headerlink" title="3.9.5 匿名内部类的特点"></a>3.9.5 匿名内部类的特点</h3><ol>
+<li>定义一个没有名字的内部类</li>
+<li>这个类实现了父类，或者父类接口</li>
+<li>匿名内部类会创建这个没有名字的类的对象</li>
+</ol>
+<h3 id="3-9-6-匿名内部类的使用场景"><a href="#3-9-6-匿名内部类的使用场景" class="headerlink" title="3.9.6 匿名内部类的使用场景"></a>3.9.6 匿名内部类的使用场景</h3><p>通常在方法的形式参数是接口或者抽象类时，也可以将匿名内部类作为参数传递。代码如下：</p>
+<div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">interface</span> <span class="title class_">Swim</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title function_">swimming</span><span class="params">()</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Demo07</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        <span class="comment">// 普通方式传入对象</span></span><br><span class="line">        <span class="comment">// 创建实现类对象</span></span><br><span class="line">        <span class="type">Student</span> <span class="variable">s</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Student</span>();</span><br><span class="line">        </span><br><span class="line">        goSwimming(s);</span><br><span class="line">        <span class="comment">// 匿名内部类使用场景:作为方法参数传递</span></span><br><span class="line">        <span class="type">Swim</span> <span class="variable">s3</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Swim</span>() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">swimming</span><span class="params">()</span> &#123;</span><br><span class="line">                System.out.println(<span class="string">&quot;蝶泳...&quot;</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;;</span><br><span class="line">        <span class="comment">// 传入匿名内部类</span></span><br><span class="line">        goSwimming(s3);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 完美方案: 一步到位</span></span><br><span class="line">        goSwimming(<span class="keyword">new</span> <span class="title class_">Swim</span>() &#123;</span><br><span class="line">            <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">swimming</span><span class="params">()</span> &#123;</span><br><span class="line">                System.out.println(<span class="string">&quot;大学生, 蛙泳...&quot;</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">        goSwimming(<span class="keyword">new</span> <span class="title class_">Swim</span>() &#123;</span><br><span class="line">            <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">swimming</span><span class="params">()</span> &#123;</span><br><span class="line">                System.out.println(<span class="string">&quot;小学生, 自由泳...&quot;</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 定义一个方法,模拟请一些人去游泳</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">goSwimming</span><span class="params">(Swim s)</span> &#123;</span><br><span class="line">        s.swimming();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+
+        </div>
+
+        
+
+        
+            <ul class="post-tags-box text-lg mt-1.5 flex-wrap justify-center flex md:hidden">
+                
+                    <li class="tag-item mx-0.5">
+                        <a href="/tags/Object-Oriented/">#Object Oriented</a>&nbsp;
+                    </li>
+                
+                    <li class="tag-item mx-0.5">
+                        <a href="/tags/Class/">#Class</a>&nbsp;
+                    </li>
+                
+                    <li class="tag-item mx-0.5">
+                        <a href="/tags/Interface/">#Interface</a>&nbsp;
+                    </li>
+                
+            </ul>
+        
+
+        
+
+        
+            <div class="article-nav my-8 flex justify-between items-center px-2 sm:px-6 md:px-8">
+                
+                    <div class="article-prev border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
+                        <a class="prev"
+                        rel="prev"
+                        href="/2024/01/29/List%E9%9B%86%E5%90%88/"
+                        >
+                            <span class="left arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">Collection集合</span>
+                                <span class="post-nav-item">Prev posts</span>
+                            </span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="article-next border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
+                        <a class="next"
+                        rel="next"
+                        href="/2024/01/20/gossip1/"
+                        >
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">无标题</span>
+                                <span class="post-nav-item">Next posts</span>
+                            </span>
+                            <span class="right arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+
+        
+            <div class="comment-container px-2 sm:px-6 md:px-8 pb-8">
+                <div class="comments-container mt-10 w-full ">
+    <div id="comment-anchor" class="w-full h-2.5"></div>
+    <div class="comment-area-title w-full my-1.5 md:my-2.5 text-xl md:text-3xl font-bold">
+        Comments
+    </div>
+    
+
+        
+            
+    <div id="waline"></div>
+    <script type="module" data-swup-reload-script>
+      import { init } from '/js/libs/waline.mjs';
+
+      function loadWaline() {
+        init({
+          el: '#waline',
+          serverURL: 'https://example.example.com',
+          lang: 'zh-CN',
+          dark: 'body[class~="dark-mode"]',
+          requiredMeta: ['nick', 'mail'],
+          emoji: [],
+          recaptchaV3Key: "wasd",
+          
+        });
+      }
+
+      if (typeof swup !== 'undefined') {
+        loadWaline();
+      } else {
+        window.addEventListener('DOMContentLoaded', loadWaline);
+      }
+    </script>
+
+
+
+        
+    
+</div>
+
+            </div>
+        
+    </div>
+
+    
+        <div class="toc-content-container">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <div class="toc-title">On this page</div>
+        <div class="page-title">抽象类&amp;接口&amp;内部类</div>
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AC%AC%E4%B8%80%E7%AB%A0-%E6%8A%BD%E8%B1%A1%E7%B1%BB"><span class="nav-text">第一章 抽象类</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-1-%E6%A6%82%E8%BF%B0"><span class="nav-text">1.1 概述</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-1-%E6%8A%BD%E8%B1%A1%E7%B1%BB%E5%BC%95%E5%85%A5"><span class="nav-text">1.1.1 抽象类引入</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-2-abstract%E4%BD%BF%E7%94%A8%E6%A0%BC%E5%BC%8F"><span class="nav-text">1.2 abstract使用格式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-1-%E6%8A%BD%E8%B1%A1%E6%96%B9%E6%B3%95"><span class="nav-text">1.2.1 抽象方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-2-%E6%8A%BD%E8%B1%A1%E7%B1%BB"><span class="nav-text">1.2.2 抽象类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-3-%E6%8A%BD%E8%B1%A1%E7%B1%BB%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="nav-text">1.2.3 抽象类的使用</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-3-%E6%8A%BD%E8%B1%A1%E7%B1%BB%E7%9A%84%E7%89%B9%E5%BE%81"><span class="nav-text">1.3 抽象类的特征</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-4-%E6%8A%BD%E8%B1%A1%E7%B1%BB%E7%9A%84%E7%BB%86%E8%8A%82"><span class="nav-text">1.4 抽象类的细节</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-5-%E6%8A%BD%E8%B1%A1%E7%B1%BB%E5%AD%98%E5%9C%A8%E7%9A%84%E6%84%8F%E4%B9%89"><span class="nav-text">1.5 抽象类存在的意义</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AC%AC%E4%BA%8C%E7%AB%A0-%E6%8E%A5%E5%8F%A3"><span class="nav-text">第二章 接口</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-%E6%A6%82%E8%BF%B0"><span class="nav-text">2.1 概述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2-%E5%AE%9A%E4%B9%89%E6%A0%BC%E5%BC%8F"><span class="nav-text">2.2 定义格式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-3-%E6%8E%A5%E5%8F%A3%E6%88%90%E5%88%86%E7%9A%84%E7%89%B9%E7%82%B9"><span class="nav-text">2.3 接口成分的特点</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-1-%E6%8A%BD%E8%B1%A1%E6%96%B9%E6%B3%95"><span class="nav-text">2.3.1.抽象方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-2-%E5%B8%B8%E9%87%8F"><span class="nav-text">2.3.2 常量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-3-%E6%A1%88%E4%BE%8B%E6%BC%94%E7%A4%BA"><span class="nav-text">2.3.3 案例演示</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-4-%E5%9F%BA%E6%9C%AC%E7%9A%84%E5%AE%9E%E7%8E%B0"><span class="nav-text">2.4 基本的实现</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-1-%E5%AE%9E%E7%8E%B0%E6%8E%A5%E5%8F%A3%E7%9A%84%E6%A6%82%E8%BF%B0"><span class="nav-text">2.4.1 实现接口的概述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-2-%E5%AE%9E%E7%8E%B0%E6%8E%A5%E5%8F%A3%E7%9A%84%E6%A0%BC%E5%BC%8F"><span class="nav-text">2.4.2 实现接口的格式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-3-%E7%B1%BB%E5%AE%9E%E7%8E%B0%E6%8E%A5%E5%8F%A3%E7%9A%84%E8%A6%81%E6%B1%82%E5%92%8C%E6%84%8F%E4%B9%89"><span class="nav-text">2.4.3 类实现接口的要求和意义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-4-%E7%B1%BB%E4%B8%8E%E6%8E%A5%E5%8F%A3%E5%9F%BA%E6%9C%AC%E5%AE%9E%E7%8E%B0%E6%A1%88%E4%BE%8B"><span class="nav-text">2.4.4  类与接口基本实现案例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-5-%E7%B1%BB%E4%B8%8E%E6%8E%A5%E5%8F%A3%E7%9A%84%E5%A4%9A%E5%AE%9E%E7%8E%B0%E6%A1%88%E4%BE%8B"><span class="nav-text">2.4.5 类与接口的多实现案例</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-5-%E6%8E%A5%E5%8F%A3%E4%B8%8E%E6%8E%A5%E5%8F%A3%E7%9A%84%E5%A4%9A%E7%BB%A7%E6%89%BF"><span class="nav-text">2.5 接口与接口的多继承</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-6%E6%89%A9%E5%B1%95%EF%BC%9A%E6%8E%A5%E5%8F%A3%E7%9A%84%E7%BB%86%E8%8A%82"><span class="nav-text">2.6扩展：接口的细节</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AC%AC%E4%B8%89%E7%AB%A0-%E5%86%85%E9%83%A8%E7%B1%BB"><span class="nav-text">第三章 内部类</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#3-1-%E6%A6%82%E8%BF%B0"><span class="nav-text">3.1 概述</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-1-%E4%BB%80%E4%B9%88%E6%98%AF%E5%86%85%E9%83%A8%E7%B1%BB"><span class="nav-text">3.1.1 什么是内部类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-2-%E4%BB%80%E4%B9%88%E6%97%B6%E5%80%99%E4%BD%BF%E7%94%A8%E5%86%85%E9%83%A8%E7%B1%BB"><span class="nav-text">3.1.2 什么时候使用内部类</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-2-%E5%86%85%E9%83%A8%E7%B1%BB%E7%9A%84%E5%88%86%E7%B1%BB"><span class="nav-text">3.2 内部类的分类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-3-%E6%88%90%E5%91%98%E5%86%85%E9%83%A8%E7%B1%BB"><span class="nav-text">3.3 成员内部类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-4-%E6%88%90%E5%91%98%E5%86%85%E9%83%A8%E7%B1%BB%E7%9A%84%E7%BB%86%E8%8A%82"><span class="nav-text">3.4 成员内部类的细节</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-5-%E6%88%90%E5%91%98%E5%86%85%E9%83%A8%E7%B1%BB%E9%9D%A2%E8%AF%95%E9%A2%98"><span class="nav-text">3.5 成员内部类面试题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-6-%E6%88%90%E5%91%98%E5%86%85%E9%83%A8%E7%B1%BB%E5%86%85%E5%AD%98%E5%9B%BE"><span class="nav-text">3.6 成员内部类内存图</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-7-%E9%9D%99%E6%80%81%E5%86%85%E9%83%A8%E7%B1%BB"><span class="nav-text">3.7 静态内部类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-8-%E5%B1%80%E9%83%A8%E5%86%85%E9%83%A8%E7%B1%BB"><span class="nav-text">3.8 局部内部类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-9-%E5%8C%BF%E5%90%8D%E5%86%85%E9%83%A8%E7%B1%BB%E3%80%90%E9%87%8D%E7%82%B9%E3%80%91"><span class="nav-text">3.9 匿名内部类【重点】</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-9-1-%E6%A6%82%E8%BF%B0"><span class="nav-text">3.9.1 概述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-9-2-%E6%A0%BC%E5%BC%8F"><span class="nav-text">3.9.2 格式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-9-2-%E4%BB%80%E4%B9%88%E6%97%B6%E5%80%99%E7%94%A8%E5%88%B0%E5%8C%BF%E5%90%8D%E5%86%85%E9%83%A8%E7%B1%BB"><span class="nav-text">3.9.2 什么时候用到匿名内部类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-9-3-%E5%8C%BF%E5%90%8D%E5%86%85%E9%83%A8%E7%B1%BB%E5%89%8D%E6%8F%90%E5%92%8C%E6%A0%BC%E5%BC%8F"><span class="nav-text">3.9.3 匿名内部类前提和格式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-9-4-%E4%BD%BF%E7%94%A8%E6%96%B9%E5%BC%8F"><span class="nav-text">3.9.4 使用方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-9-5-%E5%8C%BF%E5%90%8D%E5%86%85%E9%83%A8%E7%B1%BB%E7%9A%84%E7%89%B9%E7%82%B9"><span class="nav-text">3.9.5 匿名内部类的特点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-9-6-%E5%8C%BF%E5%90%8D%E5%86%85%E9%83%A8%E7%B1%BB%E7%9A%84%E4%BD%BF%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="nav-text">3.9.6 匿名内部类的使用场景</span></a></li></ol></li></ol></li></ol>
+
+    </div>
+</div>
+        </div>
+    
+</div>
+
+
+
+                
+
+            </div>
+
+            
+
+        </div>
+
+        <div class="main-content-footer">
+            <footer class="footer mt-5 py-5 h-auto text-base text-third-text-color relative border-t-2 border-t-border-color">
+    <div class="info-container py-3 text-center">
+        
+            <div class="customize-info my-1">无论历史是好还是坏，人要往前看~ ✨</div>
+        
+        <div class="text-center">
+            &copy;
+            
+              <span>2023</span>
+              -
+            
+            2024&nbsp;&nbsp;<i class="fa-solid fa-heart fa-beat" style="--fa-animation-duration: 0.5s; color: #f54545"></i>&nbsp;&nbsp;<a href="/">Artemis</a>
+            
+                
+                <p class="post-count space-x-0.5">
+                    <span>
+                        16 posts in total
+                    </span>
+                    
+                        <span>
+                            49.2k words in total
+                        </span>
+                    
+                </p>
+            
+        </div>
+        
+            <script data-swup-reload-script src="https://cn.vercount.one/js"></script>
+            <div class="relative text-center lg:absolute lg:right-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-right">
+                
+                    <span id="busuanzi_container_site_uv" class="lg:!block">
+                        <span class="text-sm">VISITOR COUNT</span>
+                        <span id="busuanzi_value_site_uv"></span>
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv" class="lg:!block">
+                        <span class="text-sm">TOTAL PAGE VIEWS</span>
+                        <span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <div class="relative text-center lg:absolute lg:left-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-left">
+            <span class="lg:block text-sm"></span>
+            <span class="text-sm lg:block">&nbsp;<a class="text-base" target="_blank" href="">Redefine v2.6.1</a></span>
+        </div>
+        
+        
+            <div>
+                Blog up for <span class="odometer" id="runtime_days" ></span> days <span class="odometer" id="runtime_hours"></span> hrs <span class="odometer" id="runtime_minutes"></span> Min <span class="odometer" id="runtime_seconds"></span> Sec
+            </div>
+        
+        
+            <script data-swup-reload-script>
+                try {
+                    function odometer_init() {
+                    const elements = document.querySelectorAll('.odometer');
+                    elements.forEach(el => {
+                        new Odometer({
+                            el,
+                            format: '( ddd).dd',
+                            duration: 200
+                        });
+                    });
+                    }
+                    odometer_init();
+                } catch (error) {}
+            </script>
+        
+        
+            
+                
+        
+                
+        
+                
+
+                    
+                        <script data-swup-reload-script src="/js/cursor.js?1"></script>
+                    
+        
+                
+
+                    
+                        <script data-swup-reload-script src="/js/click.js?1"></script>
+                    
+        
+        
+    </div>  
+</footer>
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="article-tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="right-bottom-tools page-aside-toggle">
+                <i class="fa-regular fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+            <li class="go-comment">
+                <i class="fa-regular fa-comments"></i>
+            </li>
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-side-tools-container">
+        <div class="side-tools-container">
+    <ul class="hidden-tools-list">
+        <li class="right-bottom-tools tool-font-adjust-plus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-plus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-font-adjust-minus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-minus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-dark-light-toggle flex justify-center items-center">
+            <i class="fa-regular fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+
+        <li class="right-bottom-tools tool-scroll-to-bottom flex justify-center items-center">
+            <i class="fa-regular fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="visible-tools-list">
+        <li class="right-bottom-tools toggle-tools-list flex justify-center items-center">
+            <i class="fa-regular fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="right-bottom-tools tool-scroll-to-top flex justify-center items-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+        
+    </ul>
+</div>
+
+    </div>
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fa-solid fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="Search..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fa-solid fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fa-solid fa-spinner fa-spin-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+</main>
+
+
+    <script src="https://evan.beee.top/projects/hexo-theme-redefine@2.6.1/source/js/libs/Swup.min.js"></script><script src="https://evan.beee.top/projects/hexo-theme-redefine@2.6.1/source/js/libs/SwupSlideTheme.min.js"></script><script src="https://evan.beee.top/projects/hexo-theme-redefine@2.6.1/source/js/libs/SwupScriptsPlugin.min.js"></script><script src="https://evan.beee.top/projects/hexo-theme-redefine@2.6.1/source/js/libs/SwupProgressPlugin.min.js"></script><script src="https://evan.beee.top/projects/hexo-theme-redefine@2.6.1/source/js/libs/SwupScrollPlugin.min.js"></script><script src="https://evan.beee.top/projects/hexo-theme-redefine@2.6.1/source/js/libs/SwupPreloadPlugin.min.js"></script>
+<script>
+    const swup = new Swup({
+        plugins: [
+            new SwupScriptsPlugin({
+                optin: true,
+            }),
+            new SwupProgressPlugin(),
+            new SwupScrollPlugin({
+                offset: 80,
+            }),
+            new SwupSlideTheme({
+                mainElement: ".main-content-body",
+            }),
+            new SwupPreloadPlugin(),
+        ],
+        containers: ["#swup"],
+    });
+</script>
+
+
+
+
+
+
+<script type="module" src="https://evan.beee.top/projects/hexo-theme-redefine@2.6.1/source/js/tools/imageViewer.js"></script><script type="module" src="https://evan.beee.top/projects/hexo-theme-redefine@2.6.1/source/js/utils.js"></script><script type="module" src="https://evan.beee.top/projects/hexo-theme-redefine@2.6.1/source/js/main.js"></script><script type="module" src="https://evan.beee.top/projects/hexo-theme-redefine@2.6.1/source/js/layouts/navbarShrink.js"></script><script type="module" src="https://evan.beee.top/projects/hexo-theme-redefine@2.6.1/source/js/tools/scrollTopBottom.js"></script><script type="module" src="https://evan.beee.top/projects/hexo-theme-redefine@2.6.1/source/js/tools/lightDarkSwitch.js"></script><script type="module" src="https://evan.beee.top/projects/hexo-theme-redefine@2.6.1/source/js/layouts/categoryList.js"></script>
+
+
+    <script type="module" src="https://evan.beee.top/projects/hexo-theme-redefine@2.6.1/source/js/tools/localSearch.js"></script>
+
+
+
+    <script type="module" src="https://evan.beee.top/projects/hexo-theme-redefine@2.6.1/source/js/tools/codeBlock.js"></script>
+
+
+
+    <script type="module" src="https://evan.beee.top/projects/hexo-theme-redefine@2.6.1/source/js/layouts/lazyload.js"></script>
+
+
+
+    <script src="https://evan.beee.top/projects/hexo-theme-redefine@2.6.1/source/js/tools/runtime.js"></script>
+    <script src="https://evan.beee.top/projects/hexo-theme-redefine@2.6.1/source/js/libs/odometer.min.js"></script>
+    <link rel="stylesheet" href="//evan.beee.top/projects/hexo-theme-redefine@2.6.1/source/assets/odometer-theme-minimal.css">
+
+
+
+  <script src="https://evan.beee.top/projects/hexo-theme-redefine@2.6.1/source/js/libs/Typed.min.js"></script>
+  <script type="module" src="https://evan.beee.top/projects/hexo-theme-redefine@2.6.1/source/js/plugins/typed.js"></script>
+
+
+
+
+
+    <script src="https://evan.beee.top/projects/hexo-theme-redefine@2.6.1/source/js/libs/minimasonry.min.js"></script>
+    <script type="module" src="https://evan.beee.top/projects/hexo-theme-redefine@2.6.1/source/js/plugins/masonry.js"></script>
+
+
+
+
+<div class="post-scripts" data-swup-reload-script>
+    
+        <script type="module" src="https://evan.beee.top/projects/hexo-theme-redefine@2.6.1/source/js/tools/tocToggle.js"></script><script type="module" src="https://evan.beee.top/projects/hexo-theme-redefine@2.6.1/source/js/layouts/toc.js"></script><script type="module" src="https://evan.beee.top/projects/hexo-theme-redefine@2.6.1/source/js/plugins/tabs.js"></script>
+    
+</div>
+
+
+    <div id="aplayer"></div>
+<script src="https://evan.beee.top/projects/hexo-theme-redefine@2.6.1/source/js/libs/APlayer.min.js"></script>
+<script src="https://evan.beee.top/projects/hexo-theme-redefine@2.6.1/source/js/plugins/aplayer.js"></script>
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"scale":1,"hHeadPos":0.5,"vHeadPos":0.618,"jsonPath":"/live2dw/assets/shizuku.model.json"},"display":{"superSample":2,"width":400,"height":380,"position":"right","hOffset":50,"vOffset":0},"mobile":{"show":false,"scale":0.5},"react":{"opacityDefault":0.7,"opacityOnHover":0.2},"dialog":{"enable":true,"hitokoto":false},"log":false});</script></body>
+</html>
