@@ -1,0 +1,1623 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="Hexo Theme Redefine">
+    
+    <meta name="author" content="Artemis">
+    <!-- preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    
+        
+        
+        
+    
+    <!--- Seo Part-->
+    
+    <link rel="canonical" href="http://example.com/2024/03/23/data-structure/"/>
+    <meta name="robots" content="index,follow">
+    <meta name="googlebot" content="index,follow">
+    <meta name="revisit-after" content="1 days">
+    
+        <meta name="description" content="1.泛型1.1泛型概述 泛型的介绍 ​	泛型是JDK5中引入的特性，它提供了编译时类型安全检测机制  泛型的好处  把运行时期的问题提前到了编译期间 避免了强制类型转换   泛型的定义格式  &lt;类型&gt;: 指定一种类型的格式.尖括号里面可以任意书写,一般只写一个字母.例如:   &lt;类型1,类型2…&gt;: 指定多种类型的格式,多种类型之间用逗号隔开.例如: &lt;E,T&gt;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="泛型&amp;Set&amp;数据结构">
+<meta property="og:url" content="http://example.com/2024/03/23/Data-Structure/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="1.泛型1.1泛型概述 泛型的介绍 ​	泛型是JDK5中引入的特性，它提供了编译时类型安全检测机制  泛型的好处  把运行时期的问题提前到了编译期间 避免了强制类型转换   泛型的定义格式  &lt;类型&gt;: 指定一种类型的格式.尖括号里面可以任意书写,一般只写一个字母.例如:   &lt;类型1,类型2…&gt;: 指定多种类型的格式,多种类型之间用逗号隔开.例如: &lt;E,T&gt;">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/JavaNotes/dataStructure/img/01_%E4%BA%8C%E5%8F%89%E6%A0%91%E7%BB%93%E6%9E%84%E5%9B%BE.png">
+<meta property="og:image" content="http://example.com/JavaNotes/dataStructure/img/02_%E4%BA%8C%E5%8F%89%E6%9F%A5%E6%89%BE%E6%A0%91%E7%BB%93%E6%9E%84%E5%9B%BE.png">
+<meta property="og:image" content="http://example.com/JavaNotes/dataStructure/img/03_%E4%BA%8C%E5%8F%89%E6%9F%A5%E6%89%BE%E6%A0%91%E5%92%8C%E4%BA%8C%E5%8F%89%E6%A0%91%E5%AF%B9%E6%AF%94%E7%BB%93%E6%9E%84%E5%9B%BE.png">
+<meta property="og:image" content="http://example.com/JavaNotes/dataStructure/img/04_%E4%BA%8C%E5%8F%89%E6%9F%A5%E6%89%BE%E6%A0%91%E6%B7%BB%E5%8A%A0%E8%8A%82%E7%82%B9%E8%A7%84%E5%88%99.png">
+<meta property="og:image" content="http://example.com/JavaNotes/dataStructure/img/05_%E5%B9%B3%E8%A1%A1%E4%BA%8C%E5%8F%89%E6%A0%91%E5%B7%A6%E6%97%8B01.png">
+<meta property="og:image" content="http://example.com/JavaNotes/dataStructure/img/05_%E5%B9%B3%E8%A1%A1%E4%BA%8C%E5%8F%89%E6%A0%91%E5%B7%A6%E6%97%8B02.png">
+<meta property="og:image" content="http://example.com/JavaNotes/dataStructure/img/06_%E5%B9%B3%E8%A1%A1%E4%BA%8C%E5%8F%89%E6%A0%91%E5%8F%B3%E6%97%8B01.png">
+<meta property="og:image" content="http://example.com/JavaNotes/dataStructure/img/06_%E5%B9%B3%E8%A1%A1%E4%BA%8C%E5%8F%89%E6%A0%91%E5%8F%B3%E6%97%8B02.png">
+<meta property="og:image" content="http://example.com/JavaNotes/dataStructure/img/07_%E5%B9%B3%E8%A1%A1%E4%BA%8C%E5%8F%89%E6%A0%91%E5%92%8C%E4%BA%8C%E5%8F%89%E6%9F%A5%E6%89%BE%E6%A0%91%E5%AF%B9%E6%AF%94%E7%BB%93%E6%9E%84%E5%9B%BE.png">
+<meta property="og:image" content="http://example.com/JavaNotes/dataStructure/img/08_%E5%B9%B3%E8%A1%A1%E4%BA%8C%E5%8F%89%E6%A0%91%E5%B7%A6%E5%B7%A6.png">
+<meta property="og:image" content="http://example.com/JavaNotes/dataStructure/img/09_%E5%B9%B3%E8%A1%A1%E4%BA%8C%E5%8F%89%E6%A0%91%E5%B7%A6%E5%8F%B3.png">
+<meta property="og:image" content="http://example.com/JavaNotes/dataStructure/img/10_%E5%B9%B3%E8%A1%A1%E4%BA%8C%E5%8F%89%E6%A0%91%E5%8F%B3%E5%8F%B3.png">
+<meta property="og:image" content="http://example.com/JavaNotes/dataStructure/img/11_%E5%B9%B3%E8%A1%A1%E4%BA%8C%E5%8F%89%E6%A0%91%E5%8F%B3%E5%B7%A6.png">
+<meta property="og:image" content="http://example.com/JavaNotes/dataStructure/img/12_%E7%BA%A2%E9%BB%91%E6%A0%91%E7%BB%93%E6%9E%84%E5%9B%BE.png">
+<meta property="og:image" content="http://example.com/JavaNotes/dataStructure/img/13_%E7%BA%A2%E9%BB%91%E6%A0%91%E6%B7%BB%E5%8A%A0%E8%8A%82%E7%82%B9%E9%A2%9C%E8%89%B2.png">
+<meta property="og:image" content="http://example.com/JavaNotes/dataStructure/img/rules.jpg">
+<meta property="og:image" content="http://example.com/JavaNotes/dataStructure/img/14_JKD8%E4%BB%A5%E5%89%8D%E5%93%88%E5%B8%8C%E8%A1%A8.png">
+<meta property="og:image" content="http://example.com/JavaNotes/dataStructure/img/15_JKD8%E4%BB%A5%E5%90%8E%E5%93%88%E5%B8%8C%E8%A1%A8.png">
+<meta property="article:published_time" content="2024-03-23T11:45:53.000Z">
+<meta property="article:modified_time" content="2024-03-23T12:12:12.197Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="红黑树">
+<meta property="article:tag" content="数据结构">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/JavaNotes/dataStructure/img/01_%E4%BA%8C%E5%8F%89%E6%A0%91%E7%BB%93%E6%9E%84%E5%9B%BE.png">
+    
+    
+    <!--- Icon Part-->
+    <link rel="icon" type="image/png" href="/images/redefine-favicon.svg" sizes="192x192">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/redefine-favicon.svg">
+    <meta name="theme-color" content="#A31F34">
+    <link rel="shortcut icon" href="/images/redefine-favicon.svg">
+    <!--- Page Info-->
+    
+    <title>
+        
+            泛型&amp;Set&amp;数据结构 -
+        
+        Artemis&#39;s Blog
+    </title>
+
+    <link rel="stylesheet" href="//evan.beee.top/projects/hexo-theme-redefine@2.6.1/source/fonts/Chillax/chillax.css">
+
+    <!--- Inject Part-->
+    
+        
+            
+    
+            
+    
+            
+                
+                    <link rel="stylesheet" href="/css/custom.css?1">
+                
+    
+
+    
+        <style>
+    :root {
+        --preloader-background-color: #fff;
+        --preloader-text-color: #000;
+    }
+
+    @media (prefers-color-scheme: dark) {
+        :root {
+            --preloader-background-color: #202124;
+            --preloader-text-color: #fff;
+        }
+    }
+
+    @media (prefers-color-scheme: light) {
+        :root {
+            --preloader-background-color: #fff;
+            --preloader-text-color: #000;
+        }
+    }
+
+    @media (max-width: 600px) {
+        .ml13 {
+            font-size: 2.6rem !important; /* Adjust this value as needed */
+        }
+    }
+
+    .preloader {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem; /* Tailwind 'gap-4' is 1rem */
+        align-items: center;
+        justify-content: center;
+        position: fixed;
+        padding: 12px;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh; /* 'h-screen' is 100% of the viewport height */
+        background-color: var(--preloader-background-color);
+        z-index: 1100; /* 'z-[1100]' sets the z-index */
+        transition: opacity 0.2s ease-in-out;
+    }
+
+    .ml13 {
+        font-size: 3.2rem;
+        /* text-transform: uppercase; */
+        color: var(--preloader-text-color);
+        letter-spacing: -1px;
+        font-weight: 500;
+        font-family: 'Chillax-Variable', sans-serif;
+        text-align: center;
+    }
+
+    .ml13 .word {
+        display: inline-flex;
+        flex-wrap: wrap;
+        white-space: nowrap;
+    }
+
+    .ml13 .letter {
+        display: inline-block;
+        line-height: 1em;
+    }
+</style>
+
+<div class="preloader">
+    <script src="https://evan.beee.top/projects/hexo-theme-redefine@2.6.1/source/js/libs/anime.min.js"></script>
+    <h1 class="ml13">
+        Artemis&#39;s Blog
+    </h1>
+    <script>
+        var textWrapper = document.querySelector('.ml13');
+        // Split text into words
+        var words = textWrapper.textContent.trim().split(' ');
+
+        // Clear the existing content
+        textWrapper.innerHTML = '';
+
+        // Wrap each word and its letters in spans
+        words.forEach(function(word) {
+            var wordSpan = document.createElement('span');
+            wordSpan.classList.add('word');
+            wordSpan.innerHTML = word.replace(/\S/g, "<span class='letter'>$&</span>");
+            textWrapper.appendChild(wordSpan);
+            textWrapper.appendChild(document.createTextNode(' ')); // Add space between words
+        });
+
+
+        anime.timeline({loop: true})
+            .add({
+                targets: '.ml13 .letter',
+                translateY: [100,0],
+                translateZ: 0,
+                opacity: [0,1],
+                easing: "easeOutExpo",
+                duration: 1400,
+                delay: (el, i) => 300 + 30 * i
+            }).add({
+            targets: '.ml13 .letter',
+            translateY: [0,-100],
+            opacity: [1,0],
+            easing: "easeInExpo",
+            duration: 1200,
+            delay: (el, i) => 100 + 30 * i
+        });
+
+        let themeStatus = JSON.parse(localStorage.getItem('REDEFINE-THEME-STATUS'))?.isDark;
+
+        // If the theme status is not found in local storage, check the preferred color scheme
+        if (themeStatus === undefined || themeStatus === null) {
+            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                themeStatus = 'dark';
+            } else {
+                themeStatus = 'light';
+            }
+        }
+
+        // Now you can use the themeStatus variable in your code
+        if (themeStatus) {
+            document.documentElement.style.setProperty('--preloader-background-color', '#202124');
+            document.documentElement.style.setProperty('--preloader-text-color', '#fff');
+        } else {
+            document.documentElement.style.setProperty('--preloader-background-color', '#fff');
+            document.documentElement.style.setProperty('--preloader-text-color', '#000');
+        }
+
+        window.addEventListener('load', function () {
+            hidePreloaderAfterTimeout(1000); // Hide after 1000 milliseconds once the window has loaded
+        });
+
+        // Backup failsafe: Hide preloader after a maximum of 5000 milliseconds, regardless of the window load event
+        hidePreloaderAfterTimeout(5000);
+
+        function hidePreloaderAfterTimeout(delay) {
+            setTimeout(function () {
+                var preloader = document.querySelector('.preloader');
+                preloader.style.opacity = '0';
+                setTimeout(function () {
+                    preloader.style.display = 'none';
+                }, 200);
+            }, delay);
+        }
+    </script>
+</div>
+    
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+        <link rel="stylesheet" href="//evan.beee.top/projects/hexo-theme-redefine@2.6.1/source/assets/build/styles.css">
+    
+
+    <link rel="stylesheet" href="//evan.beee.top/projects/hexo-theme-redefine@2.6.1/source/fonts/fonts.css">
+    <link rel="stylesheet" href="//evan.beee.top/projects/hexo-theme-redefine@2.6.1/source/fonts/Satoshi/satoshi.css">
+    <!--- Font Part-->
+    
+    
+    
+        <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+    
+    
+
+
+    <script id="hexo-configurations">
+    window.config = {"hostname":"example.com","root":"/","language":"en","path":"search.xml"};
+    window.theme = {"articles":{"style":{"font_size":"16px","line_height":1.5,"image_border_radius":"14px","image_alignment":"center","image_caption":false,"link_icon":true,"title_alignment":"left","headings_top_spacing":{"h1":"5rem","h2":"4rem","h3":"2.8rem","h4":"2.5rem","h5":"2.2rem","h6":"2rem"}},"word_count":{"enable":true,"count":true,"min2read":true},"author_label":{"enable":true,"auto":false,"list":["Lv8"]},"code_block":{"copy":true,"style":"mac","font":{"enable":false,"family":null,"url":null}},"toc":{"enable":true,"max_depth":3,"number":false,"expand":true,"init_open":true},"copyright":{"enable":false,"default":"cc_by_nc_sa"},"lazyload":true,"recommendation":{"enable":false,"title":"推荐阅读","limit":3,"mobile_limit":2,"placeholder":"/images/wallhaven-wqery6-light.webp","skip_dirs":[]}},"colors":{"primary":"#A31F34","secondary":null,"default_mode":"light"},"global":{"fonts":{"chinese":{"enable":true,"family":"Noto Sans SC","url":"https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap"},"english":{"enable":false,"family":"Farsan","url":"https://fonts.googleapis.com/css2?family=Farsan&display=swap"}},"content_max_width":"1020px","sidebar_width":"320px","hover":{"shadow":true,"scale":true},"scroll_progress":{"bar":true,"percentage":true},"website_counter":{"url":"https://cn.vercount.one/js","enable":true,"site_pv":true,"site_uv":true,"post_pv":true},"single_page":true,"preloader":true,"open_graph":true,"google_analytics":{"enable":false,"id":null}},"home_banner":{"enable":true,"style":"fixed","image":{"light":"/images/road.webp","dark":"/images/sand.webp"},"title":"Welcome to my website","subtitle":{"text":["Life gets better when no one knows what you are doing","代 码 可 以 重 构 ，思 想 难 以 重 塑","Don't be emcubered by history ,go off and do something wonderful","莫 道 桑 榆 晚，为 霞 尚 满 天","Passions will die without actions supporting them","莫得感情 + 电子阳痿 = 极致的效率","你所有的精力应该投入到更好的习惯中，而不是追求更好的结果","过度地追求局部最优会影响全局最优","关山难越，谁悲失路之人？萍水相逢，尽是他乡之客"],"hitokoto":{"enable":false,"api":"https://v1.hitokoto.cn/"},"typing_speed":100,"backing_speed":80,"starting_delay":500,"backing_delay":1500,"loop":true,"smart_backspace":true},"text_color":{"light":"#fff","dark":"#d1d1b6"},"text_style":{"title_size":"2.8rem","subtitle_size":"1.5rem","line_height":1.2},"custom_font":{"enable":false,"family":null,"url":null},"social_links":{"enable":true,"style":"default","links":{"github":"https://github.com/SukhoiGit","instagram":null,"zhihu":null,"twitter":"https://x.com/OriginBlue50362?t=Yu96I7tDxgX9IGv2CzNnbQ&s=09","email":"3103846585@qq.com"},"qrs":{"weixin":"/images/wechat.png","qq":"/images/qq.jpg"}}},"plugins":{"feed":{"enable":false},"aplayer":{"enable":true,"type":"fixed","audios":[{"name":"K-Pop Type Beat \"Puberty\"","artist":"Scorpion","url":"http://music.163.com/song/media/outer/url?id=2038499612.mp3","cover":"http://p2.music.126.net/8EFT8SUap3AFalqhCm6cTA==/109951168540048426.jpg?param=130y130"},{"name":"Anybody","artist":"Shae,WIMY","url":"http://music.163.com/song/media/outer/url?id=2067819390.mp3","cover":"http://p2.music.126.net/SYyqNbGTSHah_lyRg_ilpw==/109951168769615805.jpg?param=130y130"},{"name":"JDS (Fantasy)","artist":"Finding Hope","url":"http://music.163.com/song/media/outer/url?id=553814074.mp3","cover":"http://p1.music.126.net/aSdtmhutZ0IL-P5Edk1EAA==/109951163254267352.jpg?param=130y130"},{"name":"Saint Claire","artist":"Damma Beatz","url":"http://music.163.com/song/media/outer/url?id=1481990777.mp3","cover":"http://p1.music.126.net/r8kw9HjQKSNPLuxYTM0nHA==/109951165341829045.jpg?param=130y130"},{"name":"Warm (feat. Mia)","artist":"Dre'es,Mia","url":"http://music.163.com/song/media/outer/url?id=524148990.mp3","cover":"http://p1.music.126.net/lUr_3hI44YpbLCeTzH-OlQ==/109951168286424435.jpg?param=130y130"},{"name":"☾ 你 喜 歡 的 人 的 夢 裡 面","artist":"Mei","url":"http://music.163.com/song/media/outer/url?id=1368934522.mp3","cover":"http://p2.music.126.net/QVOpq4JILoj-x_UJck82zA==/109951164198574154.jpg?param=130y130"},{"name":"Rain Song","artist":"J-Kay,景衍Flowsik,note,YANGHAHA","url":"http://music.163.com/song/media/outer/url?id=1878880863.mp3","cover":"http://p2.music.126.net/IEO2S0e4ugeQL_N9lvProA==/109951166422664637.jpg?param=130y130"},{"name":"우리 얘기 좀 해","artist":"Lillo,제이형,지현","url":"http://music.163.com/song/media/outer/url?id=28798391.mp3","cover":"http://p1.music.126.net/4PEO92IxtPBD2MVLtPBdlA==/6062707116251917.jpg?param=130y130"},{"name":"I Blame You","artist":"Ledisi","url":"http://music.163.com/song/media/outer/url?id=28296901.mp3","cover":"http://p1.music.126.net/V7iAGrbL-IRh7YtW1TQ3hQ==/5849401859946885.jpg?param=130y130"},{"name":"危险派对 (伴奏)","artist":"王以太,刘至佳","url":"http://music.163.com/song/media/outer/url?id=1877996648.mp3","cover":"http://p2.music.126.net/GpnLproqUUyc4xmYKpRFcQ==/109951166516282895.jpg?param=130y130"},{"name":"Freaky Deaky","artist":"Tyga,Doja Cat","url":"http://music.163.com/song/media/outer/url?id=1922779061.mp3","cover":"http://p1.music.126.net/719DhEuEAsIpfU6LCzBQ3A==/109951167082707175.jpg?param=130y130"},{"name":"Shut up My Moms Calling ((Sped Up))","artist":"Hotel Ugly","url":"http://music.163.com/song/media/outer/url?id=1980856355.mp3","cover":"http://p1.music.126.net/Vfm0Jh8ynxSeYxh5DwRnXg==/109951167871897254.jpg?param=130y130"},{"name":"No Fear No More","artist":"Madeon","url":"http://music.163.com/song/media/outer/url?id=1403356922.mp3","cover":"http://p1.music.126.net/T7qkRJsFDat6GxWDXP2cTA==/109951164486305073.jpg?param=130y130"},{"name":"Say So","artist":"Doja Cat","url":"http://music.163.com/song/media/outer/url?id=1401302504.mp3","cover":"http://p2.music.126.net/jpwgibpDAI8b3AxcIv5QMQ==/109951168930483402.jpg?param=130y130"},{"name":"住在雪山的落日","artist":"Lev","url":"http://music.163.com/song/media/outer/url?id=1873107569.mp3","cover":"http://p2.music.126.net/Ejn3hYPl9hrpBuqURDfcYQ==/109951166325499272.jpg?param=130y130"},{"name":"Sweatshirt","artist":"Patrick Hizon,EJEAN,Gabe Bondoc","url":"http://music.163.com/song/media/outer/url?id=2049495339.mp3","cover":"http://p2.music.126.net/23urSlrnGAuXNzUfTemQNQ==/109951168630808433.jpg?param=130y130"},{"name":"Cool & Down","artist":"The 49ers","url":"http://music.163.com/song/media/outer/url?id=22670312.mp3","cover":"http://p2.music.126.net/ACxQuITgURDWPqivHU_EAQ==/781752767371077.jpg?param=130y130"},{"name":"爱野美奈子","artist":"银河骑士GalaxyKnight","url":"http://music.163.com/song/media/outer/url?id=413829844.mp3","cover":"http://p1.music.126.net/CDAbUu8CD1mYh5BYuxGXag==/17929736114279608.jpg?param=130y130"},{"name":"看月亮","artist":"StrawberryPapa","url":"http://music.163.com/song/media/outer/url?id=465472474.mp3","cover":"http://p2.music.126.net/71tLrMQrG3BgDH94OJY5Ew==/109951162876317221.jpg?param=130y130"},{"name":"West Coast Love","artist":"Emotional Oranges","url":"http://music.163.com/song/media/outer/url?id=1401876482.mp3","cover":"http://p1.music.126.net/QdAKECVQopD9IdEBomJ8IQ==/109951164869191242.jpg?param=130y130"},{"name":"phone kisses","artist":"suhmeduh","url":"http://music.163.com/song/media/outer/url?id=446512853.mp3","cover":"http://p2.music.126.net/UWQUe2Vl3xEvfDsSYqf-kA==/18651015743606039.jpg?param=130y130"}],"autoplay":true},"mermaid":{"enable":false,"version":"9.3.0"}},"version":"2.6.1","navbar":{"auto_hide":false,"color":{"left":"#f78736","right":"#367df7","transparency":10},"width":{"home":"1200px","pages":"1000px"},"links":{"Home":{"path":"/","icon":"fa-regular fa-house"},"Archives":{"path":"/archives","icon":"fa-regular fa-archive"},"Status":{"path":"/","icon":"fa-regular fa-chart-bar"},"gallery":{"icon":"fa-solid fa-image","path":"/masonry/"},"About":{"icon":"fa-regular fa-user","submenus":{"Github":"https://github.com/SukhoiGit"}},"Links":{"icon":"fa-regular fa-link","submenus":{"NASA":"https://www.nasa.gov/","SpaceX":"https://www.spacex.com/","ESA":"https://www.esa.int/","Mashable":"https://mashable.com/","Click here to touch stars":"https://stellarium.org/"}}},"search":{"enable":true,"preload":true}},"page_templates":{"friends_column":2,"tags_style":"blur"},"home":{"sidebar":{"enable":true,"position":"left","first_item":"menu","announcement":"借汝之光，得见光明","show_on_mobile":true,"links":{"Archives":{"path":"/archives","icon":"fa-regular fa-archive"},"Tags":{"path":"/tags","icon":"fa-regular fa-tags"},"Categories":{"path":"/categories","icon":"fa-regular fa-folder"},"Gossip":{"path":"/essays","icon":"fa-brands fa-waze"}}},"article_date_format":"auto","categories":{"enable":true,"limit":3},"tags":{"enable":true,"limit":3}},"footerStart":"2023/12/25 11:45:14"};
+    window.lang_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+    window.data = {"masonry":true};
+  </script>
+    
+    <!--- Fontawesome Part-->
+    <link rel="stylesheet" href="//evan.beee.top/projects/hexo-theme-redefine@2.6.1/source/fontawesome/fontawesome.min.css">
+    <link rel="stylesheet" href="//evan.beee.top/projects/hexo-theme-redefine@2.6.1/source/fontawesome/brands.min.css">
+    <link rel="stylesheet" href="//evan.beee.top/projects/hexo-theme-redefine@2.6.1/source/fontawesome/solid.min.css">
+    <link rel="stylesheet" href="//evan.beee.top/projects/hexo-theme-redefine@2.6.1/source/fontawesome/regular.min.css">
+    
+    
+    
+    
+<meta name="generator" content="Hexo 7.0.0"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+        <span class="scroll-progress-bar"></span>
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+<!--        <span class="swup-progress-icon">-->
+<!--            <i class="fa-solid fa-circle-notch fa-spin"></i>-->
+<!--        </span>-->
+    
+</div>
+
+
+<main class="page-container" id="swup">
+
+    
+
+    <div class="main-content-container">
+
+
+        <div class="main-content-header">
+            <header class="navbar-container px-6 md:px-12">
+
+    <div class="navbar-content ">
+        <div class="left">
+            
+            <a class="logo-title" href="/">
+                
+                Artemis&#39;s Blog
+                
+            </a>
+        </div>
+
+        <div class="right">
+            <!-- PC -->
+            <div class="desktop">
+                <ul class="navbar-list">
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/"
+                                        >
+                                    <i class="fa-regular fa-house fa-fw"></i>
+                                    HOME
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/archives"
+                                        >
+                                    <i class="fa-regular fa-archive fa-fw"></i>
+                                    ARCHIVES
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/"
+                                        >
+                                    <i class="fa-regular fa-chart-bar fa-fw"></i>
+                                    STATUS
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/masonry/"
+                                        >
+                                    <i class="fa-solid fa-image fa-fw"></i>
+                                    GALLERY
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class="has-dropdown"
+                                   href="#"
+                                        onClick=&#34;return false;&#34;>
+                                    <i class="fa-regular fa-user fa-fw"></i>
+                                    ABOUT
+                                    <i class="fa-solid fa-chevron-down fa-fw"></i>
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                                    <ul class="sub-menu">
+                                        
+                                            <li>
+                                                <a target="_blank" rel="noopener" href="https://github.com/SukhoiGit">
+                                                    GITHUB
+                                                </a>
+                                            </li>
+                                        
+                                    </ul>
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class="has-dropdown"
+                                   href="#"
+                                        onClick=&#34;return false;&#34;>
+                                    <i class="fa-regular fa-link fa-fw"></i>
+                                    LINKS
+                                    <i class="fa-solid fa-chevron-down fa-fw"></i>
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                                    <ul class="sub-menu">
+                                        
+                                            <li>
+                                                <a target="_blank" rel="noopener" href="https://www.nasa.gov/">
+                                                    NASA
+                                                </a>
+                                            </li>
+                                        
+                                            <li>
+                                                <a target="_blank" rel="noopener" href="https://www.spacex.com/">
+                                                    SPACEX
+                                                </a>
+                                            </li>
+                                        
+                                            <li>
+                                                <a target="_blank" rel="noopener" href="https://www.esa.int/">
+                                                    ESA
+                                                </a>
+                                            </li>
+                                        
+                                            <li>
+                                                <a target="_blank" rel="noopener" href="https://mashable.com/">
+                                                    MASHABLE
+                                                </a>
+                                            </li>
+                                        
+                                            <li>
+                                                <a target="_blank" rel="noopener" href="https://stellarium.org/">
+                                                    CLICK HERE TO TOUCH STARS
+                                                </a>
+                                            </li>
+                                        
+                                    </ul>
+                                
+                            </li>
+                    
+                    
+                        <li class="navbar-item search search-popup-trigger">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <!-- Mobile -->
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fa-solid fa-magnifying-glass"></i>
+                    </div>
+                
+                <div class="icon-item navbar-bar">
+                    <div class="navbar-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile sheet -->
+    <div class="navbar-drawer h-screen w-full absolute top-0 left-0 bg-background-color flex flex-col justify-between">
+        <ul class="drawer-navbar-list flex flex-col px-4 justify-center items-start">
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/"
+                        >
+                            <span>
+                                HOME
+                            </span>
+                            
+                                <i class="fa-regular fa-house fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/archives"
+                        >
+                            <span>
+                                ARCHIVES
+                            </span>
+                            
+                                <i class="fa-regular fa-archive fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/"
+                        >
+                            <span>
+                                STATUS
+                            </span>
+                            
+                                <i class="fa-regular fa-chart-bar fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/masonry/"
+                        >
+                            <span>
+                                GALLERY
+                            </span>
+                            
+                                <i class="fa-solid fa-image fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item-sub text-base my-1.5 flex flex-col w-full">
+                        
+                        <div class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary cursor-pointer text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                             navbar-data-toggle="submenu-About"
+                        >
+                            <span>
+                                ABOUT
+                            </span>
+                            
+                                <i class="fa-solid fa-chevron-right fa-sm fa-fw transition-all"></i>
+                            
+                        </div>
+                        
+
+                        
+                            <div class="flex-col items-start px-2 py-2 hidden" data-target="submenu-About">
+                                
+                                    <div class="drawer-navbar-item text-base flex flex-col justify-center items-start hover:underline active:underline hover:underline-offset-1 rounded-3xl">
+                                        <a class=" text-third-text-color text-xl"
+                                           target="_blank" rel="noopener" href="https://github.com/SukhoiGit">GITHUB</a>
+                                    </div>
+                                
+                            </div>
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item-sub text-base my-1.5 flex flex-col w-full">
+                        
+                        <div class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary cursor-pointer text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                             navbar-data-toggle="submenu-Links"
+                        >
+                            <span>
+                                LINKS
+                            </span>
+                            
+                                <i class="fa-solid fa-chevron-right fa-sm fa-fw transition-all"></i>
+                            
+                        </div>
+                        
+
+                        
+                            <div class="flex-col items-start px-2 py-2 hidden" data-target="submenu-Links">
+                                
+                                    <div class="drawer-navbar-item text-base flex flex-col justify-center items-start hover:underline active:underline hover:underline-offset-1 rounded-3xl">
+                                        <a class=" text-third-text-color text-xl"
+                                           target="_blank" rel="noopener" href="https://www.nasa.gov/">NASA</a>
+                                    </div>
+                                
+                                    <div class="drawer-navbar-item text-base flex flex-col justify-center items-start hover:underline active:underline hover:underline-offset-1 rounded-3xl">
+                                        <a class=" text-third-text-color text-xl"
+                                           target="_blank" rel="noopener" href="https://www.spacex.com/">SPACEX</a>
+                                    </div>
+                                
+                                    <div class="drawer-navbar-item text-base flex flex-col justify-center items-start hover:underline active:underline hover:underline-offset-1 rounded-3xl">
+                                        <a class=" text-third-text-color text-xl"
+                                           target="_blank" rel="noopener" href="https://www.esa.int/">ESA</a>
+                                    </div>
+                                
+                                    <div class="drawer-navbar-item text-base flex flex-col justify-center items-start hover:underline active:underline hover:underline-offset-1 rounded-3xl">
+                                        <a class=" text-third-text-color text-xl"
+                                           target="_blank" rel="noopener" href="https://mashable.com/">MASHABLE</a>
+                                    </div>
+                                
+                                    <div class="drawer-navbar-item text-base flex flex-col justify-center items-start hover:underline active:underline hover:underline-offset-1 rounded-3xl">
+                                        <a class=" text-third-text-color text-xl"
+                                           target="_blank" rel="noopener" href="https://stellarium.org/">CLICK HERE TO TOUCH STARS</a>
+                                    </div>
+                                
+                            </div>
+                        
+                    </li>
+            
+
+            
+            
+                
+                    
+                    
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full active"
+                           href="/tags"
+                        >
+                            <span>Tags</span>
+                            <i class="fa-regular fa-tags fa-sm fa-fw"></i>
+                        </a>
+                    </li>
+                
+                    
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full active"
+                           href="/categories"
+                        >
+                            <span>Categories</span>
+                            <i class="fa-regular fa-folder fa-sm fa-fw"></i>
+                        </a>
+                    </li>
+                
+                    
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full active"
+                           href="/essays"
+                        >
+                            <span>Gossip</span>
+                            <i class="fa-brands fa-waze fa-sm fa-fw"></i>
+                        </a>
+                    </li>
+                
+            
+        </ul>
+
+        <div class="statistics flex justify-around my-2.5">
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/tags">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">14</div>
+        <div class="label text-third-text-color text-sm">Tags</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/categories">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">4</div>
+        <div class="label text-third-text-color text-sm">Categories</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/archives">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">17</div>
+        <div class="label text-third-text-color text-sm">Posts</div>
+    </a>
+</div>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="main-content-body">
+
+            
+
+            <div class="main-content">
+
+                
+                    <div class="post-page-container flex relative justify-between box-border w-full h-full">
+    <div class="article-content-container">
+
+        <div class="article-title relative w-full">
+            
+                
+                
+                <img src="https://www.toopic.cn/public/uploads/small/1710477852964171047785229.jpg" alt="泛型&amp;Set&amp;数据结构" class="w-full h-60 sm:h-72 md:h-80 object-cover sm:rounded-t-large dark:brightness-75"/>
+                
+                <div class="w-full flex items-center absolute bottom-0 justify-start">
+                    <h1 class="article-title-cover text-center mx-6 my-6 text-second-text-color bg-background-color-transparent px-4 py-3 text-3xl sm:text-4xl md:text-5xl font-bold backdrop-blur-lg rounded-xl border border-border-color ">泛型&amp;Set&amp;数据结构</h1>
+                </div>
+            
+            </div>
+
+        
+            <div class="article-header flex flex-row gap-2 items-center px-2 sm:px-6 md:px-8">
+                <div class="avatar w-[46px] h-[46px] flex-shrink-0 rounded-medium border border-border-color p-[1px]">
+                    <img src="/images/girl.jpg">
+                </div>
+                <div class="info flex flex-col justify-between">
+                    <div class="author flex items-center">
+                        <span class="name text-default-text-color text-lg font-semibold">Artemis</span>
+                        
+                            <span class="author-label ml-1.5 text-xs px-2 py-0.5 rounded-small text-third-text-color border border-shadow-color-1">Lv8</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa-regular fa-pen-fancy"></i>&nbsp;
+        <span class="desktop">2024-03-23 19:45:53</span>
+        <span class="mobile">2024-03-23 19:45:53</span>
+        <span class="hover-info">Created</span>
+    </span>
+    
+        <span class="article-date article-meta-item">
+            <i class="fa-regular fa-wrench"></i>&nbsp;
+            <span class="desktop">2024-03-23 20:12:12</span>
+            <span class="mobile">2024-03-23 20:12:12</span>
+            <span class="hover-info">Updated</span>
+        </span>
+    
+
+    
+        <span class="article-categories article-meta-item">
+            <i class="fa-regular fa-folders"></i>&nbsp;
+            <ul>
+                
+                
+                    
+                        
+                        <li>
+                            <a href="/categories/Java%E5%9F%BA%E7%A1%80/">Java基础</a>&nbsp;
+                        </li>
+                    
+                    
+                
+            </ul>
+        </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fa-regular fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/%E7%BA%A2%E9%BB%91%E6%A0%91/">红黑树</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">数据结构</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+        <span class="article-wordcount article-meta-item">
+            <i class="fa-regular fa-typewriter"></i>&nbsp;<span>3.3k Words</span>
+        </span>
+    
+    
+        <span class="article-min2read article-meta-item">
+            <i class="fa-regular fa-clock"></i>&nbsp;<span>13 Mins</span>
+        </span>
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fa-regular fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
+                </div>
+            </div>
+        
+
+        
+
+
+        <div class="article-content markdown-body px-2 sm:px-6 md:px-8 pb-8">
+            <h2 id="1-泛型"><a href="#1-泛型" class="headerlink" title="1.泛型"></a>1.泛型</h2><h3 id="1-1泛型概述"><a href="#1-1泛型概述" class="headerlink" title="1.1泛型概述"></a>1.1泛型概述</h3><ul>
+<li><p>泛型的介绍</p>
+<p>​	泛型是JDK5中引入的特性，它提供了编译时类型安全检测机制</p>
+</li>
+<li><p>泛型的好处</p>
+<ol>
+<li>把运行时期的问题提前到了编译期间</li>
+<li>避免了强制类型转换</li>
+</ol>
+</li>
+<li><p>泛型的定义格式</p>
+<ul>
+<li>&lt;类型&gt;: 指定一种类型的格式.尖括号里面可以任意书写,一般只写一个字母.例如: <E> <T></li>
+<li>&lt;类型1,类型2…&gt;: 指定多种类型的格式,多种类型之间用逗号隔开.例如: &lt;E,T&gt; &lt;K,V&gt;</li>
+</ul>
+</li>
+</ul>
+<h2 id="2-Set集合"><a href="#2-Set集合" class="headerlink" title="2.Set集合"></a>2.Set集合</h2><h3 id="2-1Set集合概述和特点【应用】"><a href="#2-1Set集合概述和特点【应用】" class="headerlink" title="2.1Set集合概述和特点【应用】"></a>2.1Set集合概述和特点【应用】</h3><ul>
+<li>不可以存储重复元素</li>
+<li>没有索引,不能使用普通for循环遍历</li>
+</ul>
+<h3 id="2-2Set集合的使用【应用】"><a href="#2-2Set集合的使用【应用】" class="headerlink" title="2.2Set集合的使用【应用】"></a>2.2Set集合的使用【应用】</h3><p>存储字符串并遍历</p>
+<div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">MySet1</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">      	<span class="comment">//创建集合对象</span></span><br><span class="line">        Set&lt;String&gt; set = <span class="keyword">new</span> <span class="title class_">TreeSet</span>&lt;&gt;();</span><br><span class="line">      	<span class="comment">//添加元素</span></span><br><span class="line">        set.add(<span class="string">&quot;ccc&quot;</span>);</span><br><span class="line">        set.add(<span class="string">&quot;aaa&quot;</span>);</span><br><span class="line">        set.add(<span class="string">&quot;aaa&quot;</span>);</span><br><span class="line">        set.add(<span class="string">&quot;bbb&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">//        for (int i = 0; i &lt; set.size(); i++) &#123;</span></span><br><span class="line"><span class="comment">//            //Set集合是没有索引的，所以不能使用通过索引获取元素的方法</span></span><br><span class="line"><span class="comment">//        &#125;</span></span><br><span class="line">      </span><br><span class="line">      	<span class="comment">//遍历集合</span></span><br><span class="line">        Iterator&lt;String&gt; it = set.iterator();</span><br><span class="line">        <span class="keyword">while</span> (it.hasNext())&#123;</span><br><span class="line">            <span class="type">String</span> <span class="variable">s</span> <span class="operator">=</span> it.next();</span><br><span class="line">            System.out.println(s);</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println(<span class="string">&quot;-----------------------------------&quot;</span>);</span><br><span class="line">        <span class="keyword">for</span> (String s : set) &#123;</span><br><span class="line">            System.out.println(s);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<h2 id="3-TreeSet集合"><a href="#3-TreeSet集合" class="headerlink" title="3.TreeSet集合"></a>3.TreeSet集合</h2><h3 id="3-1TreeSet集合概述和特点【应用】"><a href="#3-1TreeSet集合概述和特点【应用】" class="headerlink" title="3.1TreeSet集合概述和特点【应用】"></a>3.1TreeSet集合概述和特点【应用】</h3><ul>
+<li>不可以存储重复元素</li>
+<li>没有索引</li>
+<li>可以将元素按照规则进行排序<ul>
+<li>TreeSet()：根据其元素的自然排序进行排序</li>
+<li>TreeSet(Comparator comparator) ：根据指定的比较器进行排序</li>
+</ul>
+</li>
+</ul>
+<h3 id="3-2TreeSet集合基本使用【应用】"><a href="#3-2TreeSet集合基本使用【应用】" class="headerlink" title="3.2TreeSet集合基本使用【应用】"></a>3.2TreeSet集合基本使用【应用】</h3><p>存储Integer类型的整数并遍历</p>
+<div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">TreeSetDemo01</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        <span class="comment">//创建集合对象</span></span><br><span class="line">        TreeSet&lt;Integer&gt; ts = <span class="keyword">new</span> <span class="title class_">TreeSet</span>&lt;Integer&gt;();</span><br><span class="line"></span><br><span class="line">        <span class="comment">//添加元素</span></span><br><span class="line">        ts.add(<span class="number">10</span>);</span><br><span class="line">        ts.add(<span class="number">40</span>);</span><br><span class="line">        ts.add(<span class="number">30</span>);</span><br><span class="line">        ts.add(<span class="number">50</span>);</span><br><span class="line">        ts.add(<span class="number">20</span>);</span><br><span class="line"></span><br><span class="line">        ts.add(<span class="number">30</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//遍历集合</span></span><br><span class="line">        <span class="keyword">for</span>(Integer i : ts) &#123;</span><br><span class="line">            System.out.println(i);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<h3 id="3-3自然排序Comparable的使用【应用】"><a href="#3-3自然排序Comparable的使用【应用】" class="headerlink" title="3.3自然排序Comparable的使用【应用】"></a>3.3自然排序Comparable的使用【应用】</h3><ul>
+<li><p>案例需求</p>
+<ul>
+<li>存储学生对象并遍历，创建TreeSet集合使用无参构造方法</li>
+<li>要求：按照年龄从小到大排序，年龄相同时，按照姓名的字母顺序排序</li>
+</ul>
+</li>
+<li><p>实现步骤</p>
+<ol>
+<li>使用空参构造创建TreeSet集合<ul>
+<li>用TreeSet集合存储自定义对象，无参构造方法使用的是自然排序对元素进行排序的</li>
+</ul>
+</li>
+<li>自定义的Student类实现Comparable接口<ul>
+<li>自然排序，就是让元素所属的类实现Comparable接口，重写compareTo(T o)方法</li>
+</ul>
+</li>
+<li>重写接口中的compareTo方法<ul>
+<li>重写方法时，一定要注意排序规则必须按照要求的主要条件和次要条件来写</li>
+</ul>
+</li>
+</ol>
+</li>
+<li><p>代码实现</p>
+<p>学生类</p>
+<div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Student</span> <span class="keyword">implements</span> <span class="title class_">Comparable</span>&lt;Student&gt;&#123;</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line">    <span class="keyword">private</span> <span class="type">int</span> age;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">Student</span><span class="params">()</span> &#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">Student</span><span class="params">(String name, <span class="type">int</span> age)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.name = name;</span><br><span class="line">        <span class="built_in">this</span>.age = age;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">getName</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setName</span><span class="params">(String name)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.name = name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">getAge</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> age;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setAge</span><span class="params">(<span class="type">int</span> age)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.age = age;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">toString</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;Student&#123;&quot;</span> +</span><br><span class="line">                <span class="string">&quot;name=&#x27;&quot;</span> + name + <span class="string">&#x27;\&#x27;&#x27;</span> +</span><br><span class="line">                <span class="string">&quot;, age=&quot;</span> + age +</span><br><span class="line">                <span class="string">&#x27;&#125;&#x27;</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">compareTo</span><span class="params">(Student o)</span> &#123;</span><br><span class="line">        <span class="comment">//按照对象的年龄进行排序</span></span><br><span class="line">        <span class="comment">//主要判断条件: 按照年龄从小到大排序</span></span><br><span class="line">        <span class="type">int</span> <span class="variable">result</span> <span class="operator">=</span> <span class="built_in">this</span>.age - o.age;</span><br><span class="line">        <span class="comment">//次要判断条件: 年龄相同时，按照姓名的字母顺序排序</span></span><br><span class="line">        result = result == <span class="number">0</span> ? <span class="built_in">this</span>.name.compareTo(o.getName()) : result;</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<p>测试类</p>
+<div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">MyTreeSet2</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        <span class="comment">//创建集合对象</span></span><br><span class="line">        TreeSet&lt;Student&gt; ts = <span class="keyword">new</span> <span class="title class_">TreeSet</span>&lt;&gt;();</span><br><span class="line">	    <span class="comment">//创建学生对象</span></span><br><span class="line">        <span class="type">Student</span> <span class="variable">s1</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Student</span>(<span class="string">&quot;zhangsan&quot;</span>,<span class="number">28</span>);</span><br><span class="line">        <span class="type">Student</span> <span class="variable">s2</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Student</span>(<span class="string">&quot;lisi&quot;</span>,<span class="number">27</span>);</span><br><span class="line">        <span class="type">Student</span> <span class="variable">s3</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Student</span>(<span class="string">&quot;wangwu&quot;</span>,<span class="number">29</span>);</span><br><span class="line">        <span class="type">Student</span> <span class="variable">s4</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Student</span>(<span class="string">&quot;zhaoliu&quot;</span>,<span class="number">28</span>);</span><br><span class="line">        <span class="type">Student</span> <span class="variable">s5</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Student</span>(<span class="string">&quot;qianqi&quot;</span>,<span class="number">30</span>);</span><br><span class="line">		<span class="comment">//把学生添加到集合</span></span><br><span class="line">        ts.add(s1);</span><br><span class="line">        ts.add(s2);</span><br><span class="line">        ts.add(s3);</span><br><span class="line">        ts.add(s4);</span><br><span class="line">        ts.add(s5);</span><br><span class="line">		<span class="comment">//遍历集合</span></span><br><span class="line">        <span class="keyword">for</span> (Student student : ts) &#123;</span><br><span class="line">            System.out.println(student);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div></li>
+</ul>
+<h3 id="3-4比较器排序Comparator的使用【应用】"><a href="#3-4比较器排序Comparator的使用【应用】" class="headerlink" title="3.4比较器排序Comparator的使用【应用】"></a>3.4比较器排序Comparator的使用【应用】</h3><ul>
+<li><p>案例需求</p>
+<ul>
+<li>存储老师对象并遍历，创建TreeSet集合使用带参构造方法</li>
+<li>要求：按照年龄从小到大排序，年龄相同时，按照姓名的字母顺序排序</li>
+</ul>
+</li>
+<li><p>实现步骤</p>
+<ul>
+<li>用TreeSet集合存储自定义对象，带参构造方法使用的是比较器排序对元素进行排序的</li>
+<li>比较器排序，就是让集合构造方法接收Comparator的实现类对象，重写compare(T o1,T o2)方法</li>
+<li>重写方法时，一定要注意排序规则必须按照要求的主要条件和次要条件来写</li>
+</ul>
+</li>
+<li><p>代码实现</p>
+<p>老师类</p>
+<div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Teacher</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line">    <span class="keyword">private</span> <span class="type">int</span> age;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">Teacher</span><span class="params">()</span> &#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">Teacher</span><span class="params">(String name, <span class="type">int</span> age)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.name = name;</span><br><span class="line">        <span class="built_in">this</span>.age = age;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">getName</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setName</span><span class="params">(String name)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.name = name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">getAge</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> age;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setAge</span><span class="params">(<span class="type">int</span> age)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.age = age;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">toString</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;Teacher&#123;&quot;</span> +</span><br><span class="line">                <span class="string">&quot;name=&#x27;&quot;</span> + name + <span class="string">&#x27;\&#x27;&#x27;</span> +</span><br><span class="line">                <span class="string">&quot;, age=&quot;</span> + age +</span><br><span class="line">                <span class="string">&#x27;&#125;&#x27;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<p>测试类</p>
+<div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">MyTreeSet4</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">      	<span class="comment">//创建集合对象</span></span><br><span class="line">        TreeSet&lt;Teacher&gt; ts = <span class="keyword">new</span> <span class="title class_">TreeSet</span>&lt;&gt;(<span class="keyword">new</span> <span class="title class_">Comparator</span>&lt;Teacher&gt;() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">compare</span><span class="params">(Teacher o1, Teacher o2)</span> &#123;</span><br><span class="line">                <span class="comment">//o1表示现在要存入的那个元素</span></span><br><span class="line">                <span class="comment">//o2表示已经存入到集合中的元素</span></span><br><span class="line">              </span><br><span class="line">                <span class="comment">//主要条件</span></span><br><span class="line">                <span class="type">int</span> <span class="variable">result</span> <span class="operator">=</span> o1.getAge() - o2.getAge();</span><br><span class="line">                <span class="comment">//次要条件</span></span><br><span class="line">                result = result == <span class="number">0</span> ? o1.getName().compareTo(o2.getName()) : result;</span><br><span class="line">                <span class="keyword">return</span> result;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">		<span class="comment">//创建老师对象</span></span><br><span class="line">        <span class="type">Teacher</span> <span class="variable">t1</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Teacher</span>(<span class="string">&quot;zhangsan&quot;</span>,<span class="number">23</span>);</span><br><span class="line">        <span class="type">Teacher</span> <span class="variable">t2</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Teacher</span>(<span class="string">&quot;lisi&quot;</span>,<span class="number">22</span>);</span><br><span class="line">        <span class="type">Teacher</span> <span class="variable">t3</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Teacher</span>(<span class="string">&quot;wangwu&quot;</span>,<span class="number">24</span>);</span><br><span class="line">        <span class="type">Teacher</span> <span class="variable">t4</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Teacher</span>(<span class="string">&quot;zhaoliu&quot;</span>,<span class="number">24</span>);</span><br><span class="line">		<span class="comment">//把老师添加到集合</span></span><br><span class="line">        ts.add(t1);</span><br><span class="line">        ts.add(t2);</span><br><span class="line">        ts.add(t3);</span><br><span class="line">        ts.add(t4);</span><br><span class="line">		<span class="comment">//遍历集合</span></span><br><span class="line">        <span class="keyword">for</span> (Teacher teacher : ts) &#123;</span><br><span class="line">            System.out.println(teacher);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div></li>
+</ul>
+<h3 id="3-5两种比较方式总结【理解】"><a href="#3-5两种比较方式总结【理解】" class="headerlink" title="3.5两种比较方式总结【理解】"></a>3.5两种比较方式总结【理解】</h3><ul>
+<li>两种比较方式小结<ul>
+<li>自然排序: 自定义类实现Comparable接口,重写compareTo方法,根据返回值进行排序</li>
+<li>比较器排序: 创建TreeSet对象的时候传递Comparator的实现类对象,重写compare方法,根据返回值进行排序</li>
+<li>在使用的时候,默认使用自然排序,当自然排序不满足现在的需求时,必须使用比较器排序</li>
+</ul>
+</li>
+<li>两种方式中关于返回值的规则<ul>
+<li>如果返回值为负数，表示当前存入的元素是较小值，存左边</li>
+<li>如果返回值为0，表示当前存入的元素跟集合中元素重复了，不存</li>
+<li>如果返回值为正数，表示当前存入的元素是较大值，存右边</li>
+</ul>
+</li>
+</ul>
+<h2 id="4-数据结构"><a href="#4-数据结构" class="headerlink" title="4.数据结构"></a>4.数据结构</h2><h3 id="4-1二叉树【理解】"><a href="#4-1二叉树【理解】" class="headerlink" title="4.1二叉树【理解】"></a>4.1二叉树【理解】</h3><ul>
+<li><p>二叉树的特点</p>
+<ul>
+<li>二叉树中,任意一个节点的度要小于等于2<ul>
+<li>节点: 在树结构中,每一个元素称之为节点</li>
+<li>度: 每一个节点的子节点数量称之为度</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>二叉树结构图</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/JavaNotes/dataStructure/img/01_%E4%BA%8C%E5%8F%89%E6%A0%91%E7%BB%93%E6%9E%84%E5%9B%BE.png"
+                      alt="01_二叉树结构图"
+                ></p>
+</li>
+</ul>
+<h3 id="4-2二叉查找树【理解】"><a href="#4-2二叉查找树【理解】" class="headerlink" title="4.2二叉查找树【理解】"></a>4.2二叉查找树【理解】</h3><ul>
+<li><p>二叉查找树的特点</p>
+<ul>
+<li>二叉查找树,又称二叉排序树或者二叉搜索树</li>
+<li>每一个节点上最多有两个子节点</li>
+<li>左子树上所有节点的值都小于根节点的值</li>
+<li>右子树上所有节点的值都大于根节点的值</li>
+</ul>
+</li>
+<li><p>二叉查找树结构图</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/JavaNotes/dataStructure/img/02_%E4%BA%8C%E5%8F%89%E6%9F%A5%E6%89%BE%E6%A0%91%E7%BB%93%E6%9E%84%E5%9B%BE.png"
+                      alt="02_二叉查找树结构图"
+                ></p>
+</li>
+<li><p>二叉查找树和二叉树对比结构图</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/JavaNotes/dataStructure/img/03_%E4%BA%8C%E5%8F%89%E6%9F%A5%E6%89%BE%E6%A0%91%E5%92%8C%E4%BA%8C%E5%8F%89%E6%A0%91%E5%AF%B9%E6%AF%94%E7%BB%93%E6%9E%84%E5%9B%BE.png"
+                      alt="03_二叉查找树和二叉树对比结构图"
+                ></p>
+</li>
+<li><p>二叉查找树添加节点规则</p>
+<ul>
+<li>小的存左边</li>
+<li>大的存右边</li>
+<li>一样的不存</li>
+</ul>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/JavaNotes/dataStructure/img/04_%E4%BA%8C%E5%8F%89%E6%9F%A5%E6%89%BE%E6%A0%91%E6%B7%BB%E5%8A%A0%E8%8A%82%E7%82%B9%E8%A7%84%E5%88%99.png"
+                      alt="04_二叉查找树添加节点规则"
+                ></p>
+</li>
+</ul>
+<h3 id="4-3平衡二叉树【理解】"><a href="#4-3平衡二叉树【理解】" class="headerlink" title="4.3平衡二叉树【理解】"></a>4.3平衡二叉树【理解】</h3><ul>
+<li><p>平衡二叉树的特点</p>
+<ul>
+<li>二叉树左右两个子树的高度差不超过1</li>
+<li>任意节点的左右两个子树都是一颗平衡二叉树</li>
+</ul>
+</li>
+<li><p>平衡二叉树旋转</p>
+<ul>
+<li><p>旋转触发时机</p>
+<ul>
+<li>当添加一个节点之后,该树不再是一颗平衡二叉树</li>
+</ul>
+</li>
+<li><p>左旋</p>
+<ul>
+<li>就是将根节点的右侧往左拉,原先的右子节点变成新的父节点,并把多余的左子节点出让,给已经降级的根节点当右子节点</li>
+</ul>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/JavaNotes/dataStructure/img/05_%E5%B9%B3%E8%A1%A1%E4%BA%8C%E5%8F%89%E6%A0%91%E5%B7%A6%E6%97%8B01.png"
+                      alt="05_平衡二叉树左旋01"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/JavaNotes/dataStructure/img/05_%E5%B9%B3%E8%A1%A1%E4%BA%8C%E5%8F%89%E6%A0%91%E5%B7%A6%E6%97%8B02.png"
+                      alt="05_平衡二叉树左旋02"
+                ></p>
+</li>
+<li><p>右旋</p>
+<ul>
+<li><p>就是将根节点的左侧往右拉,左子节点变成了新的父节点,并把多余的右子节点出让,给已经降级根节点当左子节点</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/JavaNotes/dataStructure/img/06_%E5%B9%B3%E8%A1%A1%E4%BA%8C%E5%8F%89%E6%A0%91%E5%8F%B3%E6%97%8B01.png"
+                      alt="06_平衡二叉树右旋01"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/JavaNotes/dataStructure/img/06_%E5%B9%B3%E8%A1%A1%E4%BA%8C%E5%8F%89%E6%A0%91%E5%8F%B3%E6%97%8B02.png"
+                      alt="06_平衡二叉树右旋02"
+                ></p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>平衡二叉树和二叉查找树对比结构图</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/JavaNotes/dataStructure/img/07_%E5%B9%B3%E8%A1%A1%E4%BA%8C%E5%8F%89%E6%A0%91%E5%92%8C%E4%BA%8C%E5%8F%89%E6%9F%A5%E6%89%BE%E6%A0%91%E5%AF%B9%E6%AF%94%E7%BB%93%E6%9E%84%E5%9B%BE.png"
+                      alt="07_平衡二叉树和二叉查找树对比结构图"
+                ></p>
+</li>
+<li><p>平衡二叉树旋转的四种情况</p>
+<ul>
+<li><p>左左</p>
+<ul>
+<li><p>左左: 当根节点左子树的左子树有节点插入,导致二叉树不平衡</p>
+</li>
+<li><p>如何旋转: 直接对整体进行右旋即可</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/JavaNotes/dataStructure/img/08_%E5%B9%B3%E8%A1%A1%E4%BA%8C%E5%8F%89%E6%A0%91%E5%B7%A6%E5%B7%A6.png"
+                      alt="08_平衡二叉树左左"
+                ></p>
+</li>
+</ul>
+</li>
+<li><p>左右</p>
+<ul>
+<li><p>左右: 当根节点左子树的右子树有节点插入,导致二叉树不平衡</p>
+</li>
+<li><p>如何旋转: 先在左子树对应的节点位置进行左旋,在对整体进行右旋</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/JavaNotes/dataStructure/img/09_%E5%B9%B3%E8%A1%A1%E4%BA%8C%E5%8F%89%E6%A0%91%E5%B7%A6%E5%8F%B3.png"
+                      alt="09_平衡二叉树左右"
+                ></p>
+</li>
+</ul>
+</li>
+<li><p>右右</p>
+<ul>
+<li><p>右右: 当根节点右子树的右子树有节点插入,导致二叉树不平衡</p>
+</li>
+<li><p>如何旋转: 直接对整体进行左旋即可</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/JavaNotes/dataStructure/img/10_%E5%B9%B3%E8%A1%A1%E4%BA%8C%E5%8F%89%E6%A0%91%E5%8F%B3%E5%8F%B3.png"
+                      alt="10_平衡二叉树右右"
+                ></p>
+</li>
+</ul>
+</li>
+<li><p>右左</p>
+<ul>
+<li><p>右左:当根节点右子树的左子树有节点插入,导致二叉树不平衡</p>
+</li>
+<li><p>如何旋转: 先在右子树对应的节点位置进行右旋,在对整体进行左旋</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/JavaNotes/dataStructure/img/11_%E5%B9%B3%E8%A1%A1%E4%BA%8C%E5%8F%89%E6%A0%91%E5%8F%B3%E5%B7%A6.png"
+                      alt="11_平衡二叉树右左"
+                ></p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="4-3红黑树【理解】"><a href="#4-3红黑树【理解】" class="headerlink" title="4.3红黑树【理解】"></a>4.3红黑树【理解】</h3><ul>
+<li><p>红黑树的特点</p>
+<ul>
+<li>平衡二叉B树</li>
+<li>每一个节点可以是红或者黑</li>
+<li>红黑树不是高度平衡的,它的平衡是通过”自己的红黑规则”进行实现的</li>
+</ul>
+</li>
+<li><p>红黑树的红黑规则有哪些</p>
+<ol>
+<li><p>每一个节点或是红色的,或者是黑色的</p>
+</li>
+<li><p>根节点必须是黑色</p>
+</li>
+<li><p>如果一个节点没有子节点或者父节点,则该节点相应的指针属性值为Nil,这些Nil视为叶节点,每个叶节点(Nil)是黑色的</p>
+</li>
+<li><p>如果某一个节点是红色,那么它的子节点必须是黑色(不能出现两个红色节点相连 的情况)</p>
+</li>
+<li><p>对每一个节点,从该节点到其所有后代叶节点的简单路径上,均包含相同数目的黑色节点</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/JavaNotes/dataStructure/img/12_%E7%BA%A2%E9%BB%91%E6%A0%91%E7%BB%93%E6%9E%84%E5%9B%BE.png"
+                      alt="12_红黑树结构图"
+                ></p>
+</li>
+</ol>
+</li>
+<li><p>红黑树添加节点的默认颜色</p>
+<ul>
+<li><p>添加节点时,默认为红色,效率高</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/JavaNotes/dataStructure/img/13_%E7%BA%A2%E9%BB%91%E6%A0%91%E6%B7%BB%E5%8A%A0%E8%8A%82%E7%82%B9%E9%A2%9C%E8%89%B2.png"
+                      alt="13_红黑树添加节点颜色"
+                ></p>
+</li>
+</ul>
+</li>
+<li><p>红黑树添加节点后如何保持红黑规则</p>
+<ul>
+<li>根节点位置<ul>
+<li>直接变为黑色</li>
+</ul>
+</li>
+<li>非根节点位置<ul>
+<li>父节点为黑色<ul>
+<li>不需要任何操作,默认红色即可</li>
+</ul>
+</li>
+<li>父节点为红色<ul>
+<li>叔叔节点为红色<ol>
+<li>将”父节点”设为黑色,将”叔叔节点”设为黑色</li>
+<li>将”祖父节点”设为红色</li>
+<li>如果”祖父节点”为根节点,则将根节点再次变成黑色</li>
+</ol>
+</li>
+<li>叔叔节点为黑色<ol>
+<li>将”父节点”设为黑色</li>
+<li>将”祖父节点”设为红色</li>
+<li>以”祖父节点”为支点进行旋转</li>
+</ol>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/JavaNotes/dataStructure/img/rules.jpg"
+                     
+                ></p>
+<p>##5.HashSet集合</p>
+<h3 id="5-1HashSet集合概述和特点【应用】"><a href="#5-1HashSet集合概述和特点【应用】" class="headerlink" title="5.1HashSet集合概述和特点【应用】"></a>5.1HashSet集合概述和特点【应用】</h3><ul>
+<li>底层数据结构是哈希表</li>
+<li>存取无序</li>
+<li>不可以存储重复元素</li>
+<li>没有索引,不能使用普通for循环遍历</li>
+</ul>
+<h3 id="5-2HashSet集合的基本应用【应用】"><a href="#5-2HashSet集合的基本应用【应用】" class="headerlink" title="5.2HashSet集合的基本应用【应用】"></a>5.2HashSet集合的基本应用【应用】</h3><p>存储字符串并遍历</p>
+<div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">HashSetDemo</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        <span class="comment">//创建集合对象</span></span><br><span class="line">        HashSet&lt;String&gt; set = <span class="keyword">new</span> <span class="title class_">HashSet</span>&lt;String&gt;();</span><br><span class="line"></span><br><span class="line">        <span class="comment">//添加元素</span></span><br><span class="line">        set.add(<span class="string">&quot;hello&quot;</span>);</span><br><span class="line">        set.add(<span class="string">&quot;world&quot;</span>);</span><br><span class="line">        set.add(<span class="string">&quot;java&quot;</span>);</span><br><span class="line">        <span class="comment">//不包含重复元素的集合</span></span><br><span class="line">        set.add(<span class="string">&quot;world&quot;</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//遍历</span></span><br><span class="line">        <span class="keyword">for</span>(String s : set) &#123;</span><br><span class="line">            System.out.println(s);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<h3 id="5-3哈希值【理解】"><a href="#5-3哈希值【理解】" class="headerlink" title="5.3哈希值【理解】"></a>5.3哈希值【理解】</h3><ul>
+<li><p>哈希值简介</p>
+<p>​	是JDK根据对象的地址或者字符串或者数字算出来的int类型的数值</p>
+</li>
+<li><p>如何获取哈希值</p>
+<p>​	Object类中的public int hashCode()：返回对象的哈希码值</p>
+</li>
+<li><p>哈希值的特点</p>
+<ul>
+<li>同一个对象多次调用hashCode()方法返回的哈希值是相同的</li>
+<li>默认情况下，不同对象的哈希值是不同的。而重写hashCode()方法，可以实现让不同对象的哈希值相同</li>
+</ul>
+</li>
+</ul>
+<h3 id="5-4哈希表结构【理解】"><a href="#5-4哈希表结构【理解】" class="headerlink" title="5.4哈希表结构【理解】"></a>5.4哈希表结构【理解】</h3><ul>
+<li><p>JDK1.8以前</p>
+<p>​	数组 + 链表</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/JavaNotes/dataStructure/img/14_JKD8%E4%BB%A5%E5%89%8D%E5%93%88%E5%B8%8C%E8%A1%A8.png"
+                     
+                ></p>
+</li>
+<li><p>JDK1.8以后</p>
+<ul>
+<li><p>节点个数少于等于8个</p>
+<p>​	数组 + 链表</p>
+</li>
+<li><p>节点个数多于8个</p>
+<p>​	数组 + 红黑树</p>
+</li>
+</ul>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/JavaNotes/dataStructure/img/15_JKD8%E4%BB%A5%E5%90%8E%E5%93%88%E5%B8%8C%E8%A1%A8.png"
+                     
+                ></p>
+</li>
+</ul>
+<h3 id="5-5HashSet集合存储学生对象并遍历【应用】"><a href="#5-5HashSet集合存储学生对象并遍历【应用】" class="headerlink" title="5.5HashSet集合存储学生对象并遍历【应用】"></a>5.5HashSet集合存储学生对象并遍历【应用】</h3><ul>
+<li><p>案例需求</p>
+<ul>
+<li>创建一个存储学生对象的集合，存储多个学生对象，使用程序实现在控制台遍历该集合</li>
+<li>要求：学生对象的成员变量值相同，我们就认为是同一个对象</li>
+</ul>
+</li>
+<li><p>代码实现</p>
+<p>学生类</p>
+<div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Student</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line">    <span class="keyword">private</span> <span class="type">int</span> age;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">Student</span><span class="params">()</span> &#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">Student</span><span class="params">(String name, <span class="type">int</span> age)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.name = name;</span><br><span class="line">        <span class="built_in">this</span>.age = age;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">getName</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setName</span><span class="params">(String name)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.name = name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">getAge</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> age;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setAge</span><span class="params">(<span class="type">int</span> age)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.age = age;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">equals</span><span class="params">(Object o)</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="built_in">this</span> == o) <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">        <span class="keyword">if</span> (o == <span class="literal">null</span> || getClass() != o.getClass()) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line"></span><br><span class="line">        <span class="type">Student</span> <span class="variable">student</span> <span class="operator">=</span> (Student) o;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (age != student.age) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        <span class="keyword">return</span> name != <span class="literal">null</span> ? name.equals(student.name) : student.name == <span class="literal">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">hashCode</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="type">int</span> <span class="variable">result</span> <span class="operator">=</span> name != <span class="literal">null</span> ? name.hashCode() : <span class="number">0</span>;</span><br><span class="line">        result = <span class="number">31</span> * result + age;</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<p>测试类</p>
+<div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">HashSetDemo02</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        <span class="comment">//创建HashSet集合对象</span></span><br><span class="line">        HashSet&lt;Student&gt; hs = <span class="keyword">new</span> <span class="title class_">HashSet</span>&lt;Student&gt;();</span><br><span class="line"></span><br><span class="line">        <span class="comment">//创建学生对象</span></span><br><span class="line">        <span class="type">Student</span> <span class="variable">s1</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Student</span>(<span class="string">&quot;林青霞&quot;</span>, <span class="number">30</span>);</span><br><span class="line">        <span class="type">Student</span> <span class="variable">s2</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Student</span>(<span class="string">&quot;张曼玉&quot;</span>, <span class="number">35</span>);</span><br><span class="line">        <span class="type">Student</span> <span class="variable">s3</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Student</span>(<span class="string">&quot;王祖贤&quot;</span>, <span class="number">33</span>);</span><br><span class="line"></span><br><span class="line">        <span class="type">Student</span> <span class="variable">s4</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Student</span>(<span class="string">&quot;王祖贤&quot;</span>, <span class="number">33</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//把学生添加到集合</span></span><br><span class="line">        hs.add(s1);</span><br><span class="line">        hs.add(s2);</span><br><span class="line">        hs.add(s3);</span><br><span class="line">        hs.add(s4);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//遍历集合(增强for)</span></span><br><span class="line">        <span class="keyword">for</span> (Student s : hs) &#123;</span><br><span class="line">            System.out.println(s.getName() + <span class="string">&quot;,&quot;</span> + s.getAge());</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+</li>
+<li><p>总结</p>
+<p>​	HashSet集合存储自定义类型元素,要想实现元素的唯一,要求必须重写hashCode方法和equals方法</p>
+</li>
+</ul>
+
+        </div>
+
+        
+
+        
+            <ul class="post-tags-box text-lg mt-1.5 flex-wrap justify-center flex md:hidden">
+                
+                    <li class="tag-item mx-0.5">
+                        <a href="/tags/%E7%BA%A2%E9%BB%91%E6%A0%91/">#红黑树</a>&nbsp;
+                    </li>
+                
+                    <li class="tag-item mx-0.5">
+                        <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">#数据结构</a>&nbsp;
+                    </li>
+                
+            </ul>
+        
+
+        
+
+        
+            <div class="article-nav my-8 flex justify-between items-center px-2 sm:px-6 md:px-8">
+                
+                
+                    <div class="article-next border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
+                        <a class="next"
+                        rel="next"
+                        href="/2024/03/17/%E8%BF%BD%E6%B1%82%E4%B8%8E%E6%8A%95%E5%85%A5/"
+                        >
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">那些我们努力追求却无法得到的，也是世界对我们的一种偏爱</span>
+                                <span class="post-nav-item">Next posts</span>
+                            </span>
+                            <span class="right arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+
+        
+            <div class="comment-container px-2 sm:px-6 md:px-8 pb-8">
+                <div class="comments-container mt-10 w-full ">
+    <div id="comment-anchor" class="w-full h-2.5"></div>
+    <div class="comment-area-title w-full my-1.5 md:my-2.5 text-xl md:text-3xl font-bold">
+        Comments
+    </div>
+    
+
+        
+            
+    <div id="waline"></div>
+    <script type="module" data-swup-reload-script>
+      import { init } from '/js/libs/waline.mjs';
+
+      function loadWaline() {
+        init({
+          el: '#waline',
+          serverURL: 'https://example.example.com',
+          lang: 'zh-CN',
+          dark: 'body[class~="dark-mode"]',
+          requiredMeta: ['nick', 'mail'],
+          emoji: [],
+          recaptchaV3Key: "wasd",
+          
+        });
+      }
+
+      if (typeof swup !== 'undefined') {
+        loadWaline();
+      } else {
+        window.addEventListener('DOMContentLoaded', loadWaline);
+      }
+    </script>
+
+
+
+        
+    
+</div>
+
+            </div>
+        
+    </div>
+
+    
+        <div class="toc-content-container">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <div class="toc-title">On this page</div>
+        <div class="page-title">泛型&amp;Set&amp;数据结构</div>
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E6%B3%9B%E5%9E%8B"><span class="nav-text">1.泛型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1%E6%B3%9B%E5%9E%8B%E6%A6%82%E8%BF%B0"><span class="nav-text">1.1泛型概述</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-Set%E9%9B%86%E5%90%88"><span class="nav-text">2.Set集合</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1Set%E9%9B%86%E5%90%88%E6%A6%82%E8%BF%B0%E5%92%8C%E7%89%B9%E7%82%B9%E3%80%90%E5%BA%94%E7%94%A8%E3%80%91"><span class="nav-text">2.1Set集合概述和特点【应用】</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2Set%E9%9B%86%E5%90%88%E7%9A%84%E4%BD%BF%E7%94%A8%E3%80%90%E5%BA%94%E7%94%A8%E3%80%91"><span class="nav-text">2.2Set集合的使用【应用】</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-TreeSet%E9%9B%86%E5%90%88"><span class="nav-text">3.TreeSet集合</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1TreeSet%E9%9B%86%E5%90%88%E6%A6%82%E8%BF%B0%E5%92%8C%E7%89%B9%E7%82%B9%E3%80%90%E5%BA%94%E7%94%A8%E3%80%91"><span class="nav-text">3.1TreeSet集合概述和特点【应用】</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2TreeSet%E9%9B%86%E5%90%88%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8%E3%80%90%E5%BA%94%E7%94%A8%E3%80%91"><span class="nav-text">3.2TreeSet集合基本使用【应用】</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3%E8%87%AA%E7%84%B6%E6%8E%92%E5%BA%8FComparable%E7%9A%84%E4%BD%BF%E7%94%A8%E3%80%90%E5%BA%94%E7%94%A8%E3%80%91"><span class="nav-text">3.3自然排序Comparable的使用【应用】</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-4%E6%AF%94%E8%BE%83%E5%99%A8%E6%8E%92%E5%BA%8FComparator%E7%9A%84%E4%BD%BF%E7%94%A8%E3%80%90%E5%BA%94%E7%94%A8%E3%80%91"><span class="nav-text">3.4比较器排序Comparator的使用【应用】</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-5%E4%B8%A4%E7%A7%8D%E6%AF%94%E8%BE%83%E6%96%B9%E5%BC%8F%E6%80%BB%E7%BB%93%E3%80%90%E7%90%86%E8%A7%A3%E3%80%91"><span class="nav-text">3.5两种比较方式总结【理解】</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84"><span class="nav-text">4.数据结构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1%E4%BA%8C%E5%8F%89%E6%A0%91%E3%80%90%E7%90%86%E8%A7%A3%E3%80%91"><span class="nav-text">4.1二叉树【理解】</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2%E4%BA%8C%E5%8F%89%E6%9F%A5%E6%89%BE%E6%A0%91%E3%80%90%E7%90%86%E8%A7%A3%E3%80%91"><span class="nav-text">4.2二叉查找树【理解】</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-3%E5%B9%B3%E8%A1%A1%E4%BA%8C%E5%8F%89%E6%A0%91%E3%80%90%E7%90%86%E8%A7%A3%E3%80%91"><span class="nav-text">4.3平衡二叉树【理解】</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-3%E7%BA%A2%E9%BB%91%E6%A0%91%E3%80%90%E7%90%86%E8%A7%A3%E3%80%91"><span class="nav-text">4.3红黑树【理解】</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-1HashSet%E9%9B%86%E5%90%88%E6%A6%82%E8%BF%B0%E5%92%8C%E7%89%B9%E7%82%B9%E3%80%90%E5%BA%94%E7%94%A8%E3%80%91"><span class="nav-text">5.1HashSet集合概述和特点【应用】</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-2HashSet%E9%9B%86%E5%90%88%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%BA%94%E7%94%A8%E3%80%90%E5%BA%94%E7%94%A8%E3%80%91"><span class="nav-text">5.2HashSet集合的基本应用【应用】</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-3%E5%93%88%E5%B8%8C%E5%80%BC%E3%80%90%E7%90%86%E8%A7%A3%E3%80%91"><span class="nav-text">5.3哈希值【理解】</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-4%E5%93%88%E5%B8%8C%E8%A1%A8%E7%BB%93%E6%9E%84%E3%80%90%E7%90%86%E8%A7%A3%E3%80%91"><span class="nav-text">5.4哈希表结构【理解】</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-5HashSet%E9%9B%86%E5%90%88%E5%AD%98%E5%82%A8%E5%AD%A6%E7%94%9F%E5%AF%B9%E8%B1%A1%E5%B9%B6%E9%81%8D%E5%8E%86%E3%80%90%E5%BA%94%E7%94%A8%E3%80%91"><span class="nav-text">5.5HashSet集合存储学生对象并遍历【应用】</span></a></li></ol></li></ol>
+
+    </div>
+</div>
+        </div>
+    
+</div>
+
+
+
+                
+
+            </div>
+
+            
+
+        </div>
+
+        <div class="main-content-footer">
+            <footer class="footer mt-5 py-5 h-auto text-base text-third-text-color relative border-t-2 border-t-border-color">
+    <div class="info-container py-3 text-center">
+        
+            <div class="customize-info my-1">无论历史是好还是坏，人要往前看~ ✨</div>
+        
+        <div class="text-center">
+            &copy;
+            
+              <span>2023</span>
+              -
+            
+            2024&nbsp;&nbsp;<i class="fa-solid fa-heart fa-beat" style="--fa-animation-duration: 0.5s; color: #f54545"></i>&nbsp;&nbsp;<a href="/">Artemis</a>
+            
+                
+                <p class="post-count space-x-0.5">
+                    <span>
+                        17 posts in total
+                    </span>
+                    
+                        <span>
+                            52.5k words in total
+                        </span>
+                    
+                </p>
+            
+        </div>
+        
+            <script data-swup-reload-script src="https://cn.vercount.one/js"></script>
+            <div class="relative text-center lg:absolute lg:right-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-right">
+                
+                    <span id="busuanzi_container_site_uv" class="lg:!block">
+                        <span class="text-sm">VISITOR COUNT</span>
+                        <span id="busuanzi_value_site_uv"></span>
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv" class="lg:!block">
+                        <span class="text-sm">TOTAL PAGE VIEWS</span>
+                        <span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <div class="relative text-center lg:absolute lg:left-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-left">
+            <span class="lg:block text-sm"></span>
+            <span class="text-sm lg:block">&nbsp;<a class="text-base" target="_blank" href="">Redefine v2.6.1</a></span>
+        </div>
+        
+        
+            <div>
+                Blog up for <span class="odometer" id="runtime_days" ></span> days <span class="odometer" id="runtime_hours"></span> hrs <span class="odometer" id="runtime_minutes"></span> Min <span class="odometer" id="runtime_seconds"></span> Sec
+            </div>
+        
+        
+            <script data-swup-reload-script>
+                try {
+                    function odometer_init() {
+                    const elements = document.querySelectorAll('.odometer');
+                    elements.forEach(el => {
+                        new Odometer({
+                            el,
+                            format: '( ddd).dd',
+                            duration: 200
+                        });
+                    });
+                    }
+                    odometer_init();
+                } catch (error) {}
+            </script>
+        
+        
+            
+                
+        
+                
+        
+                
+
+                    
+                        <script data-swup-reload-script src="/js/cursor.js?1"></script>
+                    
+        
+                
+
+                    
+                        <script data-swup-reload-script src="/js/click.js?1"></script>
+                    
+        
+        
+    </div>  
+</footer>
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="article-tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="right-bottom-tools page-aside-toggle">
+                <i class="fa-regular fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+            <li class="go-comment">
+                <i class="fa-regular fa-comments"></i>
+            </li>
+        
+    </ul>
+</div>
+
+        </div>
+    
+
+    <div class="right-side-tools-container">
+        <div class="side-tools-container">
+    <ul class="hidden-tools-list">
+        <li class="right-bottom-tools tool-font-adjust-plus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-plus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-font-adjust-minus flex justify-center items-center">
+            <i class="fa-regular fa-magnifying-glass-minus"></i>
+        </li>
+
+        <li class="right-bottom-tools tool-dark-light-toggle flex justify-center items-center">
+            <i class="fa-regular fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+
+        <li class="right-bottom-tools tool-scroll-to-bottom flex justify-center items-center">
+            <i class="fa-regular fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="visible-tools-list">
+        <li class="right-bottom-tools toggle-tools-list flex justify-center items-center">
+            <i class="fa-regular fa-cog fa-spin"></i>
+        </li>
+        
+            <li class="right-bottom-tools tool-scroll-to-top flex justify-center items-center">
+                <i class="arrow-up fas fa-arrow-up"></i>
+                <span class="percent"></span>
+            </li>
+        
+        
+    </ul>
+</div>
+
+    </div>
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fa-solid fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="Search..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fa-solid fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fa-solid fa-spinner fa-spin-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+</main>
+
+
+    <script src="https://evan.beee.top/projects/hexo-theme-redefine@2.6.1/source/js/libs/Swup.min.js"></script><script src="https://evan.beee.top/projects/hexo-theme-redefine@2.6.1/source/js/libs/SwupSlideTheme.min.js"></script><script src="https://evan.beee.top/projects/hexo-theme-redefine@2.6.1/source/js/libs/SwupScriptsPlugin.min.js"></script><script src="https://evan.beee.top/projects/hexo-theme-redefine@2.6.1/source/js/libs/SwupProgressPlugin.min.js"></script><script src="https://evan.beee.top/projects/hexo-theme-redefine@2.6.1/source/js/libs/SwupScrollPlugin.min.js"></script><script src="https://evan.beee.top/projects/hexo-theme-redefine@2.6.1/source/js/libs/SwupPreloadPlugin.min.js"></script>
+<script>
+    const swup = new Swup({
+        plugins: [
+            new SwupScriptsPlugin({
+                optin: true,
+            }),
+            new SwupProgressPlugin(),
+            new SwupScrollPlugin({
+                offset: 80,
+            }),
+            new SwupSlideTheme({
+                mainElement: ".main-content-body",
+            }),
+            new SwupPreloadPlugin(),
+        ],
+        containers: ["#swup"],
+    });
+</script>
+
+
+
+
+
+
+<script type="module" src="https://evan.beee.top/projects/hexo-theme-redefine@2.6.1/source/js/tools/imageViewer.js"></script><script type="module" src="https://evan.beee.top/projects/hexo-theme-redefine@2.6.1/source/js/utils.js"></script><script type="module" src="https://evan.beee.top/projects/hexo-theme-redefine@2.6.1/source/js/main.js"></script><script type="module" src="https://evan.beee.top/projects/hexo-theme-redefine@2.6.1/source/js/layouts/navbarShrink.js"></script><script type="module" src="https://evan.beee.top/projects/hexo-theme-redefine@2.6.1/source/js/tools/scrollTopBottom.js"></script><script type="module" src="https://evan.beee.top/projects/hexo-theme-redefine@2.6.1/source/js/tools/lightDarkSwitch.js"></script><script type="module" src="https://evan.beee.top/projects/hexo-theme-redefine@2.6.1/source/js/layouts/categoryList.js"></script>
+
+
+    <script type="module" src="https://evan.beee.top/projects/hexo-theme-redefine@2.6.1/source/js/tools/localSearch.js"></script>
+
+
+
+    <script type="module" src="https://evan.beee.top/projects/hexo-theme-redefine@2.6.1/source/js/tools/codeBlock.js"></script>
+
+
+
+    <script type="module" src="https://evan.beee.top/projects/hexo-theme-redefine@2.6.1/source/js/layouts/lazyload.js"></script>
+
+
+
+    <script src="https://evan.beee.top/projects/hexo-theme-redefine@2.6.1/source/js/tools/runtime.js"></script>
+    <script src="https://evan.beee.top/projects/hexo-theme-redefine@2.6.1/source/js/libs/odometer.min.js"></script>
+    <link rel="stylesheet" href="//evan.beee.top/projects/hexo-theme-redefine@2.6.1/source/assets/odometer-theme-minimal.css">
+
+
+
+  <script src="https://evan.beee.top/projects/hexo-theme-redefine@2.6.1/source/js/libs/Typed.min.js"></script>
+  <script type="module" src="https://evan.beee.top/projects/hexo-theme-redefine@2.6.1/source/js/plugins/typed.js"></script>
+
+
+
+
+
+    <script src="https://evan.beee.top/projects/hexo-theme-redefine@2.6.1/source/js/libs/minimasonry.min.js"></script>
+    <script type="module" src="https://evan.beee.top/projects/hexo-theme-redefine@2.6.1/source/js/plugins/masonry.js"></script>
+
+
+
+
+<div class="post-scripts" data-swup-reload-script>
+    
+        <script type="module" src="https://evan.beee.top/projects/hexo-theme-redefine@2.6.1/source/js/tools/tocToggle.js"></script><script type="module" src="https://evan.beee.top/projects/hexo-theme-redefine@2.6.1/source/js/layouts/toc.js"></script><script type="module" src="https://evan.beee.top/projects/hexo-theme-redefine@2.6.1/source/js/plugins/tabs.js"></script>
+    
+</div>
+
+
+    <div id="aplayer"></div>
+<script src="https://evan.beee.top/projects/hexo-theme-redefine@2.6.1/source/js/libs/APlayer.min.js"></script>
+<script src="https://evan.beee.top/projects/hexo-theme-redefine@2.6.1/source/js/plugins/aplayer.js"></script>
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"scale":1,"hHeadPos":0.5,"vHeadPos":0.618,"jsonPath":"/live2dw/assets/shizuku.model.json"},"display":{"superSample":2,"width":400,"height":380,"position":"right","hOffset":50,"vOffset":0},"mobile":{"show":false,"scale":0.5},"react":{"opacityDefault":0.7,"opacityOnHover":0.2},"dialog":{"enable":true,"hitokoto":false},"log":false});</script></body>
+</html>
