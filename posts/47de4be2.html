@@ -1,0 +1,673 @@
+<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"><title>泛型&amp;Set&amp;数据结构 | Artemis 🐱</title><meta name="keywords" content="红黑树,数据结构"><meta name="author" content="Artemis"><meta name="copyright" content="Artemis"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#f7f9fe"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-touch-fullscreen" content="yes"><meta name="apple-mobile-web-app-title" content="泛型&amp;Set&amp;数据结构"><meta name="application-name" content="泛型&amp;Set&amp;数据结构"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="#f7f9fe"><meta property="og:type" content="article"><meta property="og:title" content="泛型&amp;Set&amp;数据结构"><meta property="og:url" content="http://sukhoigit.github.io/posts/47de4be2.html"><meta property="og:site_name" content="Artemis 🐱"><meta property="og:description" content="1.泛型1.1泛型概述 泛型的介绍 ​	泛型是JDK5中引入的特性，它提供了编译时类型安全检测机制  泛型的好处  把运行时期的问题提前到了编译期间 避免了强制类型转换   泛型的定义格式  &amp;lt;类型&amp;gt;: 指定一种类型的格式.尖括号里面可以任意书写,一般只写一个字母.例如:   &amp;lt;类"><meta property="og:locale" content="en"><meta property="og:image" content="https://www.toopic.cn/public/uploads/small/1710477852964171047785229.jpg"><meta property="article:author" content="Artemis"><meta property="article:tag"><meta name="twitter:card" content="summary"><meta name="twitter:image" content="https://www.toopic.cn/public/uploads/small/1710477852964171047785229.jpg"><meta name="description" content="1.泛型1.1泛型概述 泛型的介绍 ​	泛型是JDK5中引入的特性，它提供了编译时类型安全检测机制  泛型的好处  把运行时期的问题提前到了编译期间 避免了强制类型转换   泛型的定义格式  &amp;lt;类型&amp;gt;: 指定一种类型的格式.尖括号里面可以任意书写,一般只写一个字母.例如:   &amp;lt;类"><link rel="shortcut icon" href="/favicon.ico"><link rel="canonical" href="http://sukhoigit.github.io/posts/47de4be2"><link rel="preconnect" href="//cdn.cbd.int"/><meta name="google-site-verification" content="xxx"/><meta name="baidu-site-verification" content="code-xxx"/><meta name="msvalidate.01" content="xxx"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.cbd.int/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.cbd.int/node-snackbar@0.1.16/dist/snackbar.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.cbd.int/@fancyapps/ui@5.0.28/dist/fancybox/fancybox.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://npm.elemecdn.com/anzhiyu-theme-static@1.0.0/swiper/swiper.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  linkPageTop: undefined,
+  peoplecanvas: {"enable":true,"img":"https://upload-bbs.miyoushe.com/upload/2023/09/03/125766904/ee23df8517f3c3e3efc4145658269c06_5714860933110284659.png"},
+  postHeadAiDescription: {"enable":true,"gptName":"AnZhiYu","mode":"local","switchBtn":false,"btnLink":"https://afdian.net/item/886a79d4db6711eda42a52540025c377","randomNum":3,"basicWordCount":1000,"key":"xxxx","Referer":"https://xx.xx/"},
+  diytitle: {"enable":true,"leaveTitle":"w(ﾟДﾟ)w 不要走！再看看嘛！","backTitle":"♪(^∇^*)欢迎肥来！"},
+  LA51: undefined,
+  greetingBox: {"enable":true,"default":"晚上好👋","list":[{"greeting":"晚安😴","startTime":0,"endTime":5},{"greeting":"早上好鸭👋, 祝你一天好心情！","startTime":6,"endTime":9},{"greeting":"上午好👋, 状态很好，鼓励一下～","startTime":10,"endTime":10},{"greeting":"11点多啦, 在坚持一下就吃饭啦～","startTime":11,"endTime":11},{"greeting":"午安👋, 宝贝","startTime":12,"endTime":14},{"greeting":"🌈充实的一天辛苦啦！","startTime":14,"endTime":18},{"greeting":"19点喽, 奖励一顿丰盛的大餐吧🍔。","startTime":19,"endTime":19},{"greeting":"晚上好👋, 在属于自己的时间好好放松😌~","startTime":20,"endTime":24}]},
+  twikooEnvId: '',
+  commentBarrageConfig:{"enable":true,"maxBarrage":1,"barrageTime":4000,"accessToken":"","mailMd5":""},
+  root: '/',
+  preloader: {"source":3},
+  friends_vue_info: undefined,
+  navMusic: true,
+  mainTone: undefined,
+  authorStatus: {"skills":["🤖️ 数码科技爱好者","🔍 分享与热心帮助","🤝 军事发烧友","🏃 脚踏实地行动派","🚀 航空航天爱好者"]},
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"languages":{"hits_empty":"We didn't find any results for the search: ${query}"}},
+  translate: {"defaultEncoding":2,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"简","rightMenuMsgToTraditionalChinese":"转为繁体","rightMenuMsgToSimplifiedChinese":"转为简体"},
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":330},
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  },
+  relativeDate: {
+    homepage: false,
+    simplehomepage: true,
+    post: false
+  },
+  runtime: 'days',
+  date_suffix: {
+    just: 'Just',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: {"copy":true,"copyrightEbable":false,"limitCount":50,"languages":{"author":"Author: Artemis","link":"Link: ","source":"Source: Artemis 🐱","info":"Copyright is owned by the author. For commercial reprints, please contact the author for authorization. For non-commercial reprints, please indicate the source.","copySuccess":"Copy success, copy and reprint please mark the address of this article"}},
+  lightbox: 'fancybox',
+  Snackbar: {"chs_to_cht":"Traditional Chinese Activated Manually","cht_to_chs":"Simplified Chinese Activated Manually","day_to_night":"Dark Mode Activated Manually","night_to_day":"Light Mode Activated Manually","bgLight":"#425AEF","bgDark":"#1f1f1f","position":"top-center"},
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.cbd.int/flickr-justified-gallery@2.1.2/dist/fjGallery.min.js',
+      css: 'https://cdn.cbd.int/flickr-justified-gallery@2.1.2/dist/fjGallery.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: true,
+  isAnchor: false,
+  shortcutKey: undefined,
+  autoDarkmode: true
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  configTitle: 'Artemis 🐱',
+  title: '泛型&Set&数据结构',
+  postAI: '',
+  pageFillDescription: '1.泛型, 1.1泛型概述, 2.Set集合, 2.1Set集合概述和特点【应用】, 2.2Set集合的使用【应用】, 3.TreeSet集合, 3.1TreeSet集合概述和特点【应用】, 3.2TreeSet集合基本使用【应用】, 3.3自然排序Comparable的使用【应用】, 3.4比较器排序Comparator的使用【应用】, 3.5两种比较方式总结【理解】, 4.数据结构, 4.1二叉树【理解】, 4.2二叉查找树【理解】, 4.3平衡二叉树【理解】, 4.3红黑树【理解】, 5.1HashSet集合概述和特点【应用】, 5.2HashSet集合的基本应用【应用】, 5.3哈希值【理解】, 5.4哈希表结构【理解】, 5.5HashSet集合存储学生对象并遍历【应用】泛型泛型概述泛型的介绍泛型是中引入的特性它提供了编译时类型安全检测机制泛型的好处把运行时期的问题提前到了编译期间避免了强制类型转换泛型的定义格式类型指定一种类型的格式尖括号里面可以任意书写一般只写一个字母例如类型类型指定多种类型的格式多种类型之间用逗号隔开例如集合集合概述和特点应用不可以存储重复元素没有索引不能使用普通循环遍历集合的使用应用存储字符串并遍历创建集合对象添加元素集合是没有索引的所以不能使用通过索引获取元素的方法遍历集合集合集合概述和特点应用不可以存储重复元素没有索引可以将元素按照规则进行排序根据其元素的自然排序进行排序根据指定的比较器进行排序集合基本使用应用存储类型的整数并遍历创建集合对象添加元素遍历集合自然排序的使用应用案例需求存储学生对象并遍历创建集合使用无参构造方法要求按照年龄从小到大排序年龄相同时按照姓名的字母顺序排序实现步骤使用空参构造创建集合用集合存储自定义对象无参构造方法使用的是自然排序对元素进行排序的自定义的类实现接口自然排序就是让元素所属的类实现接口重写方法重写接口中的方法重写方法时一定要注意排序规则必须按照要求的主要条件和次要条件来写代码实现学生类按照对象的年龄进行排序主要判断条件按照年龄从小到大排序次要判断条件年龄相同时按照姓名的字母顺序排序测试类创建集合对象创建学生对象把学生添加到集合遍历集合比较器排序的使用应用案例需求存储老师对象并遍历创建集合使用带参构造方法要求按照年龄从小到大排序年龄相同时按照姓名的字母顺序排序实现步骤用集合存储自定义对象带参构造方法使用的是比较器排序对元素进行排序的比较器排序就是让集合构造方法接收的实现类对象重写方法重写方法时一定要注意排序规则必须按照要求的主要条件和次要条件来写代码实现老师类测试类创建集合对象表示现在要存入的那个元素表示已经存入到集合中的元素主要条件次要条件创建老师对象把老师添加到集合遍历集合两种比较方式总结理解两种比较方式小结自然排序自定义类实现接口重写方法根据返回值进行排序比较器排序创建对象的时候传递的实现类对象重写方法根据返回值进行排序在使用的时候默认使用自然排序当自然排序不满足现在的需求时必须使用比较器排序两种方式中关于返回值的规则如果返回值为负数表示当前存入的元素是较小值存左边如果返回值为表示当前存入的元素跟集合中元素重复了不存如果返回值为正数表示当前存入的元素是较大值存右边数据结构二叉树理解二叉树的特点二叉树中任意一个节点的度要小于等于节点在树结构中每一个元素称之为节点度每一个节点的子节点数量称之为度二叉树结构图二叉查找树理解二叉查找树的特点二叉查找树又称二叉排序树或者二叉搜索树每一个节点上最多有两个子节点左子树上所有节点的值都小于根节点的值右子树上所有节点的值都大于根节点的值二叉查找树结构图二叉查找树和二叉树对比结构图二叉查找树添加节点规则小的存左边大的存右边一样的不存平衡二叉树理解平衡二叉树的特点二叉树左右两个子树的高度差不超过任意节点的左右两个子树都是一颗平衡二叉树平衡二叉树旋转旋转触发时机当添加一个节点之后该树不再是一颗平衡二叉树左旋就是将根节点的右侧往左拉原先的右子节点变成新的父节点并把多余的左子节点出让给已经降级的根节点当右子节点右旋就是将根节点的左侧往右拉左子节点变成了新的父节点并把多余的右子节点出让给已经降级根节点当左子节点平衡二叉树和二叉查找树对比结构图平衡二叉树旋转的四种情况左左左左当根节点左子树的左子树有节点插入导致二叉树不平衡如何旋转直接对整体进行右旋即可左右左右当根节点左子树的右子树有节点插入导致二叉树不平衡如何旋转先在左子树对应的节点位置进行左旋在对整体进行右旋右右右右当根节点右子树的右子树有节点插入导致二叉树不平衡如何旋转直接对整体进行左旋即可右左右左当根节点右子树的左子树有节点插入导致二叉树不平衡如何旋转先在右子树对应的节点位置进行右旋在对整体进行左旋红黑树理解红黑树的特点平衡二叉树每一个节点可以是红或者黑红黑树不是高度平衡的它的平衡是通过自己的红黑规则进行实现的红黑树的红黑规则有哪些每一个节点或是红色的或者是黑色的根节点必须是黑色如果一个节点没有子节点或者父节点则该节点相应的指针属性值为这些视为叶节点每个叶节点是黑色的如果某一个节点是红色那么它的子节点必须是黑色不能出现两个红色节点相连的情况对每一个节点从该节点到其所有后代叶节点的简单路径上均包含相同数目的黑色节点红黑树添加节点的默认颜色添加节点时默认为红色效率高红黑树添加节点后如何保持红黑规则根节点位置直接变为黑色非根节点位置父节点为黑色不需要任何操作默认红色即可父节点为红色叔叔节点为红色将父节点设为黑色将叔叔节点设为黑色将祖父节点设为红色如果祖父节点为根节点则将根节点再次变成黑色叔叔节点为黑色将父节点设为黑色将祖父节点设为红色以祖父节点为支点进行旋转集合集合概述和特点应用底层数据结构是哈希表存取无序不可以存储重复元素没有索引不能使用普通循环遍历集合的基本应用应用存储字符串并遍历创建集合对象添加元素不包含重复元素的集合遍历哈希值理解哈希值简介是根据对象的地址或者字符串或者数字算出来的类型的数值如何获取哈希值类中的返回对象的哈希码值哈希值的特点同一个对象多次调用方法返回的哈希值是相同的默认情况下不同对象的哈希值是不同的而重写方法可以实现让不同对象的哈希值相同哈希表结构理解以前数组链表以后节点个数少于等于个数组链表节点个数多于个数组红黑树集合存储学生对象并遍历应用案例需求创建一个存储学生对象的集合存储多个学生对象使用程序实现在控制台遍历该集合要求学生对象的成员变量值相同我们就认为是同一个对象代码实现学生类测试类创建集合对象创建学生对象林青霞张曼玉王祖贤王祖贤把学生添加到集合遍历集合增强总结集合存储自定义类型元素要想实现元素的唯一要求必须重写方法和方法',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2024-04-20 21:24:53',
+  postMainColor: '',
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#18171d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#f7f9fe')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+          const isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+          const isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+          const hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+          if (t === undefined) {
+            if (isLightMode) activateLightMode()
+            else if (isDarkMode) activateDarkMode()
+            else if (isNotSpecified || hasNoSupport) {
+              const now = new Date()
+              const hour = now.getHours()
+              const isNight = hour <= 6 || hour >= 18
+              isNight ? activateDarkMode() : activateLightMode()
+            }
+            window.matchMedia('(prefers-color-scheme: dark)').addListener(e => {
+              if (saveToLocal.get('theme') === undefined) {
+                e.matches ? activateDarkMode() : activateLightMode()
+              }
+            })
+          } else if (t === 'light') activateLightMode()
+          else activateDarkMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><meta name="generator" content="Hexo 7.2.0"></head><body data-type="anzhiyu"><div id="web_bg"></div><div id="an_music_bg"></div><div id="loading-box" onclick="document.getElementById(&quot;loading-box&quot;).classList.add(&quot;loaded&quot;)"><div class="loading-bg"><img class="loading-img nolazyload" alt="加载头像" src="/img/freecompress-girl.jpg"/><div class="loading-image-dot"></div></div></div><script>const preloader = {
+  endLoading: () => {
+    document.getElementById('loading-box').classList.add("loaded");
+  },
+  initLoading: () => {
+    document.getElementById('loading-box').classList.remove("loaded")
+  }
+}
+window.addEventListener('load',()=> { preloader.endLoading() })
+setTimeout(function(){preloader.endLoading();},10000)
+
+if (true) {
+  document.addEventListener('pjax:send', () => { preloader.initLoading() })
+  document.addEventListener('pjax:complete', () => { preloader.endLoading() })
+}</script><link rel="stylesheet" href="https://cdn.cbd.int/anzhiyu-theme-static@1.1.10/progress_bar/progress_bar.css"/><script async="async" src="https://cdn.cbd.int/pace-js@1.2.4/pace.min.js" data-pace-options="{ &quot;restartOnRequestAfter&quot;:false,&quot;eventLag&quot;:false}"></script><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><div id="nav-group"><span id="blog_name"><div class="back-home-button"><i class="anzhiyufont anzhiyu-icon-grip-vertical"></i><div class="back-menu-list-groups"><div class="back-menu-list-group"><div class="back-menu-list-title">网页</div><div class="back-menu-list"><a class="back-menu-item" href="https://sukhoigit.github.io" title="博客"><img class="back-menu-item-icon" src="/img/favicon.ico" alt="博客"/><span class="back-menu-item-text">博客</span></a></div></div><div class="back-menu-list-group"><div class="back-menu-list-title">项目</div><div class="back-menu-list"><a class="back-menu-item" target="_blank" rel="noopener" href="https://origin.eqing.tech/" title="AI"><img class="back-menu-item-icon" src="https://image.anheyu.com/favicon.ico" alt="AI"/><span class="back-menu-item-text">AI</span></a></div></div></div></div><a id="site-name" href="/" accesskey="h"><div class="title">Artemis 🐱</div><i class="anzhiyufont anzhiyu-icon-house-chimney"></i></a></span><div class="mask-name-container"><div id="name-container"><a id="page-name" href="javascript:anzhiyu.scrollToDest(0, 500)">PAGE_NAME</a></div></div><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 文章</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/archives/"><i class="anzhiyufont anzhiyu-icon-box-archive faa-tada" style="font-size: 0.9em;"></i><span> 隧道</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/categories/"><i class="anzhiyufont anzhiyu-icon-shapes faa-tada" style="font-size: 0.9em;"></i><span> 分类</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/tags/"><i class="anzhiyufont anzhiyu-icon-tags faa-tada" style="font-size: 0.9em;"></i><span> 标签</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 友链</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/link/"><i class="anzhiyufont anzhiyu-icon-link faa-tada" style="font-size: 0.9em;"></i><span> 友人帐</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 我的</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/music/?id=9852413331&amp;server=netease"><i class="anzhiyufont anzhiyu-icon-music faa-tada" style="font-size: 0.9em;"></i><span> 音乐馆</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/album/"><i class="anzhiyufont anzhiyu-icon-images faa-tada" style="font-size: 0.9em;"></i><span> 相册集</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/air-conditioner/"><i class="anzhiyufont anzhiyu-icon-fan faa-tada" style="font-size: 0.9em;"></i><span> 小空调</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 关于</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/about/"><i class="anzhiyufont anzhiyu-icon-paper-plane faa-tada" style="font-size: 0.9em;"></i><span> 关于本人</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/essay/"><i class="anzhiyufont anzhiyu-icon-lightbulb faa-tada" style="font-size: 0.9em;"></i><span> 闲言碎语</span></a></li><li><a class="site-page child faa-parent animated-hover" href="javascript:toRandomPost()"><i class="anzhiyufont anzhiyu-icon-shoe-prints1 faa-tada" style="font-size: 0.9em;"></i><span> 随便逛逛</span></a></li></ul></div></div></div><div id="nav-right"><div class="nav-button" id="randomPost_button"><a class="site-page" onclick="toRandomPost()" title="随机前往一个文章" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-dice"></i></a></div><div class="nav-button" id="search-button"><a class="site-page social-icon search" href="javascript:void(0);" title="搜索🔍" accesskey="s"><i class="anzhiyufont anzhiyu-icon-magnifying-glass"></i><span> Search</span></a></div><input id="center-console" type="checkbox"/><label class="widget" for="center-console" title="中控台" onclick="anzhiyu.switchConsole();"><i class="left"></i><i class="widget center"></i><i class="widget right"></i></label><div id="console"><div class="console-card-group-reward"><ul class="reward-all console-card"><li class="reward-item"><a href="https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/qrcode-weichat.png" target="_blank"><img class="post-qr-code-img" alt="微信" src="https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/qrcode-weichat.png"/></a><div class="post-qr-code-desc">微信</div></li><li class="reward-item"><a href="https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/qrcode-alipay.png" target="_blank"><img class="post-qr-code-img" alt="支付宝" src="https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/qrcode-alipay.png"/></a><div class="post-qr-code-desc">支付宝</div></li></ul></div><div class="console-card-group"><div class="console-card-group-left"><div class="console-card" id="card-newest-comments"><div class="card-content"><div class="author-content-item-tips">互动</div><span class="author-content-item-title"> Newest Comments</span></div><div class="aside-list"><span>loading...</span></div></div></div><div class="console-card-group-right"><div class="console-card tags"><div class="card-content"><div class="author-content-item-tips">兴趣点</div><span class="author-content-item-title">寻找你感兴趣的领域</span><div class="card-tags"><div class="item-headline"></div><div class="card-tag-cloud"><a href="/tags/API/" style="font-size: 1.05rem;">API<sup>1</sup></a><a href="/tags/Class/" style="font-size: 1.05rem;">Class<sup>1</sup></a><a href="/tags/Collection%E9%9B%86%E5%90%88/" style="font-size: 1.05rem;">Collection集合<sup>1</sup></a><a href="/tags/IO/" style="font-size: 1.05rem;">IO<sup>1</sup></a><a href="/tags/Interface/" style="font-size: 1.05rem;">Interface<sup>1</sup></a><a href="/tags/List/" style="font-size: 1.05rem;">List<sup>1</sup></a><a href="/tags/Object-Oriented/" style="font-size: 1.05rem;">Object Oriented<sup>1</sup></a><a href="/tags/String/" style="font-size: 1.05rem;">String<sup>1</sup></a><a href="/tags/java%E5%9F%BA%E7%A1%80/" style="font-size: 1.05rem;">java基础<sup>1</sup></a><a href="/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/" style="font-size: 1.05rem;">多线程<sup>3</sup></a><a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" style="font-size: 1.05rem;">数据结构<sup>1</sup></a><a href="/tags/%E7%BA%A2%E9%BB%91%E6%A0%91/" style="font-size: 1.05rem;">红黑树<sup>1</sup></a><a href="/tags/%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/" style="font-size: 1.05rem;">网络编程<sup>1</sup></a></div></div><hr/></div></div><div class="console-card history"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-box-archiv"></i><span>文章</span></div><div class="card-archives"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-archive"></i><span>Archives</span></div><ul class="card-archive-list"><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/04/"><span class="card-archive-list-date">April 2024</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">1</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/03/"><span class="card-archive-list-date">March 2024</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">7</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/02/"><span class="card-archive-list-date">February 2024</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">4</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/01/"><span class="card-archive-list-date">January 2024</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">4</span><span>篇</span></div></a></li></ul></div><hr/></div></div></div><div class="button-group"><div class="console-btn-item"><a class="darkmode_switchbutton" title="显示模式切换" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-moon"></i></a></div><div class="console-btn-item" id="consoleHideAside" onclick="anzhiyu.hideAsideBtn()" title="边栏显示控制"><a class="asideSwitch"><i class="anzhiyufont anzhiyu-icon-arrows-left-right"></i></a></div><div class="console-btn-item on" id="consoleCommentBarrage" onclick="anzhiyu.switchCommentBarrage()" title="热评开关"><a class="commentBarrage"><i class="anzhiyufont anzhiyu-icon-message"></i></a></div><div class="console-btn-item" id="consoleMusic" onclick="anzhiyu.musicToggle()" title="音乐开关"><a class="music-switch"><i class="anzhiyufont anzhiyu-icon-music"></i></a></div></div><div class="console-mask" onclick="anzhiyu.hideConsole()" href="javascript:void(0);"></div></div><div class="nav-button" id="nav-totop"><a class="totopbtn" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-arrow-up"></i><span id="percent" onclick="anzhiyu.scrollToDest(0,500)">0</span></a></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);" title="切换"><i class="anzhiyufont anzhiyu-icon-bars"></i></a></div></div></div></nav><div id="post-info"><div id="post-firstinfo"><div class="meta-firstline"><a class="post-meta-original">原创</a><span class="post-meta-categories"><span class="post-meta-separator"></span><i class="anzhiyufont anzhiyu-icon-inbox post-meta-icon"></i><a class="post-meta-categories" href="/categories/Java/" itemprop="url">Java</a></span><span class="article-meta tags"><a class="article-meta__tags" href="/tags/%E7%BA%A2%E9%BB%91%E6%A0%91/" tabindex="-1" itemprop="url"> <span> <i class="anzhiyufont anzhiyu-icon-hashtag"></i>红黑树</span></a><a class="article-meta__tags" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" tabindex="-1" itemprop="url"> <span> <i class="anzhiyufont anzhiyu-icon-hashtag"></i>数据结构</span></a></span></div></div><h1 class="post-title" itemprop="name headline">泛型&amp;Set&amp;数据结构</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="anzhiyufont anzhiyu-icon-calendar-days post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" itemprop="dateCreated datePublished" datetime="2024-03-23T11:45:53.000Z" title="Created 2024-03-23 19:45:53">2024-03-23</time><span class="post-meta-separator"></span><i class="anzhiyufont anzhiyu-icon-history post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" itemprop="dateCreated datePublished" datetime="2024-04-20T13:24:53.568Z" title="Updated 2024-04-20 21:24:53">2024-04-20</time></span></div><div class="meta-secondline"><span class="post-meta-separator"></span><span class="post-meta-wordcount"><i class="anzhiyufont anzhiyu-icon-file-word post-meta-icon" title="文章字数"></i><span class="post-meta-label" title="文章字数">Word count:</span><span class="word-count" title="文章字数">3.3k</span><span class="post-meta-separator"></span><i class="anzhiyufont anzhiyu-icon-clock post-meta-icon" title="阅读时长"></i><span class="post-meta-label" title="阅读时长">Reading time:</span><span>12min</span></span><span class="post-meta-separator">       </span><span class="post-meta-position" title="作者IP属地为NanChang-CN"><i class="anzhiyufont anzhiyu-icon-location-dot"></i>NanChang-CN</span></div></div></div><section class="main-hero-waves-area waves-area"><svg class="waves-svg" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto"><defs><path id="gentle-wave" d="M -160 44 c 30 0 58 -18 88 -18 s 58 18 88 18 s 58 -18 88 -18 s 58 18 88 18 v 44 h -352 Z"></path></defs><g class="parallax"><use href="#gentle-wave" x="48" y="0"></use><use href="#gentle-wave" x="48" y="3"></use><use href="#gentle-wave" x="48" y="5"></use><use href="#gentle-wave" x="48" y="7"></use></g></svg></section><div id="post-top-cover"><img class="nolazyload" id="post-top-bg" src="https://www.toopic.cn/public/uploads/small/1710477852964171047785229.jpg"></div></header><main id="blog-container"><div class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container" itemscope itemtype="http://sukhoigit.github.io/posts/47de4be2.html"><header><a class="post-meta-categories" href="/categories/Java/" itemprop="url">Java</a><a href="/tags/%E7%BA%A2%E9%BB%91%E6%A0%91/" tabindex="-1" itemprop="url">红黑树</a><a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" tabindex="-1" itemprop="url">数据结构</a><h1 id="CrawlerTitle" itemprop="name headline">泛型&amp;Set&amp;数据结构</h1><span itemprop="author" itemscope itemtype="http://schema.org/Person">Artemis</span><time itemprop="dateCreated datePublished" datetime="2024-03-23T11:45:53.000Z" title="Created 2024-03-23 19:45:53">2024-03-23</time><time itemprop="dateCreated datePublished" datetime="2024-04-20T13:24:53.568Z" title="Updated 2024-04-20 21:24:53">2024-04-20</time></header><h2 id="1-泛型"><a href="#1-泛型" class="headerlink" title="1.泛型"></a>1.泛型</h2><h3 id="1-1泛型概述"><a href="#1-1泛型概述" class="headerlink" title="1.1泛型概述"></a>1.1泛型概述</h3><ul>
+<li><p>泛型的介绍</p>
+<p>​	泛型是JDK5中引入的特性，它提供了编译时类型安全检测机制</p>
+</li>
+<li><p>泛型的好处</p>
+<ol>
+<li>把运行时期的问题提前到了编译期间</li>
+<li>避免了强制类型转换</li>
+</ol>
+</li>
+<li><p>泛型的定义格式</p>
+<ul>
+<li>&lt;类型&gt;: 指定一种类型的格式.尖括号里面可以任意书写,一般只写一个字母.例如: <E> <T></li>
+<li>&lt;类型1,类型2…&gt;: 指定多种类型的格式,多种类型之间用逗号隔开.例如: &lt;E,T&gt; &lt;K,V&gt;</li>
+</ul>
+</li>
+</ul>
+<h2 id="2-Set集合"><a href="#2-Set集合" class="headerlink" title="2.Set集合"></a>2.Set集合</h2><h3 id="2-1Set集合概述和特点【应用】"><a href="#2-1Set集合概述和特点【应用】" class="headerlink" title="2.1Set集合概述和特点【应用】"></a>2.1Set集合概述和特点【应用】</h3><ul>
+<li>不可以存储重复元素</li>
+<li>没有索引,不能使用普通for循环遍历</li>
+</ul>
+<h3 id="2-2Set集合的使用【应用】"><a href="#2-2Set集合的使用【应用】" class="headerlink" title="2.2Set集合的使用【应用】"></a>2.2Set集合的使用【应用】</h3><p>存储字符串并遍历</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">MySet1</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">      	<span class="comment">//创建集合对象</span></span><br><span class="line">        Set&lt;String&gt; set = <span class="keyword">new</span> <span class="title class_">TreeSet</span>&lt;&gt;();</span><br><span class="line">      	<span class="comment">//添加元素</span></span><br><span class="line">        set.add(<span class="string">&quot;ccc&quot;</span>);</span><br><span class="line">        set.add(<span class="string">&quot;aaa&quot;</span>);</span><br><span class="line">        set.add(<span class="string">&quot;aaa&quot;</span>);</span><br><span class="line">        set.add(<span class="string">&quot;bbb&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">//        for (int i = 0; i &lt; set.size(); i++) &#123;</span></span><br><span class="line"><span class="comment">//            //Set集合是没有索引的，所以不能使用通过索引获取元素的方法</span></span><br><span class="line"><span class="comment">//        &#125;</span></span><br><span class="line">      </span><br><span class="line">      	<span class="comment">//遍历集合</span></span><br><span class="line">        Iterator&lt;String&gt; it = set.iterator();</span><br><span class="line">        <span class="keyword">while</span> (it.hasNext())&#123;</span><br><span class="line">            <span class="type">String</span> <span class="variable">s</span> <span class="operator">=</span> it.next();</span><br><span class="line">            System.out.println(s);</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println(<span class="string">&quot;-----------------------------------&quot;</span>);</span><br><span class="line">        <span class="keyword">for</span> (String s : set) &#123;</span><br><span class="line">            System.out.println(s);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="3-TreeSet集合"><a href="#3-TreeSet集合" class="headerlink" title="3.TreeSet集合"></a>3.TreeSet集合</h2><h3 id="3-1TreeSet集合概述和特点【应用】"><a href="#3-1TreeSet集合概述和特点【应用】" class="headerlink" title="3.1TreeSet集合概述和特点【应用】"></a>3.1TreeSet集合概述和特点【应用】</h3><ul>
+<li>不可以存储重复元素</li>
+<li>没有索引</li>
+<li>可以将元素按照规则进行排序<ul>
+<li>TreeSet()：根据其元素的自然排序进行排序</li>
+<li>TreeSet(Comparator comparator) ：根据指定的比较器进行排序</li>
+</ul>
+</li>
+</ul>
+<h3 id="3-2TreeSet集合基本使用【应用】"><a href="#3-2TreeSet集合基本使用【应用】" class="headerlink" title="3.2TreeSet集合基本使用【应用】"></a>3.2TreeSet集合基本使用【应用】</h3><p>存储Integer类型的整数并遍历</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">TreeSetDemo01</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        <span class="comment">//创建集合对象</span></span><br><span class="line">        TreeSet&lt;Integer&gt; ts = <span class="keyword">new</span> <span class="title class_">TreeSet</span>&lt;Integer&gt;();</span><br><span class="line"></span><br><span class="line">        <span class="comment">//添加元素</span></span><br><span class="line">        ts.add(<span class="number">10</span>);</span><br><span class="line">        ts.add(<span class="number">40</span>);</span><br><span class="line">        ts.add(<span class="number">30</span>);</span><br><span class="line">        ts.add(<span class="number">50</span>);</span><br><span class="line">        ts.add(<span class="number">20</span>);</span><br><span class="line"></span><br><span class="line">        ts.add(<span class="number">30</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//遍历集合</span></span><br><span class="line">        <span class="keyword">for</span>(Integer i : ts) &#123;</span><br><span class="line">            System.out.println(i);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-3自然排序Comparable的使用【应用】"><a href="#3-3自然排序Comparable的使用【应用】" class="headerlink" title="3.3自然排序Comparable的使用【应用】"></a>3.3自然排序Comparable的使用【应用】</h3><ul>
+<li><p>案例需求</p>
+<ul>
+<li>存储学生对象并遍历，创建TreeSet集合使用无参构造方法</li>
+<li>要求：按照年龄从小到大排序，年龄相同时，按照姓名的字母顺序排序</li>
+</ul>
+</li>
+<li><p>实现步骤</p>
+<ol>
+<li>使用空参构造创建TreeSet集合<ul>
+<li>用TreeSet集合存储自定义对象，无参构造方法使用的是自然排序对元素进行排序的</li>
+</ul>
+</li>
+<li>自定义的Student类实现Comparable接口<ul>
+<li>自然排序，就是让元素所属的类实现Comparable接口，重写compareTo(T o)方法</li>
+</ul>
+</li>
+<li>重写接口中的compareTo方法<ul>
+<li>重写方法时，一定要注意排序规则必须按照要求的主要条件和次要条件来写</li>
+</ul>
+</li>
+</ol>
+</li>
+<li><p>代码实现</p>
+<p>学生类</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Student</span> <span class="keyword">implements</span> <span class="title class_">Comparable</span>&lt;Student&gt;&#123;</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line">    <span class="keyword">private</span> <span class="type">int</span> age;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">Student</span><span class="params">()</span> &#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">Student</span><span class="params">(String name, <span class="type">int</span> age)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.name = name;</span><br><span class="line">        <span class="built_in">this</span>.age = age;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">getName</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setName</span><span class="params">(String name)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.name = name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">getAge</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> age;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setAge</span><span class="params">(<span class="type">int</span> age)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.age = age;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">toString</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;Student&#123;&quot;</span> +</span><br><span class="line">                <span class="string">&quot;name=&#x27;&quot;</span> + name + <span class="string">&#x27;\&#x27;&#x27;</span> +</span><br><span class="line">                <span class="string">&quot;, age=&quot;</span> + age +</span><br><span class="line">                <span class="string">&#x27;&#125;&#x27;</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">compareTo</span><span class="params">(Student o)</span> &#123;</span><br><span class="line">        <span class="comment">//按照对象的年龄进行排序</span></span><br><span class="line">        <span class="comment">//主要判断条件: 按照年龄从小到大排序</span></span><br><span class="line">        <span class="type">int</span> <span class="variable">result</span> <span class="operator">=</span> <span class="built_in">this</span>.age - o.age;</span><br><span class="line">        <span class="comment">//次要判断条件: 年龄相同时，按照姓名的字母顺序排序</span></span><br><span class="line">        result = result == <span class="number">0</span> ? <span class="built_in">this</span>.name.compareTo(o.getName()) : result;</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>测试类</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">MyTreeSet2</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        <span class="comment">//创建集合对象</span></span><br><span class="line">        TreeSet&lt;Student&gt; ts = <span class="keyword">new</span> <span class="title class_">TreeSet</span>&lt;&gt;();</span><br><span class="line">	    <span class="comment">//创建学生对象</span></span><br><span class="line">        <span class="type">Student</span> <span class="variable">s1</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Student</span>(<span class="string">&quot;zhangsan&quot;</span>,<span class="number">28</span>);</span><br><span class="line">        <span class="type">Student</span> <span class="variable">s2</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Student</span>(<span class="string">&quot;lisi&quot;</span>,<span class="number">27</span>);</span><br><span class="line">        <span class="type">Student</span> <span class="variable">s3</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Student</span>(<span class="string">&quot;wangwu&quot;</span>,<span class="number">29</span>);</span><br><span class="line">        <span class="type">Student</span> <span class="variable">s4</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Student</span>(<span class="string">&quot;zhaoliu&quot;</span>,<span class="number">28</span>);</span><br><span class="line">        <span class="type">Student</span> <span class="variable">s5</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Student</span>(<span class="string">&quot;qianqi&quot;</span>,<span class="number">30</span>);</span><br><span class="line">		<span class="comment">//把学生添加到集合</span></span><br><span class="line">        ts.add(s1);</span><br><span class="line">        ts.add(s2);</span><br><span class="line">        ts.add(s3);</span><br><span class="line">        ts.add(s4);</span><br><span class="line">        ts.add(s5);</span><br><span class="line">		<span class="comment">//遍历集合</span></span><br><span class="line">        <span class="keyword">for</span> (Student student : ts) &#123;</span><br><span class="line">            System.out.println(student);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="3-4比较器排序Comparator的使用【应用】"><a href="#3-4比较器排序Comparator的使用【应用】" class="headerlink" title="3.4比较器排序Comparator的使用【应用】"></a>3.4比较器排序Comparator的使用【应用】</h3><ul>
+<li><p>案例需求</p>
+<ul>
+<li>存储老师对象并遍历，创建TreeSet集合使用带参构造方法</li>
+<li>要求：按照年龄从小到大排序，年龄相同时，按照姓名的字母顺序排序</li>
+</ul>
+</li>
+<li><p>实现步骤</p>
+<ul>
+<li>用TreeSet集合存储自定义对象，带参构造方法使用的是比较器排序对元素进行排序的</li>
+<li>比较器排序，就是让集合构造方法接收Comparator的实现类对象，重写compare(T o1,T o2)方法</li>
+<li>重写方法时，一定要注意排序规则必须按照要求的主要条件和次要条件来写</li>
+</ul>
+</li>
+<li><p>代码实现</p>
+<p>老师类</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Teacher</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line">    <span class="keyword">private</span> <span class="type">int</span> age;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">Teacher</span><span class="params">()</span> &#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">Teacher</span><span class="params">(String name, <span class="type">int</span> age)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.name = name;</span><br><span class="line">        <span class="built_in">this</span>.age = age;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">getName</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setName</span><span class="params">(String name)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.name = name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">getAge</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> age;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setAge</span><span class="params">(<span class="type">int</span> age)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.age = age;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">toString</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;Teacher&#123;&quot;</span> +</span><br><span class="line">                <span class="string">&quot;name=&#x27;&quot;</span> + name + <span class="string">&#x27;\&#x27;&#x27;</span> +</span><br><span class="line">                <span class="string">&quot;, age=&quot;</span> + age +</span><br><span class="line">                <span class="string">&#x27;&#125;&#x27;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>测试类</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">MyTreeSet4</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">      	<span class="comment">//创建集合对象</span></span><br><span class="line">        TreeSet&lt;Teacher&gt; ts = <span class="keyword">new</span> <span class="title class_">TreeSet</span>&lt;&gt;(<span class="keyword">new</span> <span class="title class_">Comparator</span>&lt;Teacher&gt;() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">compare</span><span class="params">(Teacher o1, Teacher o2)</span> &#123;</span><br><span class="line">                <span class="comment">//o1表示现在要存入的那个元素</span></span><br><span class="line">                <span class="comment">//o2表示已经存入到集合中的元素</span></span><br><span class="line">              </span><br><span class="line">                <span class="comment">//主要条件</span></span><br><span class="line">                <span class="type">int</span> <span class="variable">result</span> <span class="operator">=</span> o1.getAge() - o2.getAge();</span><br><span class="line">                <span class="comment">//次要条件</span></span><br><span class="line">                result = result == <span class="number">0</span> ? o1.getName().compareTo(o2.getName()) : result;</span><br><span class="line">                <span class="keyword">return</span> result;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">		<span class="comment">//创建老师对象</span></span><br><span class="line">        <span class="type">Teacher</span> <span class="variable">t1</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Teacher</span>(<span class="string">&quot;zhangsan&quot;</span>,<span class="number">23</span>);</span><br><span class="line">        <span class="type">Teacher</span> <span class="variable">t2</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Teacher</span>(<span class="string">&quot;lisi&quot;</span>,<span class="number">22</span>);</span><br><span class="line">        <span class="type">Teacher</span> <span class="variable">t3</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Teacher</span>(<span class="string">&quot;wangwu&quot;</span>,<span class="number">24</span>);</span><br><span class="line">        <span class="type">Teacher</span> <span class="variable">t4</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Teacher</span>(<span class="string">&quot;zhaoliu&quot;</span>,<span class="number">24</span>);</span><br><span class="line">		<span class="comment">//把老师添加到集合</span></span><br><span class="line">        ts.add(t1);</span><br><span class="line">        ts.add(t2);</span><br><span class="line">        ts.add(t3);</span><br><span class="line">        ts.add(t4);</span><br><span class="line">		<span class="comment">//遍历集合</span></span><br><span class="line">        <span class="keyword">for</span> (Teacher teacher : ts) &#123;</span><br><span class="line">            System.out.println(teacher);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="3-5两种比较方式总结【理解】"><a href="#3-5两种比较方式总结【理解】" class="headerlink" title="3.5两种比较方式总结【理解】"></a>3.5两种比较方式总结【理解】</h3><ul>
+<li>两种比较方式小结<ul>
+<li>自然排序: 自定义类实现Comparable接口,重写compareTo方法,根据返回值进行排序</li>
+<li>比较器排序: 创建TreeSet对象的时候传递Comparator的实现类对象,重写compare方法,根据返回值进行排序</li>
+<li>在使用的时候,默认使用自然排序,当自然排序不满足现在的需求时,必须使用比较器排序</li>
+</ul>
+</li>
+<li>两种方式中关于返回值的规则<ul>
+<li>如果返回值为负数，表示当前存入的元素是较小值，存左边</li>
+<li>如果返回值为0，表示当前存入的元素跟集合中元素重复了，不存</li>
+<li>如果返回值为正数，表示当前存入的元素是较大值，存右边</li>
+</ul>
+</li>
+</ul>
+<h2 id="4-数据结构"><a href="#4-数据结构" class="headerlink" title="4.数据结构"></a>4.数据结构</h2><h3 id="4-1二叉树【理解】"><a href="#4-1二叉树【理解】" class="headerlink" title="4.1二叉树【理解】"></a>4.1二叉树【理解】</h3><ul>
+<li><p>二叉树的特点</p>
+<ul>
+<li>二叉树中,任意一个节点的度要小于等于2<ul>
+<li>节点: 在树结构中,每一个元素称之为节点</li>
+<li>度: 每一个节点的子节点数量称之为度</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>二叉树结构图</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/JavaNotes/dataStructure/img/01_%E4%BA%8C%E5%8F%89%E6%A0%91%E7%BB%93%E6%9E%84%E5%9B%BE.png" alt="01_二叉树结构图"></p>
+</li>
+</ul>
+<h3 id="4-2二叉查找树【理解】"><a href="#4-2二叉查找树【理解】" class="headerlink" title="4.2二叉查找树【理解】"></a>4.2二叉查找树【理解】</h3><ul>
+<li><p>二叉查找树的特点</p>
+<ul>
+<li>二叉查找树,又称二叉排序树或者二叉搜索树</li>
+<li>每一个节点上最多有两个子节点</li>
+<li>左子树上所有节点的值都小于根节点的值</li>
+<li>右子树上所有节点的值都大于根节点的值</li>
+</ul>
+</li>
+<li><p>二叉查找树结构图</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/JavaNotes/dataStructure/img/02_%E4%BA%8C%E5%8F%89%E6%9F%A5%E6%89%BE%E6%A0%91%E7%BB%93%E6%9E%84%E5%9B%BE.png" alt="02_二叉查找树结构图"></p>
+</li>
+<li><p>二叉查找树和二叉树对比结构图</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/JavaNotes/dataStructure/img/03_%E4%BA%8C%E5%8F%89%E6%9F%A5%E6%89%BE%E6%A0%91%E5%92%8C%E4%BA%8C%E5%8F%89%E6%A0%91%E5%AF%B9%E6%AF%94%E7%BB%93%E6%9E%84%E5%9B%BE.png" alt="03_二叉查找树和二叉树对比结构图"></p>
+</li>
+<li><p>二叉查找树添加节点规则</p>
+<ul>
+<li>小的存左边</li>
+<li>大的存右边</li>
+<li>一样的不存</li>
+</ul>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/JavaNotes/dataStructure/img/04_%E4%BA%8C%E5%8F%89%E6%9F%A5%E6%89%BE%E6%A0%91%E6%B7%BB%E5%8A%A0%E8%8A%82%E7%82%B9%E8%A7%84%E5%88%99.png" alt="04_二叉查找树添加节点规则"></p>
+</li>
+</ul>
+<h3 id="4-3平衡二叉树【理解】"><a href="#4-3平衡二叉树【理解】" class="headerlink" title="4.3平衡二叉树【理解】"></a>4.3平衡二叉树【理解】</h3><ul>
+<li><p>平衡二叉树的特点</p>
+<ul>
+<li>二叉树左右两个子树的高度差不超过1</li>
+<li>任意节点的左右两个子树都是一颗平衡二叉树</li>
+</ul>
+</li>
+<li><p>平衡二叉树旋转</p>
+<ul>
+<li><p>旋转触发时机</p>
+<ul>
+<li>当添加一个节点之后,该树不再是一颗平衡二叉树</li>
+</ul>
+</li>
+<li><p>左旋</p>
+<ul>
+<li>就是将根节点的右侧往左拉,原先的右子节点变成新的父节点,并把多余的左子节点出让,给已经降级的根节点当右子节点</li>
+</ul>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/JavaNotes/dataStructure/img/05_%E5%B9%B3%E8%A1%A1%E4%BA%8C%E5%8F%89%E6%A0%91%E5%B7%A6%E6%97%8B01.png" alt="05_平衡二叉树左旋01"></p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/JavaNotes/dataStructure/img/05_%E5%B9%B3%E8%A1%A1%E4%BA%8C%E5%8F%89%E6%A0%91%E5%B7%A6%E6%97%8B02.png" alt="05_平衡二叉树左旋02"></p>
+</li>
+<li><p>右旋</p>
+<ul>
+<li><p>就是将根节点的左侧往右拉,左子节点变成了新的父节点,并把多余的右子节点出让,给已经降级根节点当左子节点</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/JavaNotes/dataStructure/img/06_%E5%B9%B3%E8%A1%A1%E4%BA%8C%E5%8F%89%E6%A0%91%E5%8F%B3%E6%97%8B01.png" alt="06_平衡二叉树右旋01"></p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/JavaNotes/dataStructure/img/06_%E5%B9%B3%E8%A1%A1%E4%BA%8C%E5%8F%89%E6%A0%91%E5%8F%B3%E6%97%8B02.png" alt="06_平衡二叉树右旋02"></p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>平衡二叉树和二叉查找树对比结构图</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/JavaNotes/dataStructure/img/07_%E5%B9%B3%E8%A1%A1%E4%BA%8C%E5%8F%89%E6%A0%91%E5%92%8C%E4%BA%8C%E5%8F%89%E6%9F%A5%E6%89%BE%E6%A0%91%E5%AF%B9%E6%AF%94%E7%BB%93%E6%9E%84%E5%9B%BE.png" alt="07_平衡二叉树和二叉查找树对比结构图"></p>
+</li>
+<li><p>平衡二叉树旋转的四种情况</p>
+<ul>
+<li><p>左左</p>
+<ul>
+<li><p>左左: 当根节点左子树的左子树有节点插入,导致二叉树不平衡</p>
+</li>
+<li><p>如何旋转: 直接对整体进行右旋即可</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/JavaNotes/dataStructure/img/08_%E5%B9%B3%E8%A1%A1%E4%BA%8C%E5%8F%89%E6%A0%91%E5%B7%A6%E5%B7%A6.png" alt="08_平衡二叉树左左"></p>
+</li>
+</ul>
+</li>
+<li><p>左右</p>
+<ul>
+<li><p>左右: 当根节点左子树的右子树有节点插入,导致二叉树不平衡</p>
+</li>
+<li><p>如何旋转: 先在左子树对应的节点位置进行左旋,在对整体进行右旋</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/JavaNotes/dataStructure/img/09_%E5%B9%B3%E8%A1%A1%E4%BA%8C%E5%8F%89%E6%A0%91%E5%B7%A6%E5%8F%B3.png" alt="09_平衡二叉树左右"></p>
+</li>
+</ul>
+</li>
+<li><p>右右</p>
+<ul>
+<li><p>右右: 当根节点右子树的右子树有节点插入,导致二叉树不平衡</p>
+</li>
+<li><p>如何旋转: 直接对整体进行左旋即可</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/JavaNotes/dataStructure/img/10_%E5%B9%B3%E8%A1%A1%E4%BA%8C%E5%8F%89%E6%A0%91%E5%8F%B3%E5%8F%B3.png" alt="10_平衡二叉树右右"></p>
+</li>
+</ul>
+</li>
+<li><p>右左</p>
+<ul>
+<li><p>右左:当根节点右子树的左子树有节点插入,导致二叉树不平衡</p>
+</li>
+<li><p>如何旋转: 先在右子树对应的节点位置进行右旋,在对整体进行左旋</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/JavaNotes/dataStructure/img/11_%E5%B9%B3%E8%A1%A1%E4%BA%8C%E5%8F%89%E6%A0%91%E5%8F%B3%E5%B7%A6.png" alt="11_平衡二叉树右左"></p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="4-3红黑树【理解】"><a href="#4-3红黑树【理解】" class="headerlink" title="4.3红黑树【理解】"></a>4.3红黑树【理解】</h3><ul>
+<li><p>红黑树的特点</p>
+<ul>
+<li>平衡二叉B树</li>
+<li>每一个节点可以是红或者黑</li>
+<li>红黑树不是高度平衡的,它的平衡是通过”自己的红黑规则”进行实现的</li>
+</ul>
+</li>
+<li><p>红黑树的红黑规则有哪些</p>
+<ol>
+<li><p>每一个节点或是红色的,或者是黑色的</p>
+</li>
+<li><p>根节点必须是黑色</p>
+</li>
+<li><p>如果一个节点没有子节点或者父节点,则该节点相应的指针属性值为Nil,这些Nil视为叶节点,每个叶节点(Nil)是黑色的</p>
+</li>
+<li><p>如果某一个节点是红色,那么它的子节点必须是黑色(不能出现两个红色节点相连 的情况)</p>
+</li>
+<li><p>对每一个节点,从该节点到其所有后代叶节点的简单路径上,均包含相同数目的黑色节点</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/JavaNotes/dataStructure/img/12_%E7%BA%A2%E9%BB%91%E6%A0%91%E7%BB%93%E6%9E%84%E5%9B%BE.png" alt="12_红黑树结构图"></p>
+</li>
+</ol>
+</li>
+<li><p>红黑树添加节点的默认颜色</p>
+<ul>
+<li><p>添加节点时,默认为红色,效率高</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/JavaNotes/dataStructure/img/13_%E7%BA%A2%E9%BB%91%E6%A0%91%E6%B7%BB%E5%8A%A0%E8%8A%82%E7%82%B9%E9%A2%9C%E8%89%B2.png" alt="13_红黑树添加节点颜色"></p>
+</li>
+</ul>
+</li>
+<li><p>红黑树添加节点后如何保持红黑规则</p>
+<ul>
+<li>根节点位置<ul>
+<li>直接变为黑色</li>
+</ul>
+</li>
+<li>非根节点位置<ul>
+<li>父节点为黑色<ul>
+<li>不需要任何操作,默认红色即可</li>
+</ul>
+</li>
+<li>父节点为红色<ul>
+<li>叔叔节点为红色<ol>
+<li>将”父节点”设为黑色,将”叔叔节点”设为黑色</li>
+<li>将”祖父节点”设为红色</li>
+<li>如果”祖父节点”为根节点,则将根节点再次变成黑色</li>
+</ol>
+</li>
+<li>叔叔节点为黑色<ol>
+<li>将”父节点”设为黑色</li>
+<li>将”祖父节点”设为红色</li>
+<li>以”祖父节点”为支点进行旋转</li>
+</ol>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/JavaNotes/dataStructure/img/rules.jpg"></p>
+<p>##5.HashSet集合</p>
+<h3 id="5-1HashSet集合概述和特点【应用】"><a href="#5-1HashSet集合概述和特点【应用】" class="headerlink" title="5.1HashSet集合概述和特点【应用】"></a>5.1HashSet集合概述和特点【应用】</h3><ul>
+<li>底层数据结构是哈希表</li>
+<li>存取无序</li>
+<li>不可以存储重复元素</li>
+<li>没有索引,不能使用普通for循环遍历</li>
+</ul>
+<h3 id="5-2HashSet集合的基本应用【应用】"><a href="#5-2HashSet集合的基本应用【应用】" class="headerlink" title="5.2HashSet集合的基本应用【应用】"></a>5.2HashSet集合的基本应用【应用】</h3><p>存储字符串并遍历</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">HashSetDemo</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        <span class="comment">//创建集合对象</span></span><br><span class="line">        HashSet&lt;String&gt; set = <span class="keyword">new</span> <span class="title class_">HashSet</span>&lt;String&gt;();</span><br><span class="line"></span><br><span class="line">        <span class="comment">//添加元素</span></span><br><span class="line">        set.add(<span class="string">&quot;hello&quot;</span>);</span><br><span class="line">        set.add(<span class="string">&quot;world&quot;</span>);</span><br><span class="line">        set.add(<span class="string">&quot;java&quot;</span>);</span><br><span class="line">        <span class="comment">//不包含重复元素的集合</span></span><br><span class="line">        set.add(<span class="string">&quot;world&quot;</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//遍历</span></span><br><span class="line">        <span class="keyword">for</span>(String s : set) &#123;</span><br><span class="line">            System.out.println(s);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="5-3哈希值【理解】"><a href="#5-3哈希值【理解】" class="headerlink" title="5.3哈希值【理解】"></a>5.3哈希值【理解】</h3><ul>
+<li><p>哈希值简介</p>
+<p>​	是JDK根据对象的地址或者字符串或者数字算出来的int类型的数值</p>
+</li>
+<li><p>如何获取哈希值</p>
+<p>​	Object类中的public int hashCode()：返回对象的哈希码值</p>
+</li>
+<li><p>哈希值的特点</p>
+<ul>
+<li>同一个对象多次调用hashCode()方法返回的哈希值是相同的</li>
+<li>默认情况下，不同对象的哈希值是不同的。而重写hashCode()方法，可以实现让不同对象的哈希值相同</li>
+</ul>
+</li>
+</ul>
+<h3 id="5-4哈希表结构【理解】"><a href="#5-4哈希表结构【理解】" class="headerlink" title="5.4哈希表结构【理解】"></a>5.4哈希表结构【理解】</h3><ul>
+<li><p>JDK1.8以前</p>
+<p>​	数组 + 链表</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/JavaNotes/dataStructure/img/14_JKD8%E4%BB%A5%E5%89%8D%E5%93%88%E5%B8%8C%E8%A1%A8.png"></p>
+</li>
+<li><p>JDK1.8以后</p>
+<ul>
+<li><p>节点个数少于等于8个</p>
+<p>​	数组 + 链表</p>
+</li>
+<li><p>节点个数多于8个</p>
+<p>​	数组 + 红黑树</p>
+</li>
+</ul>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/JavaNotes/dataStructure/img/15_JKD8%E4%BB%A5%E5%90%8E%E5%93%88%E5%B8%8C%E8%A1%A8.png"></p>
+</li>
+</ul>
+<h3 id="5-5HashSet集合存储学生对象并遍历【应用】"><a href="#5-5HashSet集合存储学生对象并遍历【应用】" class="headerlink" title="5.5HashSet集合存储学生对象并遍历【应用】"></a>5.5HashSet集合存储学生对象并遍历【应用】</h3><ul>
+<li><p>案例需求</p>
+<ul>
+<li>创建一个存储学生对象的集合，存储多个学生对象，使用程序实现在控制台遍历该集合</li>
+<li>要求：学生对象的成员变量值相同，我们就认为是同一个对象</li>
+</ul>
+</li>
+<li><p>代码实现</p>
+<p>学生类</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Student</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line">    <span class="keyword">private</span> <span class="type">int</span> age;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">Student</span><span class="params">()</span> &#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">Student</span><span class="params">(String name, <span class="type">int</span> age)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.name = name;</span><br><span class="line">        <span class="built_in">this</span>.age = age;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">getName</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setName</span><span class="params">(String name)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.name = name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">getAge</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> age;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setAge</span><span class="params">(<span class="type">int</span> age)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.age = age;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">equals</span><span class="params">(Object o)</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="built_in">this</span> == o) <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">        <span class="keyword">if</span> (o == <span class="literal">null</span> || getClass() != o.getClass()) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line"></span><br><span class="line">        <span class="type">Student</span> <span class="variable">student</span> <span class="operator">=</span> (Student) o;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (age != student.age) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        <span class="keyword">return</span> name != <span class="literal">null</span> ? name.equals(student.name) : student.name == <span class="literal">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">hashCode</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="type">int</span> <span class="variable">result</span> <span class="operator">=</span> name != <span class="literal">null</span> ? name.hashCode() : <span class="number">0</span>;</span><br><span class="line">        result = <span class="number">31</span> * result + age;</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>测试类</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">HashSetDemo02</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        <span class="comment">//创建HashSet集合对象</span></span><br><span class="line">        HashSet&lt;Student&gt; hs = <span class="keyword">new</span> <span class="title class_">HashSet</span>&lt;Student&gt;();</span><br><span class="line"></span><br><span class="line">        <span class="comment">//创建学生对象</span></span><br><span class="line">        <span class="type">Student</span> <span class="variable">s1</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Student</span>(<span class="string">&quot;林青霞&quot;</span>, <span class="number">30</span>);</span><br><span class="line">        <span class="type">Student</span> <span class="variable">s2</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Student</span>(<span class="string">&quot;张曼玉&quot;</span>, <span class="number">35</span>);</span><br><span class="line">        <span class="type">Student</span> <span class="variable">s3</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Student</span>(<span class="string">&quot;王祖贤&quot;</span>, <span class="number">33</span>);</span><br><span class="line"></span><br><span class="line">        <span class="type">Student</span> <span class="variable">s4</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Student</span>(<span class="string">&quot;王祖贤&quot;</span>, <span class="number">33</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//把学生添加到集合</span></span><br><span class="line">        hs.add(s1);</span><br><span class="line">        hs.add(s2);</span><br><span class="line">        hs.add(s3);</span><br><span class="line">        hs.add(s4);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//遍历集合(增强for)</span></span><br><span class="line">        <span class="keyword">for</span> (Student s : hs) &#123;</span><br><span class="line">            System.out.println(s.getName() + <span class="string">&quot;,&quot;</span> + s.getAge());</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>总结</p>
+<p>​	HashSet集合存储自定义类型元素,要想实现元素的唯一,要求必须重写hashCode方法和equals方法</p>
+</li>
+</ul>
+</article><div class="post-copyright"><div class="copyright-cc-box"><i class="anzhiyufont anzhiyu-icon-copyright"></i></div><div class="post-copyright__author_box"><a class="post-copyright__author_img" href="/" title="头像"><img class="post-copyright__author_img_back" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/freecompress-girl.jpg" title="头像" alt="头像"><img class="post-copyright__author_img_front" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/freecompress-girl.jpg" title="头像" alt="头像"></a><div class="post-copyright__author_name">Artemis</div><div class="post-copyright__author_desc">不要用逻辑生活   生活没有逻辑 🏠</div></div><div class="post-copyright__post__info"><a class="post-copyright__original" title="该文章为原创文章，注意版权协议" href="http://sukhoigit.github.io/posts/47de4be2.html">原创</a><a class="post-copyright-title"><span onclick="rm.copyPageUrl('http://sukhoigit.github.io/posts/47de4be2.html')">泛型&amp;Set&amp;数据结构</span></a></div><div class="post-tools" id="post-tools"><div class="post-tools-left"><div class="rewardLeftButton"></div><div class="shareRight"><div class="share-link mobile"><div class="share-qrcode"><div class="share-button" title="使用手机访问这篇文章"><i class="anzhiyufont anzhiyu-icon-qrcode"></i></div><div class="share-main"><div class="share-main-all"><div id="qrcode" title="http://sukhoigit.github.io/posts/47de4be2.html"></div><div class="reward-dec">使用手机访问这篇文章</div></div></div></div></div><div class="share-link weibo"><a class="share-button" target="_blank" href="https://service.weibo.com/share/share.php?title=泛型&amp;Set&amp;数据结构&amp;url=http://sukhoigit.github.io/posts/47de4be2.html&amp;pic=https://www.toopic.cn/public/uploads/small/1710477852964171047785229.jpg" rel="external nofollow noreferrer noopener"><i class="anzhiyufont anzhiyu-icon-weibo"></i></a></div><script>function copyCurrentPageUrl() {
+  var currentPageUrl = window.location.href;
+  var input = document.createElement("input");
+  input.setAttribute("value", currentPageUrl);
+  document.body.appendChild(input);
+  input.select();
+  input.setSelectionRange(0, 99999);
+  document.execCommand("copy");
+  document.body.removeChild(input);
+}</script><div class="share-link copyurl"><div class="share-button" id="post-share-url" title="复制链接" onclick="copyCurrentPageUrl()"><i class="anzhiyufont anzhiyu-icon-link"></i></div></div></div></div></div><div class="post-copyright__notice"><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="post-tools-right"><div class="tag_share"><div class="post-meta__box"><div class="post-meta__box__tag-list"><a class="post-meta__box__tags" href="/tags/%E7%BA%A2%E9%BB%91%E6%A0%91/"><span class="tags-punctuation"> <i class="anzhiyufont anzhiyu-icon-tag"></i></span>红黑树<span class="tagsPageCount">1</span></a><a class="post-meta__box__tags" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/"><span class="tags-punctuation"> <i class="anzhiyufont anzhiyu-icon-tag"></i></span>数据结构<span class="tagsPageCount">1</span></a></div></div></div><div class="post_share"><div class="social-share" data-image="https://www.toopic.cn/public/uploads/small/1704204475642170420447536.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.cbd.int/butterfly-extsrc@1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"/><script src="https://cdn.cbd.int/butterfly-extsrc@1.1.3/sharejs/dist/js/social-share.min.js" defer="defer"></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/posts/c943696a.html"><img class="prev-cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/default_cover.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">Previous Post</div><div class="prev_info">那些我们努力追求却无法得到的，也是世界对我们的一种偏爱</div></div></a></div><div class="next-post pull-right"><a href="/posts/aa55683f.html"><img class="next-cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://www.toopic.cn/public/uploads/small/1704204475642170420447536.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">Next Post</div><div class="next_info">JUC</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-content"><div class="author-info__sayhi" id="author-info__sayhi" onclick="anzhiyu.changeSayHelloText()"></div><div class="author-info-avatar"><img class="avatar-img" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/freecompress-girl.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-status"><img class="g-status" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://bu.dusays.com/2021/01/15/0b000885b5287.gif" alt="status"/></div></div><div class="author-info__description"><div style="line-height:1.38;margin:0.6rem 0;text-align:justify;color:rgba(255, 255, 255, 0.8);">这里有我的<b style="color:#fff">学习笔记、想法、日常分享</b>以及<b style="color:#fff">书摘</b>，还有一些好用的<b style="color:#fff">网站推荐</b>。</div><div style="line-height:1.38;margin:0.6rem 0;text-align:justify;color:rgba(255, 255, 255, 0.8);">相信你可以在这里找到对你有用的<b style="color:#fff">知识</b>和<b style="color:#fff">教程</b>。</div></div><div class="author-info__bottom-group"><a class="author-info__bottom-group-left" href="/"><h1 class="author-info__name">Artemis</h1><div class="author-info__desc">不要用逻辑生活   生活没有逻辑 🏠</div></a><div class="card-info-social-icons is-center"><a class="social-icon faa-parent animated-hover" href="https://github.com/SukhoiGit" target="_blank" title="Github"><i class="anzhiyufont anzhiyu-icon-github"></i></a><a class="social-icon faa-parent animated-hover" href="https://space.bilibili.com/1855430258" target="_blank" title="BiliBili"><i class="anzhiyufont anzhiyu-icon-bilibili"></i></a><a class="social-icon faa-parent animated-hover" href="/img/QQ.jpg" target="_blank" title="QQ"><i class="anzhiyufont anzhiyu-icon-qq"></i></a><a class="social-icon faa-parent animated-hover" href="/img/wechat.jpg" target="_blank" title="Wechat"><i class="fa-brands fa-weixin faa-tada"></i></a></div></div></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-bullhorn anzhiyu-shake"></i><span>Announcement</span></div><div class="announcement_content">欢迎来看我的博客鸭~</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-bars"></i><span>Catalog</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E6%B3%9B%E5%9E%8B"><span class="toc-number">1.</span> <span class="toc-text">1.泛型</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1%E6%B3%9B%E5%9E%8B%E6%A6%82%E8%BF%B0"><span class="toc-number">1.1.</span> <span class="toc-text">1.1泛型概述</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-Set%E9%9B%86%E5%90%88"><span class="toc-number">2.</span> <span class="toc-text">2.Set集合</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1Set%E9%9B%86%E5%90%88%E6%A6%82%E8%BF%B0%E5%92%8C%E7%89%B9%E7%82%B9%E3%80%90%E5%BA%94%E7%94%A8%E3%80%91"><span class="toc-number">2.1.</span> <span class="toc-text">2.1Set集合概述和特点【应用】</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2Set%E9%9B%86%E5%90%88%E7%9A%84%E4%BD%BF%E7%94%A8%E3%80%90%E5%BA%94%E7%94%A8%E3%80%91"><span class="toc-number">2.2.</span> <span class="toc-text">2.2Set集合的使用【应用】</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-TreeSet%E9%9B%86%E5%90%88"><span class="toc-number">3.</span> <span class="toc-text">3.TreeSet集合</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1TreeSet%E9%9B%86%E5%90%88%E6%A6%82%E8%BF%B0%E5%92%8C%E7%89%B9%E7%82%B9%E3%80%90%E5%BA%94%E7%94%A8%E3%80%91"><span class="toc-number">3.1.</span> <span class="toc-text">3.1TreeSet集合概述和特点【应用】</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2TreeSet%E9%9B%86%E5%90%88%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8%E3%80%90%E5%BA%94%E7%94%A8%E3%80%91"><span class="toc-number">3.2.</span> <span class="toc-text">3.2TreeSet集合基本使用【应用】</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3%E8%87%AA%E7%84%B6%E6%8E%92%E5%BA%8FComparable%E7%9A%84%E4%BD%BF%E7%94%A8%E3%80%90%E5%BA%94%E7%94%A8%E3%80%91"><span class="toc-number">3.3.</span> <span class="toc-text">3.3自然排序Comparable的使用【应用】</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-4%E6%AF%94%E8%BE%83%E5%99%A8%E6%8E%92%E5%BA%8FComparator%E7%9A%84%E4%BD%BF%E7%94%A8%E3%80%90%E5%BA%94%E7%94%A8%E3%80%91"><span class="toc-number">3.4.</span> <span class="toc-text">3.4比较器排序Comparator的使用【应用】</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-5%E4%B8%A4%E7%A7%8D%E6%AF%94%E8%BE%83%E6%96%B9%E5%BC%8F%E6%80%BB%E7%BB%93%E3%80%90%E7%90%86%E8%A7%A3%E3%80%91"><span class="toc-number">3.5.</span> <span class="toc-text">3.5两种比较方式总结【理解】</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84"><span class="toc-number">4.</span> <span class="toc-text">4.数据结构</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4-1%E4%BA%8C%E5%8F%89%E6%A0%91%E3%80%90%E7%90%86%E8%A7%A3%E3%80%91"><span class="toc-number">4.1.</span> <span class="toc-text">4.1二叉树【理解】</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-2%E4%BA%8C%E5%8F%89%E6%9F%A5%E6%89%BE%E6%A0%91%E3%80%90%E7%90%86%E8%A7%A3%E3%80%91"><span class="toc-number">4.2.</span> <span class="toc-text">4.2二叉查找树【理解】</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-3%E5%B9%B3%E8%A1%A1%E4%BA%8C%E5%8F%89%E6%A0%91%E3%80%90%E7%90%86%E8%A7%A3%E3%80%91"><span class="toc-number">4.3.</span> <span class="toc-text">4.3平衡二叉树【理解】</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-3%E7%BA%A2%E9%BB%91%E6%A0%91%E3%80%90%E7%90%86%E8%A7%A3%E3%80%91"><span class="toc-number">4.4.</span> <span class="toc-text">4.3红黑树【理解】</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-1HashSet%E9%9B%86%E5%90%88%E6%A6%82%E8%BF%B0%E5%92%8C%E7%89%B9%E7%82%B9%E3%80%90%E5%BA%94%E7%94%A8%E3%80%91"><span class="toc-number">4.5.</span> <span class="toc-text">5.1HashSet集合概述和特点【应用】</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-2HashSet%E9%9B%86%E5%90%88%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%BA%94%E7%94%A8%E3%80%90%E5%BA%94%E7%94%A8%E3%80%91"><span class="toc-number">4.6.</span> <span class="toc-text">5.2HashSet集合的基本应用【应用】</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-3%E5%93%88%E5%B8%8C%E5%80%BC%E3%80%90%E7%90%86%E8%A7%A3%E3%80%91"><span class="toc-number">4.7.</span> <span class="toc-text">5.3哈希值【理解】</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-4%E5%93%88%E5%B8%8C%E8%A1%A8%E7%BB%93%E6%9E%84%E3%80%90%E7%90%86%E8%A7%A3%E3%80%91"><span class="toc-number">4.8.</span> <span class="toc-text">5.4哈希表结构【理解】</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-5HashSet%E9%9B%86%E5%90%88%E5%AD%98%E5%82%A8%E5%AD%A6%E7%94%9F%E5%AF%B9%E8%B1%A1%E5%B9%B6%E9%81%8D%E5%8E%86%E3%80%90%E5%BA%94%E7%94%A8%E3%80%91"><span class="toc-number">4.9.</span> <span class="toc-text">5.5HashSet集合存储学生对象并遍历【应用】</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-history"></i><span>Recent Post</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/posts/aa55683f.html" title="JUC"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://www.toopic.cn/public/uploads/small/1704204475642170420447536.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="JUC"/></a><div class="content"><a class="title" href="/posts/aa55683f.html" title="JUC">JUC</a><time datetime="2024-04-05T14:45:29.000Z" title="Created 2024-04-05 22:45:29">2024-04-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/47de4be2.html" title="泛型&amp;Set&amp;数据结构"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://www.toopic.cn/public/uploads/small/1710477852964171047785229.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="泛型&amp;Set&amp;数据结构"/></a><div class="content"><a class="title" href="/posts/47de4be2.html" title="泛型&amp;Set&amp;数据结构">泛型&amp;Set&amp;数据结构</a><time datetime="2024-03-23T11:45:53.000Z" title="Created 2024-03-23 19:45:53">2024-03-23</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/c943696a.html" title="那些我们努力追求却无法得到的，也是世界对我们的一种偏爱"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/default_cover.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="那些我们努力追求却无法得到的，也是世界对我们的一种偏爱"/></a><div class="content"><a class="title" href="/posts/c943696a.html" title="那些我们努力追求却无法得到的，也是世界对我们的一种偏爱">那些我们努力追求却无法得到的，也是世界对我们的一种偏爱</a><time datetime="2024-03-17T07:56:12.000Z" title="Created 2024-03-17 15:56:12">2024-03-17</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/98480eac.html" title="理想主义"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/default_cover.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="理想主义"/></a><div class="content"><a class="title" href="/posts/98480eac.html" title="理想主义">理想主义</a><time datetime="2024-03-16T06:14:20.000Z" title="Created 2024-03-16 14:14:20">2024-03-16</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/da56859f.html" title="不要让追求完美成为阻碍进步的障碍"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/default_cover.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="不要让追求完美成为阻碍进步的障碍"/></a><div class="content"><a class="title" href="/posts/da56859f.html" title="不要让追求完美成为阻碍进步的障碍">不要让追求完美成为阻碍进步的障碍</a><time datetime="2024-03-16T05:55:13.000Z" title="Created 2024-03-16 13:55:13">2024-03-16</time></div></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div id="footer_deal"><a class="deal_link" href="/3103846585@qq.com" title="email"><i class="anzhiyufont anzhiyu-icon-envelope"></i></a><a class="deal_link" target="_blank" rel="noopener" href="https://x.com/OriginBlue50362?t=Yu96I7tDxgX9IGv2CzNnbQ&amp;s=09" title="twitter"><i class="fa-brands fa-twitter"></i></a><a class="deal_link" href="/img/QQ.jpg" title="QQ"><i class="anzhiyufont anzhiyu-icon-qq"></i></a><img class="footer_mini_logo" title="返回顶部" alt="返回顶部" onclick="anzhiyu.scrollToDest(0, 500)" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/freecompress-girl.jpg" size="50px"/><a class="deal_link" href="/img/wechat.jpg" title="微信"><i class="fa-brands fa-weixin"></i></a><a class="deal_link" target="_blank" rel="noopener" href="https://github.com/SukhoiGit" title="Github"><i class="anzhiyufont anzhiyu-icon-github"></i></a><a class="deal_link" target="_blank" rel="noopener" href="https://space.bilibili.com/1855430258" title="Bilibili"><i class="anzhiyufont anzhiyu-icon-bilibili"></i></a></div><div class="copyright">&copy;2023 - 2024 By Artemis</div><div id="workboard"><div id="runtimeTextTip"></div></div><p id="ghbdages"><a class="github-badge" target="_blank" href="https://github.com/SukhoiGit" style="margin-inline:5px" data-title="本站项目由Github托管" title="本站项目由Github托管"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://npm.elemecdn.com/anzhiyu-blog@2.1.5/img/badge/Source-Github.svg" alt="本站项目由Github托管"/></a><a class="github-badge" target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" style="margin-inline:5px" data-title="本站采用知识共享署名-非商业性使用-相同方式共享4.0国际许可协议进行许可" title="本站采用知识共享署名-非商业性使用-相同方式共享4.0国际许可协议进行许可"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://npm.elemecdn.com/anzhiyu-blog@2.2.0/img/badge/Copyright-BY-NC-SA.svg" alt="本站采用知识共享署名-非商业性使用-相同方式共享4.0国际许可协议进行许可"/></a></p></div></footer></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="sidebar-site-data site-data is-center"><a href="/archives/" title="archive"><div class="headline">Articles</div><div class="length-num">16</div></a><a href="/tags/" title="tag"><div class="headline">Tags</div><div class="length-num">13</div></a><a href="/categories/" title="category"><div class="headline">Categories</div><div class="length-num">3</div></a></div><span class="sidebar-menu-item-title">Function</span><div class="sidebar-menu-item"><a class="darkmode_switchbutton menu-child" href="javascript:void(0);" title="Display Mode"><i class="anzhiyufont anzhiyu-icon-circle-half-stroke"></i><span>Display Mode</span></a></div><div class="back-menu-list-groups"><div class="back-menu-list-group"><div class="back-menu-list-title">网页</div><div class="back-menu-list"><a class="back-menu-item" href="https://sukhoigit.github.io" title="博客"><img class="back-menu-item-icon" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/favicon.ico" alt="博客"/><span class="back-menu-item-text">博客</span></a></div></div><div class="back-menu-list-group"><div class="back-menu-list-title">项目</div><div class="back-menu-list"><a class="back-menu-item" target="_blank" rel="noopener" href="https://origin.eqing.tech/" title="AI"><img class="back-menu-item-icon" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://image.anheyu.com/favicon.ico" alt="AI"/><span class="back-menu-item-text">AI</span></a></div></div></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 文章</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/archives/"><i class="anzhiyufont anzhiyu-icon-box-archive faa-tada" style="font-size: 0.9em;"></i><span> 隧道</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/categories/"><i class="anzhiyufont anzhiyu-icon-shapes faa-tada" style="font-size: 0.9em;"></i><span> 分类</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/tags/"><i class="anzhiyufont anzhiyu-icon-tags faa-tada" style="font-size: 0.9em;"></i><span> 标签</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 友链</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/link/"><i class="anzhiyufont anzhiyu-icon-link faa-tada" style="font-size: 0.9em;"></i><span> 友人帐</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 我的</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/music/?id=9852413331&amp;server=netease"><i class="anzhiyufont anzhiyu-icon-music faa-tada" style="font-size: 0.9em;"></i><span> 音乐馆</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/album/"><i class="anzhiyufont anzhiyu-icon-images faa-tada" style="font-size: 0.9em;"></i><span> 相册集</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/air-conditioner/"><i class="anzhiyufont anzhiyu-icon-fan faa-tada" style="font-size: 0.9em;"></i><span> 小空调</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 关于</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/about/"><i class="anzhiyufont anzhiyu-icon-paper-plane faa-tada" style="font-size: 0.9em;"></i><span> 关于本人</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/essay/"><i class="anzhiyufont anzhiyu-icon-lightbulb faa-tada" style="font-size: 0.9em;"></i><span> 闲言碎语</span></a></li><li><a class="site-page child faa-parent animated-hover" href="javascript:toRandomPost()"><i class="anzhiyufont anzhiyu-icon-shoe-prints1 faa-tada" style="font-size: 0.9em;"></i><span> 随便逛逛</span></a></li></ul></div></div><span class="sidebar-menu-item-title">标签</span><div class="card-tags"><div class="item-headline"></div><div class="card-tag-cloud"><a href="/tags/API/" style="font-size: 0.88rem;">API<sup>1</sup></a><a href="/tags/Class/" style="font-size: 0.88rem;">Class<sup>1</sup></a><a href="/tags/Collection%E9%9B%86%E5%90%88/" style="font-size: 0.88rem;">Collection集合<sup>1</sup></a><a href="/tags/IO/" style="font-size: 0.88rem;">IO<sup>1</sup></a><a href="/tags/Interface/" style="font-size: 0.88rem;">Interface<sup>1</sup></a><a href="/tags/List/" style="font-size: 0.88rem;">List<sup>1</sup></a><a href="/tags/Object-Oriented/" style="font-size: 0.88rem;">Object Oriented<sup>1</sup></a><a href="/tags/String/" style="font-size: 0.88rem;">String<sup>1</sup></a><a href="/tags/java%E5%9F%BA%E7%A1%80/" style="font-size: 0.88rem;">java基础<sup>1</sup></a><a href="/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/" style="font-size: 0.88rem;">多线程<sup>3</sup></a><a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" style="font-size: 0.88rem;">数据结构<sup>1</sup></a><a href="/tags/%E7%BA%A2%E9%BB%91%E6%A0%91/" style="font-size: 0.88rem;">红黑树<sup>1</sup></a><a href="/tags/%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/" style="font-size: 0.88rem;">网络编程<sup>1</sup></a></div></div><hr/></div></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Read Mode"><i class="anzhiyufont anzhiyu-icon-book-open"></i></button><button id="translateLink" type="button" title="Switch Between Traditional Chinese And Simplified Chinese">繁</button><button id="darkmode" type="button" title="Switch Between Light And Dark Mode"><i class="anzhiyufont anzhiyu-icon-circle-half-stroke"></i></button><button id="hide-aside-btn" type="button" title="Toggle between single-column and double-column"><i class="anzhiyufont anzhiyu-icon-arrows-left-right"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="Setting"><i class="anzhiyufont anzhiyu-icon-gear"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table Of Contents"><i class="anzhiyufont anzhiyu-icon-list-ul"></i></button><a id="switch-commentBarrage" href="javascript:anzhiyu.switchCommentBarrage();" title="开关弹幕"><i class="anzhiyufont anzhiyu-icon-danmu"></i></a><button id="go-up" type="button" title="Back To Top"><i class="anzhiyufont anzhiyu-icon-arrow-up"></i></button></div></div><div id="nav-music"><a id="nav-music-hoverTips" onclick="anzhiyu.musicToggle()" accesskey="m">播放音乐</a><div id="console-music-bg"></div><meting-js id="9852413331" server="netease" type="playlist" mutex="true" preload="none" theme="var(--anzhiyu-main)" data-lrctype="0" order="random" volume="0.7"></meting-js></div><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">Search</span><span id="loading-status"></span><button class="search-close-button"><i class="anzhiyufont anzhiyu-icon-xmark"></i></button></nav><div class="is-center" id="loading-database"><i class="anzhiyufont anzhiyu-icon-spinner anzhiyu-pulse-icon"></i><span>  Loading the Database</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="Search for Posts" type="text"/></div></div><hr/><div id="local-search-results"></div></div></div><div id="search-mask"></div></div><div id="rightMenu"><div class="rightMenu-group rightMenu-small"><div class="rightMenu-item" id="menu-backward"><i class="anzhiyufont anzhiyu-icon-arrow-left"></i></div><div class="rightMenu-item" id="menu-forward"><i class="anzhiyufont anzhiyu-icon-arrow-right"></i></div><div class="rightMenu-item" id="menu-refresh"><i class="anzhiyufont anzhiyu-icon-arrow-rotate-right" style="font-size: 1rem;"></i></div><div class="rightMenu-item" id="menu-top"><i class="anzhiyufont anzhiyu-icon-arrow-up"></i></div></div><div class="rightMenu-group rightMenu-line rightMenuPlugin"><div class="rightMenu-item" id="menu-copytext"><i class="anzhiyufont anzhiyu-icon-copy"></i><span>复制选中文本</span></div><div class="rightMenu-item" id="menu-pastetext"><i class="anzhiyufont anzhiyu-icon-paste"></i><span>粘贴文本</span></div><a class="rightMenu-item" id="menu-commenttext"><i class="anzhiyufont anzhiyu-icon-comment-medical"></i><span>引用到评论</span></a><div class="rightMenu-item" id="menu-newwindow"><i class="anzhiyufont anzhiyu-icon-window-restore"></i><span>新窗口打开</span></div><div class="rightMenu-item" id="menu-copylink"><i class="anzhiyufont anzhiyu-icon-link"></i><span>复制链接地址</span></div><div class="rightMenu-item" id="menu-copyimg"><i class="anzhiyufont anzhiyu-icon-images"></i><span>复制此图片</span></div><div class="rightMenu-item" id="menu-downloadimg"><i class="anzhiyufont anzhiyu-icon-download"></i><span>下载此图片</span></div><div class="rightMenu-item" id="menu-newwindowimg"><i class="anzhiyufont anzhiyu-icon-window-restore"></i><span>新窗口打开图片</span></div><div class="rightMenu-item" id="menu-search"><i class="anzhiyufont anzhiyu-icon-magnifying-glass"></i><span>站内搜索</span></div><div class="rightMenu-item" id="menu-searchBaidu"><i class="anzhiyufont anzhiyu-icon-magnifying-glass"></i><span>百度搜索</span></div><div class="rightMenu-item" id="menu-music-toggle"><i class="anzhiyufont anzhiyu-icon-play"></i><span>播放音乐</span></div><div class="rightMenu-item" id="menu-music-back"><i class="anzhiyufont anzhiyu-icon-backward"></i><span>切换到上一首</span></div><div class="rightMenu-item" id="menu-music-forward"><i class="anzhiyufont anzhiyu-icon-forward"></i><span>切换到下一首</span></div><div class="rightMenu-item" id="menu-music-playlist" onclick="window.open(&quot;https://music.163.com/#/playlist?id=9852413331&quot;, &quot;_blank&quot;);" style="display: none;"><i class="anzhiyufont anzhiyu-icon-radio"></i><span>查看所有歌曲</span></div><div class="rightMenu-item" id="menu-music-copyMusicName"><i class="anzhiyufont anzhiyu-icon-copy"></i><span>复制歌名</span></div></div><div class="rightMenu-group rightMenu-line rightMenuOther"><a class="rightMenu-item menu-link" id="menu-randomPost"><i class="anzhiyufont anzhiyu-icon-shuffle"></i><span>随便逛逛</span></a><a class="rightMenu-item menu-link" href="/categories/"><i class="anzhiyufont anzhiyu-icon-cube"></i><span>博客分类</span></a><a class="rightMenu-item menu-link" href="/tags/"><i class="anzhiyufont anzhiyu-icon-tags"></i><span>文章标签</span></a></div><div class="rightMenu-group rightMenu-line rightMenuOther"><a class="rightMenu-item" id="menu-copy" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-copy"></i><span>复制地址</span></a><a class="rightMenu-item" id="menu-commentBarrage" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-message"></i><span class="menu-commentBarrage-text">关闭热评</span></a><a class="rightMenu-item" id="menu-darkmode" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-circle-half-stroke"></i><span class="menu-darkmode-text">深色模式</span></a><a class="rightMenu-item" id="menu-translate" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-language"></i><span>轉為繁體</span></a></div></div><div id="rightmenu-mask"></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://cdn.cbd.int/@fancyapps/ui@5.0.28/dist/fancybox/fancybox.umd.js"></script><script src="https://cdn.cbd.int/instant.page@5.2.0/instantpage.js" type="module"></script><script src="https://cdn.cbd.int/vanilla-lazyload@17.8.5/dist/lazyload.iife.min.js"></script><script src="https://cdn.cbd.int/node-snackbar@0.1.16/dist/snackbar.min.js"></script><canvas id="universe"></canvas><script async src="https://npm.elemecdn.com/anzhiyu-theme-static@1.0.0/dark/dark.js"></script><script async src="/anzhiyu/random.js"></script><script async="async">(function () {
+  var grt = new Date("12/25/2023 00:00:00"); //设置网站上线时间
+  var now = new Date();
+  var dnum;
+  var hnum;
+  var mnum;
+  var snum;
+  var nowHour;
+
+  // 计算并更新天数、小时数、分钟数和秒数
+  function updateTime() {
+    now = new Date(); // 更新 now 的值
+    nowHour = now.getHours(); // 更新 nowHour 的值
+    var days = (now - grt) / 1000 / 60 / 60 / 24;
+    dnum = Math.floor(days);
+    var hours = (now - grt) / 1000 / 60 / 60 - 24 * dnum;
+    hnum = Math.floor(hours);
+    if (String(hnum).length == 1) {
+      hnum = "0" + hnum;
+    }
+    var minutes = (now - grt) / 1000 / 60 - 24 * 60 * dnum - 60 * hnum;
+    mnum = Math.floor(minutes);
+    if (String(mnum).length == 1) {
+      mnum = "0" + mnum;
+    }
+    var seconds = (now - grt) / 1000 - 24 * 60 * 60 * dnum - 60 * 60 * hnum - 60 * mnum;
+    snum = Math.round(seconds);
+    if (String(snum).length == 1) {
+      snum = "0" + snum;
+    }
+  }
+
+  // 更新网页中显示的网站运行时间
+  function updateHtml() {
+    const footer = document.getElementById("footer");
+    if (!footer) return
+    let currentTimeHtml = "";
+    if (nowHour < 18 && nowHour >= 9) {
+      // 如果是上班时间，默认就是"安知鱼-上班摸鱼中.svg"图片，不需要更改
+      currentTimeHtml = `本站居然运行了 ${dnum} 天<span id='runtime'> ${hnum} 小时 ${mnum} 分 ${snum} 秒 </span><i class='anzhiyufont anzhiyu-icon-heartbeat' style='color:red'></i>`;
+    } else {
+      // 如果是下班时间，插入"安知鱼-下班啦.svg"图片
+      let img = document.querySelector("#workboard .workSituationImg");
+      if (img != null) {
+        img.src = "";
+        img.title = "下班了就该开开心心的玩耍，嘿嘿~";
+        img.alt = "下班了就该开开心心的玩耍，嘿嘿~";
+      }
+
+      currentTimeHtml = `本站居然运行了 ${dnum} 天<span id='runtime'> ${hnum} 小时 ${mnum} 分 ${snum} 秒 </span><i class='anzhiyufont anzhiyu-icon-heartbeat' style='color:red'></i>`;
+    }
+
+    if (document.getElementById("runtimeTextTip")) {
+      document.getElementById("runtimeTextTip").innerHTML = currentTimeHtml;
+    }
+  }
+
+  setInterval(() => {
+    updateTime();
+    updateHtml();
+  }, 1000);
+})();</script><script src="/js/search/local-search.js"></script><div class="js-pjax"><input type="hidden" name="page-type" id="page-type" value="post"></div><script>var visitorMail = "";
+</script><script async data-pjax src="https://cdn.cbd.int/anzhiyu-theme-static@1.0.0/waterfall/waterfall.js"></script><script src="https://lf3-cdn-tos.bytecdntp.com/cdn/expire-1-M/qrcodejs/1.0.0/qrcode.min.js"></script><script src="/js/anzhiyu/right_click_menu.js"></script><link rel="stylesheet" href="https://cdn.cbd.int/anzhiyu-theme-static@1.1.9/icon/ali_iconfont_css.css"><link rel="stylesheet" href="https://cdn.cbd.int/anzhiyu-theme-static@1.0.0/aplayer/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://cdn.cbd.int/anzhiyu-blog-static@1.0.1/js/APlayer.min.js"></script><script src="https://cdn.cbd.int/hexo-anzhiyu-music@1.0.1/assets/js/Meting2.min.js"></script><script src="https://cdn.cbd.int/pjax@0.2.8/pjax.min.js"></script><script>let pjaxSelectors = ["head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: false,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:send', function () {
+  // removeEventListener scroll 
+  anzhiyu.removeGlobalFnEvent('pjax')
+  anzhiyu.removeGlobalFnEvent('themeChange')
+
+  document.getElementById('rightside').classList.remove('rightside-show')
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  //reset readmode
+  const $bodyClassList = document.body.classList
+  $bodyClassList.contains('read-mode') && $bodyClassList.remove('read-mode')
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  document.querySelectorAll('script[data-pjax]').forEach(item => {
+    const newScript = document.createElement('script')
+    const content = item.text || item.textContent || item.innerHTML || ""
+    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+    newScript.appendChild(document.createTextNode(content))
+    item.parentNode.replaceChild(newScript, item)
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof panguInit === 'function' && panguInit()
+
+  // google analytics
+  typeof gtag === 'function' && gtag('config', '', {'page_path': window.location.pathname});
+
+  // baidu analytics
+  typeof _hmt === 'object' && _hmt.push(['_trackPageview',window.location.pathname]);
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+})
+
+document.addEventListener('pjax:error', e => {
+  if (e.request.status === 404) {
+    pjax.loadUrl('/404.html')
+  }
+})</script><script charset="UTF-8" src="https://cdn.cbd.int/anzhiyu-theme-static@1.1.5/accesskey/accesskey.js"></script></div><div id="popup-window"><div class="popup-window-title">通知</div><div class="popup-window-divider"></div><div class="popup-window-content"><div class="popup-tip">你好呀</div><div class="popup-link"><i class="anzhiyufont anzhiyu-icon-arrow-circle-right"></i></div></div></div></body></html>
