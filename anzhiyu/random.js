@@ -1,3 +1,3 @@
-var posts=["posts/47de4be2.html","posts/999a8fe.html","posts/fc4c1a2e.html","posts/99345e84.html","posts/f6491cfb.html","posts/aa55683f.html","posts/7da19302.html","posts/23a3bd72.html","posts/5729df21.html","posts/6bb1d783.html","posts/a42a779d.html","posts/c9a945f0.html","posts/c6e613d8.html","posts/9f572938.html","posts/6f2612a2.html","posts/c0c42fb6.html","posts/9f024484.html","posts/54d9f3d9.html"];function toRandomPost(){
+var posts=["posts/9f024484.html","posts/c9a945f0.html","posts/a42a779d.html","posts/6bb1d783.html","posts/9f572938.html","posts/c6e613d8.html","posts/6f2612a2.html","posts/47de4be2.html","posts/c0c42fb6.html","posts/54d9f3d9.html","posts/aa55683f.html","posts/5729df21.html","posts/99345e84.html","posts/fc4c1a2e.html","posts/7da19302.html","posts/999a8fe.html","posts/23a3bd72.html","posts/f6491cfb.html"];function toRandomPost(){
     pjax.loadUrl('/'+posts[Math.floor(Math.random() * posts.length)]);
   };
